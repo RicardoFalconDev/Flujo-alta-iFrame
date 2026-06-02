@@ -47,7 +47,6 @@
       max-width: 1440px;
       margin: 0 auto;
       width: 100%;
-      /* Altura fija = viewport menos el header (80px) */
       height: calc(100vh - 80px);
       overflow: hidden;
     }
@@ -364,6 +363,23 @@
       font-size: 14px;
       line-height: 1.65;
       color: #818ea1;
+    }
+    /* ─── Pantallas < 1280px ──────────────────────────────── */
+    @media (max-width: 1439px) {
+      .form-area {
+        flex: 1 1 0%;
+        width: auto;
+        min-width: 0;
+      }
+      .form-content {
+        width: calc(100% - 64px);
+        max-width: 656px;
+      }
+      .sidebar {
+        flex: 0 0 420px;
+        width: 420px;
+        padding: 58px 40px 86px;
+      }
     }
   </style>
 </head>

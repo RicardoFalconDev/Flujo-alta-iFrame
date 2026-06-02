@@ -18,6 +18,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      height: 100vh;
+      overflow: hidden;
       background: linear-gradient(to right,
         var(--bg-page) calc(50vw + 236px),
         #fff           calc(50vw + 236px)
@@ -25,6 +27,12 @@
     }
 
     .page {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      overflow: hidden;
       background: linear-gradient(to right,
         var(--bg-page) calc(50vw + 236px),
         #fff           calc(50vw + 236px)
@@ -310,6 +318,23 @@
       font-size: 16px;
       line-height: 1.65;
       color: #818ea1;
+    }
+    /* ─── Pantallas < 1280px ──────────────────────────────── */
+    @media (max-width: 1439px) {
+      .form-area {
+        flex: 1 1 0%;
+        width: auto;
+        min-width: 0;
+      }
+      .form-content {
+        width: calc(100% - 64px);
+        max-width: 656px;
+      }
+      .sidebar {
+        flex: 0 0 420px;
+        width: 420px;
+        padding: 54px 40px 64px;
+      }
     }
   </style>
 </head>
