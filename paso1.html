@@ -128,9 +128,12 @@
       max-width: 1440px;
       margin: 0 auto;
       width: 100%;
+      /* Altura fija = viewport menos el header (80px) */
+      height: calc(100vh - 80px);
+      overflow: hidden;
     }
 
-/* ─── FORM AREA (left 956px) ─────────────────────── */
+    /* ─── FORM AREA (left 956px) — scrollea solo esta columna ─── */
     .form-area {
       width: 956px;
       flex-shrink: 0;
@@ -139,7 +142,14 @@
       flex-direction: column;
       align-items: center;
       padding: 54px 0;
+      overflow-y: auto;
+      height: 100%;
+      scrollbar-width: none;        /* Firefox */
+      -ms-overflow-style: none;     /* IE/Edge */
     }
+
+    /* Webkit — ocultar scrollbar */
+    .form-area::-webkit-scrollbar { display: none; }
 
     .form-content {
       width: 656px;
@@ -432,6 +442,9 @@
       display: flex;
       flex-direction: column;
       gap: 24px;
+      /* Sidebar se queda fijo — no scrollea */
+      height: 100%;
+      overflow: hidden;
     }
 
     .sidebar-section { display: flex; flex-direction: column; gap: 16px; }
