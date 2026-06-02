@@ -122,8 +122,10 @@
       border: none;
       border-radius: 53px;
       padding: 14px 20px;
+      transition: opacity .15s;
     }
 
+    .nav-cta-primary:hover { opacity: .85; }
     .nav-cta-primary span {
       font-weight: 600;
       font-size: 14px;
@@ -136,8 +138,10 @@
       border: 1px solid #6B7494;
       border-radius: 53px;
       padding: 14px 20px;
+      transition: background .15s, border-color .15s;
     }
 
+    .nav-cta-outline:hover { background: rgba(107,116,148,.12); border-color: #8892b0; }
     .nav-cta-outline span {
       font-weight: 600;
       font-size: 14px;
@@ -241,7 +245,7 @@
     .hero-title {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
-      font-size: 32px;
+      font-size: 26px;
       color: var(--blue);
       line-height: 1.2;
     }
@@ -249,9 +253,9 @@
     .hero-subtitle {
       font-family: 'Montserrat', sans-serif;
       font-weight: 500;
-      font-size: 20px;
+      font-size: 15px;
       color: #333;
-      line-height: 32px;
+      line-height: 24px;
     }
 
     /* ─── PRICING ────────────────────────────────────── */
@@ -290,8 +294,8 @@
 
     .tab-item span {
       font-weight: 500;
-      font-size: 23.5px;
-      letter-spacing: -.47px;
+      font-size: 14px;
+      letter-spacing: 0;
       color: #495057;
       white-space: nowrap;
     }
@@ -312,12 +316,12 @@
     /* ─── CARD ESTÁNDAR ──────────────────────────────── */
     .card {
       width: 100%;
-      height: 872px;
+      height: 520px;
       background: #fff;
       border: 1px solid var(--card-border);
       border-radius: 26px;
       box-shadow: 0 26px 40px 0 rgba(188,202,255,.13);
-      padding: 52px 32px 40px;
+      padding: 32px 28px 28px;
       display: flex;
     }
 
@@ -332,25 +336,25 @@
     .card-main {
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 16px;
     }
 
-    .content-top { display: flex; flex-direction: column; gap: 24px; }
+    .content-top { display: flex; flex-direction: column; gap: 14px; }
     .info-text { display: flex; flex-direction: column; gap: 8px; }
 
     .card-name {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
-      font-size: 32px;
-      letter-spacing: -1px;
+      font-size: 22px;
+      letter-spacing: -.3px;
       color: var(--dark-1);
     }
 
     .card-desc {
       font-family: 'Open Sans', sans-serif;
       font-weight: 400;
-      font-size: 20px;
-      line-height: 32px;
+      font-size: 13px;
+      line-height: 20px;
       color: var(--dark-1);
     }
 
@@ -359,7 +363,7 @@
     .price-label {
       font-family: 'Open Sans', sans-serif;
       font-weight: 700;
-      font-size: 24px;
+      font-size: 18px;
       color: var(--blue);
     }
 
@@ -372,9 +376,9 @@
     .price-amount {
       font-family: 'Open Sans', sans-serif;
       font-weight: 700;
-      font-size: 48px;
+      font-size: 36px;
       color: var(--dark-1);
-      letter-spacing: -1px;
+      letter-spacing: -.5px;
       white-space: nowrap;
     }
 
@@ -391,27 +395,28 @@
       white-space: nowrap;
     }
 
-    .price-notes { display: flex; flex-direction: column; gap: 16px; margin-top: 6px; }
+    .price-notes { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
 
     .note-iva  { font-family: 'Open Sans', sans-serif; font-weight: 400; font-size: 12px; color: var(--dark-1); }
     .note-simp { font-family: 'Open Sans', sans-serif; font-weight: 400; font-size: 12px; color: var(--price-sub); }
 
     .divider { width: 100%; height: 1px; background: var(--card-border); }
 
-    .feature-list { display: flex; flex-direction: column; gap: 16px; list-style: none; }
+    .feature-list { display: flex; flex-direction: column; gap: 10px; list-style: none; }
     .feature-list.tight { gap: 8px; }
 
     .feature-item { display: flex; gap: 8px; align-items: flex-start; }
     .feature-item.center { align-items: center; }
 
-    .feature-icon { width: 24px; height: 24px; flex-shrink: 0; object-fit: contain; }
+    .feature-icon { width: 16px; height: 16px; flex-shrink: 0; object-fit: contain; margin-top: 1px; }
 
     .feature-text {
       font-family: 'Open Sans', sans-serif;
       font-weight: 400;
-      font-size: 20px;
+      font-size: 13px;
       color: var(--dark-1);
       flex: 1;
+      line-height: 1.5;
     }
 
     /* ─── CARD DESTACADA ─────────────────────────────── */
@@ -437,7 +442,7 @@
     .featured-badge span {
       font-family: 'Open Sans', sans-serif;
       font-weight: 600;
-      font-size: 20px;
+      font-size: 13px;
       color: #fff;
       line-height: 1;
     }
@@ -445,15 +450,15 @@
     .featured-body {
       background: #fff;
       border-radius: 0 0 21px 21px;
-      padding: 16px 32px 40px;
+      padding: 16px 28px 28px;
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 32px;
+      gap: 20px;
     }
 
-    .featured-main { display: flex; flex-direction: column; gap: 28px; }
+    .featured-main { display: flex; flex-direction: column; gap: 16px; }
 
     /* ─── BOTONES DE CARDS ───────────────────────────── */
     .btn-primary-card {
@@ -473,7 +478,7 @@
       font-weight: 500;
       font-size: 16px;
       color: #fff;
-      text-transform: uppercase;
+      text-transform: none;
       letter-spacing: .5px;
     }
 
@@ -494,7 +499,7 @@
       font-weight: 500;
       font-size: 16px;
       color: var(--blue);
-      text-transform: uppercase;
+      text-transform: none;
       letter-spacing: .5px;
     }
 
@@ -736,7 +741,7 @@
         </button>
         <button class="nav-plain">Planes y precios</button>
         <button class="nav-cta-primary"><span>Solicitar mi firma digital</span></button>
-        <button class="nav-cta-outline"><span>Iniciar Sesión</span></button>
+        <button class="nav-cta-outline" onclick="window.location.href='login.html'"><span>Iniciar Sesión</span></button>
       </div>
 
       <button class="hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
@@ -750,7 +755,7 @@
         <button>Información</button>
         <button>Planes y precios</button>
         <button class="m-cta-primary">Solicitar mi firma digital</button>
-        <button class="m-cta-outline">Iniciar Sesión</button>
+        <button class="m-cta-outline" onclick="window.location.href='login.html'">Iniciar Sesión</button>
       </div>
     </div>
   </nav>
@@ -827,7 +832,7 @@
                 </li>
               </ul>
             </div>
-            <button class="btn-outline-card" onclick="window.location.href='paso1.html'"><span>CONTRATAR PYME</span></button>
+            <button class="btn-outline-card" onclick="window.location.href='paso1.html'"><span>Contratar PyME</span></button>
           </div>
         </div>
 
@@ -841,7 +846,7 @@
               <div class="content-top">
                 <div class="info-text">
                   <p class="card-name">Enterprise</p>
-                  <p class="card-desc" style="font-size:18px">Para organizaciones con mayor volumen de documentos y múltiples áreas firmantes</p>
+                  <p class="card-desc" style="font-size:13px">Para organizaciones con mayor volumen de documentos y múltiples áreas firmantes</p>
                 </div>
                 <div class="price-section">
                   <p class="price-label">2000 firmas digitales</p>
@@ -889,7 +894,7 @@
                 </li>
               </ul>
             </div>
-            <button class="btn-primary-card"><span>CONTRATAR ENTERPRISE</span></button>
+            <button class="btn-primary-card"><span>Contratar Enterprise</span></button>
           </div>
         </div>
 
@@ -900,7 +905,7 @@
               <div class="content-top">
                 <div class="info-text">
                   <p class="card-name">Integración vía API</p>
-                  <p class="card-desc" style="font-size:18px;line-height:32px">Para empresas que necesitan integrar firmas dentro de sus propios flujos</p>
+                  <p class="card-desc" style="font-size:13px">Para empresas que necesitan integrar firmas dentro de sus propios flujos</p>
                 </div>
                 <div class="price-section">
                   <p class="price-label">Firmas personalizadas</p>
@@ -933,7 +938,7 @@
                 </li>
               </ul>
             </div>
-            <button class="btn-outline-card"><span>CONTACTAR A VENTAS</span></button>
+            <button class="btn-outline-card"><span>Contactar a ventas</span></button>
           </div>
         </div>
 
