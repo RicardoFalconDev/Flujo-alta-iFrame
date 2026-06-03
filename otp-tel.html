@@ -76,6 +76,14 @@
       box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
     }
 
+    /* Estado verificado */
+    .otp-grid.verified .otp-cell {
+      background: #f5f5f5;
+      border-color: #006633;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
     /* ─── MENSAJES BAJO EL GRID ──────────────────────── */
     .otp-messages {
       display: flex;
@@ -84,16 +92,6 @@
       gap: 4px;
       min-height: 36px;
     }
-
-    .otp-helper {
-      font-size: 13px;
-      line-height: 20px;
-      color: var(--text-ph);
-      opacity: 0;
-      transition: opacity .2s;
-    }
-
-    .otp-helper.visible { opacity: 1; }
 
     .otp-timer {
       font-size: 13px;
@@ -114,6 +112,26 @@
 
     .otp-error-msg.visible { display: flex; }
     .otp-error-msg .icon { font-size: 16px; }
+
+    .otp-verified-msg {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      line-height: 16px;
+      color: #006633;
+    }
+
+    .otp-verified-msg.visible { display: flex; }
+    .otp-verified-msg .icon { font-size: 20px; font-variation-settings: 'FILL' 1; }
+
+    /* ─── OTP INPUT WRAP (grid + helper verificado) ─── */
+    .otp-input-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
 
     /* ─── BOTONES — sizing específico ───────────────── */
     .btn-row { gap: 16px; width: 100%; }
@@ -155,20 +173,22 @@
       <!-- OTP + mensajes + botones -->
       <div class="otp-body">
 
-        <!-- Grid de 6 celdas -->
-        <div class="otp-grid" id="otp-grid">
-          <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" />
-          <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
-          <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
-          <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
-          <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
-          <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
-        </div>
-
-        <!-- Mensajes -->
-        <div class="otp-messages">
-          <span class="otp-helper" id="otp-helper">Ingresá solo números (0-9)</span>
+        <!-- Grid + helper verificado -->
+        <div class="otp-input-wrap">
+          <div class="otp-grid" id="otp-grid">
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+          </div>
+          <!-- Timer, error y verificado comparten la misma posición -->
           <span class="otp-timer" id="otp-timer">El código vence en 2:00</span>
+          <span class="otp-verified-msg" id="otp-verified">
+            <span class="icon">check_circle</span>
+            Código verificado
+          </span>
           <span class="otp-error-msg" id="otp-error">
             <span class="icon">error</span>
             El código ingresado es incorrecto. Volver a enviar.
@@ -193,13 +213,13 @@
 
 <script>
   /* ── Referencias ────────────────────────────────── */
-  const grid      = document.getElementById('otp-grid');
-  const cells     = Array.from(grid.querySelectorAll('.otp-cell'));
-  const helper    = document.getElementById('otp-helper');
-  const timerEl   = document.getElementById('otp-timer');
-  const errorEl   = document.getElementById('otp-error');
-  const btnResend = document.getElementById('btn-resend');
-  const btnCont   = document.getElementById('btn-continue');
+  const grid       = document.getElementById('otp-grid');
+  const cells      = Array.from(grid.querySelectorAll('.otp-cell'));
+  const timerEl    = document.getElementById('otp-timer');
+  const errorEl    = document.getElementById('otp-error');
+  const verifiedEl = document.getElementById('otp-verified');
+  const btnResend  = document.getElementById('btn-resend');
+  const btnCont    = document.getElementById('btn-continue');
 
   /* ── Timer ──────────────────────────────────────── */
   let seconds = 120;
@@ -240,24 +260,31 @@
   }
 
   function updateButtons() {
-    const full = getValue().length === 6 && !grid.classList.contains('error');
-    btnCont.classList.toggle('active', full);
+    if (grid.classList.contains('verified')) return;
+    const code = getValue();
+    if (code.length === 6) {
+      if (code === '000000') {
+        setError(true);
+        btnCont.classList.remove('active');
+      } else {
+        setVerified();
+      }
+    } else {
+      btnCont.classList.remove('active');
+    }
+  }
+
+  function setVerified() {
+    clearInterval(timerInterval);
+    grid.classList.add('verified');
+    timerEl.style.display = 'none';
+    verifiedEl.classList.add('visible');
+    btnResend.classList.remove('active');
+    btnCont.classList.add('active');
   }
 
   /* ── Comportamiento de celdas ────────────────────── */
   cells.forEach((cell, i) => {
-
-    // Mostrar helper al enfocar cualquier celda
-    cell.addEventListener('focus', () => {
-      helper.classList.add('visible');
-      // Limpiar error si existe y el usuario vuelve a tipear
-    });
-
-    cell.addEventListener('blur', () => {
-      if (cells.every(c => c !== document.activeElement)) {
-        helper.classList.remove('visible');
-      }
-    });
 
     cell.addEventListener('input', (e) => {
       // Limpiar error al volver a tipear
@@ -329,17 +356,7 @@
 
   /* ── Continuar ───────────────────────────────────── */
   function continuar() {
-    const code = getValue();
-    if (code.length < 6) return;
-
-    // Simular código incorrecto si es "000000"
-    if (code === '000000') {
-      setError(true);
-      updateButtons();
-      return;
-    }
-
-    // Código correcto → avanzar
+    if (!grid.classList.contains('verified')) return;
     window.location.href = 'paso3.html';
   }
 </script>
