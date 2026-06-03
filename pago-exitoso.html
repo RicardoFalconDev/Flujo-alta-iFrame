@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pago exitoso | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+
+  <style>
+    /* ─── CARD — override: dimensiones específicas de pago-exitoso ── */
+    .main-card {
+      width: 705px;
+      height: 484px;
+      padding: 98px 24px 78px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    /* ─── ILUSTRACIÓN ────────────────────────────────── */
+    .success-illustration {
+      width: 103px;
+      height: 101px;
+      object-fit: contain;
+      margin-bottom: 52px;
+    }
+
+    /* ─── TEXTO ──────────────────────────────────────── */
+    .text-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      text-align: center;
+      width: 400px;
+      margin-bottom: 32px;
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      color: var(--text-main);
+      font-feature-settings: "lnum" 1, "tnum" 1;
+    }
+
+    .card-subtitle {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--text-sub);
+      letter-spacing: 0.1px;
+      font-feature-settings: "lnum" 1, "tnum" 1;
+    }
+
+    /* ─── BOTÓN — sizing específico ─────────────────── */
+    .btn-inicio { width: 265px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <img class="header-logo"
+         src="assets/icons/logo-fid.svg"
+         alt="FID by Lakaut" />
+    <span class="header-title">Pago exitoso</span>
+    <button class="icon-btn" onclick="window.location.href='login.html'" aria-label="Cerrar">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <!-- ── CONTENT ── -->
+  <main class="content-area">
+    <div class="main-card">
+
+      <!-- Ilustración -->
+      <img class="success-illustration"
+           src="assets/icons/success-illustration.png"
+           alt="" />
+
+      <!-- Título + bajada -->
+      <div class="text-content">
+        <h2 class="card-title">Pago realizado con éxito</h2>
+        <p class="card-subtitle">Tu pago fue exitoso. Ahora terminemos de configurar tu cuenta y generemos tu certificado de firma digital.</p>
+      </div>
+
+      <!-- Botón -->
+      <a class="btn-inicio" href="biometria.html">
+        <span>Continuar</span>
+      </a>
+
+    </div>
+  </main>
+
+</div>
+</body>
+</html>
