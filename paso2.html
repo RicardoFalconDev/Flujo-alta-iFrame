@@ -191,7 +191,7 @@
 
         <!-- Botones -->
         <div class="btn-row">
-          <button class="btn-outline" onclick="window.location.href='editar-datos.html'">
+          <button class="btn-outline" onclick="irAEditar()">
             <span>No soy esa persona</span>
           </button>
           <button class="btn-primary" onclick="window.location.href='otp-correo.html'">
@@ -206,6 +206,15 @@
 </div>
 
 <script>
+  function irAEditar() {
+    const generoTexto = document.getElementById('val-genero').textContent.trim().toLowerCase()
+      .replace('é', 'e').replace(' ', '_');
+    sessionStorage.setItem('edit_dni',    document.getElementById('val-dni').textContent.trim());
+    sessionStorage.setItem('edit_genero', generoTexto);
+    sessionStorage.setItem('edit_nombre', document.getElementById('val-nombre').textContent.trim());
+    window.location.href = 'editar-datos.html';
+  }
+
   function toggleDomicilio() {
     const row   = document.getElementById('domicilio-row');
     const input = document.getElementById('domicilio-input');

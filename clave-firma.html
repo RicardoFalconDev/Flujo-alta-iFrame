@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clave de firma | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+  <link rel="stylesheet" href="assets/css/inputs.css" />
+
+  <style>
+    /* ─── BANNER ADVERTENCIA ─────────────────────────── */
+    .warning-banner {
+      background: #fffbeb;
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .warning-icon {
+      font-size: 20px;
+      color: #d97706;
+      flex-shrink: 0;
+      font-variation-settings: 'FILL' 1;
+      line-height: 1;
+      margin-top: 1px;
+    }
+
+    .warning-text {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 13px;
+      line-height: 20px;
+      color: var(--text-help);
+    }
+
+    .warning-text strong { font-weight: 700; }
+
+    /* ─── FORM ───────────────────────────────────────── */
+    .form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* ─── ERROR ESTADO ───────────────────────────────── */
+    .pass-input-wrap.error { border-color: #bc251d; }
+
+    .field-error {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      line-height: 18px;
+      color: #bc251d;
+    }
+
+    .field-error.visible { display: flex; }
+
+    .field-error .icon {
+      font-size: 16px;
+      font-variation-settings: 'FILL' 1;
+      flex-shrink: 0;
+    }
+
+    .field-success {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 12px;
+      line-height: 18px;
+      color: #3f860a;
+    }
+
+    .field-success.visible { display: flex; }
+    .field-success img { width: 20px; height: 20px; flex-shrink: 0; }
+
+    /* ─── BOTÓN CENTRADO ─────────────────────────────── */
+    .btn-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-generar { width: 256px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    <button class="icon-btn" onclick="history.back()" aria-label="Volver">
+      <span class="icon">arrow_back</span>
+    </button>
+    <span class="header-title">Clave de firma</span>
+    <button class="icon-btn" onclick="window.location.href='login.html'" aria-label="Cerrar">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <!-- ── CONTENT ── -->
+  <main class="content-area">
+    <div class="main-card">
+
+      <!-- Título -->
+      <div class="title-section">
+        <h2 class="card-title">Creá tu clave de firma</h2>
+        <p class="card-subtitle">
+          La vas a usar siempre que necesites firmar un documento y <strong>esta asociada a tu certificado digital.</strong>
+        </p>
+      </div>
+
+      <!-- Banner advertencia -->
+      <div class="warning-banner">
+        <span class="icon warning-icon">info</span>
+        <p class="warning-text">
+          Por seguridad, <strong>esta clave no se puede recuperar</strong>. Si la perdés o la olvidás, vas a tener que emitir un nuevo certificado.
+        </p>
+      </div>
+
+      <!-- Formulario -->
+      <div class="form-fields">
+
+        <!-- Campo 1: Clave de firma -->
+        <div class="field-group">
+          <label class="field-label" for="pw1">Clave de firma</label>
+          <div class="pass-input-wrap" id="wrap1">
+            <input id="pw1" type="password" placeholder="Ingresa tu contraseña" autocomplete="new-password" />
+            <button class="eye-btn" type="button" onclick="toggleEye('pw1','eye1')" aria-label="Mostrar/ocultar">
+              <span class="icon" id="eye1">visibility_off</span>
+            </button>
+          </div>
+          <p class="field-helper">Tu clave debe contener:</p>
+          <div class="pw-reqs">
+            <div class="pw-req" id="req-len">
+              <img src="assets/icons/dot-outline.svg" alt="" />
+              <span>Entre 8 y 20 caracteres.</span>
+            </div>
+            <div class="pw-req" id="req-case">
+              <img src="assets/icons/dot-outline.svg" alt="" />
+              <span>Al menos una mayúscula y una minúscula.</span>
+            </div>
+            <div class="pw-req" id="req-sym">
+              <img src="assets/icons/dot-outline.svg" alt="" />
+              <span>Un número o un símbolo (ej. ! o *).</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campo 2: Confirmar clave -->
+        <div class="field-group">
+          <label class="field-label" for="pw2">Confirmar clave de firma</label>
+          <div class="pass-input-wrap" id="wrap2">
+            <input id="pw2" type="password" placeholder="Repetí tu clave..." autocomplete="new-password" />
+            <button class="eye-btn" type="button" onclick="toggleEye('pw2','eye2')" aria-label="Mostrar/ocultar">
+              <span class="icon" id="eye2">visibility_off</span>
+            </button>
+          </div>
+          <p class="field-error" id="error-match">
+            <span class="icon">error</span>
+            Las claves no coinciden
+          </p>
+          <p class="field-success" id="success-match">
+            <img src="assets/icons/check-req.svg" alt="" />
+            Las claves coinciden
+          </p>
+        </div>
+
+        <!-- Botón -->
+        <div class="btn-wrap">
+          <button class="btn-primary btn-generar" id="btn-generar" disabled onclick="generar()">
+            <span>Generar certificado</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+</div>
+
+<script>
+  const pw1        = document.getElementById('pw1');
+  const pw2        = document.getElementById('pw2');
+  const wrap2      = document.getElementById('wrap2');
+  const errorMsg   = document.getElementById('error-match');
+  const successMsg = document.getElementById('success-match');
+  const btn        = document.getElementById('btn-generar');
+
+  const reqs = {
+    len:  { el: document.getElementById('req-len'),  test: v => v.length >= 8 && v.length <= 20 },
+    case: { el: document.getElementById('req-case'), test: v => /[A-Z]/.test(v) && /[a-z]/.test(v) },
+    sym:  { el: document.getElementById('req-sym'),  test: v => /[\d\W]/.test(v) },
+  };
+
+  function checkReqs(val) {
+    let allOk = true;
+    for (const r of Object.values(reqs)) {
+      const ok = r.test(val);
+      r.el.querySelector('img').src = ok
+        ? 'assets/icons/check-req.svg'
+        : 'assets/icons/dot-outline.svg';
+      if (!ok) allOk = false;
+    }
+    return allOk;
+  }
+
+  function updateBtn() {
+    const v1 = pw1.value;
+    const v2 = pw2.value;
+    const allReqs = checkReqs(v1);
+    const hasError = v2.length > 0 && v1 !== v2;
+    const matches  = v1 && v2 && v1 === v2;
+
+    wrap2.classList.toggle('error', hasError);
+    errorMsg.classList.toggle('visible', hasError);
+    successMsg.classList.toggle('visible', !!matches);
+    btn.classList.toggle('active', allReqs && matches);
+    btn.disabled = !(allReqs && matches);
+  }
+
+  pw1.addEventListener('input', updateBtn);
+  pw2.addEventListener('input', updateBtn);
+
+  function toggleEye(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon  = document.getElementById(iconId);
+    input.type  = input.type === 'password' ? 'text' : 'password';
+    icon.textContent = input.type === 'text' ? 'visibility' : 'visibility_off';
+  }
+
+  function generar() {
+    if (!btn.classList.contains('active')) return;
+    window.location.href = 'generando-certificado.html';
+  }
+</script>
+</body>
+</html>

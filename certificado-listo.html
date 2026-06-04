@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificado Digital | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+
+  <style>
+    /* card centrada, gap 32px entre secciones */
+    .main-card {
+      align-items: center;
+      gap: 32px;
+    }
+
+    /* ─── SECCIÓN ÍCONO + TÍTULO ─────────────────────── */
+    .cert-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      width: 484px;
+    }
+
+    .cert-icon {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
+    .cert-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .cert-title {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      color: var(--text-main);
+    }
+
+    .cert-subtitle {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--text-help);
+      letter-spacing: 0.1px;
+    }
+
+    /* ─── TABLA DATOS ────────────────────────────────── */
+    .cert-details {
+      width: 484px;
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cert-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #000;
+    }
+
+    .cert-label {
+      font-weight: 600;
+      flex-shrink: 0;
+      min-width: 150px;
+    }
+
+    .cert-value {
+      flex: 1;
+      font-weight: 400;
+      text-align: right;
+      word-break: break-all;
+    }
+
+    /* ─── BOTÓN ──────────────────────────────────────── */
+    .btn-finalizar { width: 256px; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    <button class="icon-btn" onclick="history.back()" aria-label="Volver">
+      <span class="icon">arrow_back</span>
+    </button>
+    <span class="header-title">Clave de firma</span>
+    <button class="icon-btn" onclick="window.location.href='login.html'" aria-label="Cerrar">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <!-- ── CONTENT ── -->
+  <main class="content-area">
+    <div class="main-card">
+
+      <!-- Ícono + título -->
+      <div class="cert-content">
+        <img class="cert-icon" src="assets/images/cert-check-icon.png" alt="" />
+        <div class="cert-title-block">
+          <h2 class="cert-title">Todo listo para firmar</h2>
+          <p class="cert-subtitle">Tu certificado digital se encuentra habilitado<br>para firmas digitales.</p>
+        </div>
+      </div>
+
+      <!-- Datos del certificado -->
+      <div class="cert-details">
+        <div class="cert-row">
+          <span class="cert-label">Nombre</span>
+          <span class="cert-value">Isaac Cristian Meneses</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-label">CUIL</span>
+          <span class="cert-value">20-12345678-2</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-label">Correo</span>
+          <span class="cert-value">isacris23@gmail.com</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-label">N° de solicitud</span>
+          <span class="cert-value">10000555</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-label">Fecha de vencimiento</span>
+          <span class="cert-value">03-11-2027</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-label">N° de serie</span>
+          <span class="cert-value">3244geghth67787hhyh6</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-label">Almacenamiento</span>
+          <span class="cert-value">Nube</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-label">Autoridad (CA)</span>
+          <span class="cert-value">AC2-Lakaut</span>
+        </div>
+        <div class="cert-row">
+          <span class="cert-label">Pin de revocación</span>
+          <span class="cert-value">3244geghth67787hhyh63244geg</span>
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <button class="btn-primary btn-finalizar active"
+              onclick="window.location.href='login.html'">
+        <span>Finalizar</span>
+      </button>
+
+    </div>
+  </main>
+
+</div>
+</body>
+</html>

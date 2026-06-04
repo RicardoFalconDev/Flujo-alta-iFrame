@@ -176,6 +176,26 @@
     /* ─── SUBMIT ROW ─────────────────────────────────────────── */
     .btn-submit { width: 256px; }
 
+    /* Botón siempre clickeable para mostrar errores */
+    #btn-pagar { pointer-events: auto; cursor: pointer; }
+
+    /* ─── VALIDACIÓN ─────────────────────────────────────────── */
+    .input-wrap.error,
+    .doc-type-wrap.error,
+    .doc-num-wrap.error {
+      border-color: #ef4444 !important;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.10);
+    }
+
+    .field-msg {
+      display: none;
+      font-size: 12px;
+      line-height: 16px;
+      color: #ef4444;
+    }
+
+    .field-msg.visible { display: block; }
+
     /* ─── SIDEBAR ────────────────────────────────────────────── */
     .sidebar {
       flex: 1;
@@ -388,7 +408,7 @@
               <div class="field">
                 <label class="field-label">Dirección de facturación fiscal</label>
                 <div class="input-wrap">
-                  <input type="text" id="direccion" value="Av. ejemplo 123" />
+                  <input type="text" id="direccion" readonly oninput="checkForm()" />
                 </div>
               </div>
             </div>
@@ -490,7 +510,7 @@
 
         <!-- Botón Continuar -->
         <div class="submit-row">
-          <button class="btn-submit" id="btn-pagar" disabled onclick="window.location.href='pago-exitoso.html'">
+          <button class="btn-submit" id="btn-pagar" onclick="pagar()">
             <span>Pagar</span>
           </button>
         </div>
@@ -564,22 +584,97 @@
     input.value = v;
   }
 
-  // Activa el botón Continuar cuando todos los campos requeridos tienen valor
+  /* ── CUIT → dirección fiscal ─────────────────────── */
+  const CUIT_DIRECCIONES = {
+    '30-71234567-8 – Empresa S.A.':    'Florida 456, CABA',
+    '20-37654321-9 – Sociedad S.R.L.': 'Corrientes 789, CABA',
+  };
+
+  document.getElementById('cuit-select').addEventListener('change', function () {
+    const direccion = document.getElementById('direccion');
+    direccion.value = CUIT_DIRECCIONES[this.value] || '';
+    direccion.readOnly = this.value === '';
+    clearError(this);
+    clearError(direccion);
+    checkForm();
+  });
+
+  /* ── Activar/desactivar botón ────────────────────── */
   function checkForm() {
-    const fields = ['tipo-tarjeta', 'num-tarjeta', 'vencimiento', 'cvv', 'nombre-titular', 'doc-num'];
-    const filled = fields.every(id => {
-      const el = document.getElementById(id);
-      return el && el.value.trim() !== '';
-    });
-    const cuit = document.getElementById('cuit-select').value;
-    const btn  = document.getElementById('btn-pagar');
-    const ok   = filled && cuit !== '';
-    btn.classList.toggle('active', ok);
-    btn.disabled = !ok;
+    const REQUIRED = ['cuit-select', 'direccion', 'tipo-tarjeta', 'num-tarjeta', 'vencimiento', 'cvv', 'nombre-titular', 'doc-num'];
+    const ok = REQUIRED.every(id => document.getElementById(id)?.value.trim() !== '');
+    document.getElementById('btn-pagar').classList.toggle('active', ok);
   }
 
-  // Dispara checkForm cuando cambia el select de CUIT
-  document.getElementById('cuit-select').addEventListener('change', checkForm);
+  /* ── Helpers de error ────────────────────────────── */
+  function getWrap(el) {
+    if (el.id === 'doc-num') return el.closest('.input-wrap');
+    return el.closest('.input-wrap');
+  }
+
+  function getMsg(el) {
+    const field = el.closest('.field');
+    if (!field) return null;
+    let msg = field.querySelector('.field-msg');
+    if (!msg) {
+      msg = document.createElement('p');
+      msg.className = 'field-msg';
+      msg.textContent = 'Campo obligatorio';
+      const anchor = el.id === 'doc-num'
+        ? el.closest('.doc-input-row')
+        : el.closest('.input-wrap');
+      anchor?.insertAdjacentElement('afterend', msg);
+    }
+    return msg;
+  }
+
+  function showError(el) {
+    getWrap(el)?.classList.add('error');
+    getMsg(el)?.classList.add('visible');
+  }
+
+  function clearError(el) {
+    getWrap(el)?.classList.remove('error');
+    getMsg(el)?.classList.remove('visible');
+  }
+
+  /* ── Limpiar error al escribir ───────────────────── */
+  ['num-tarjeta','vencimiento','cvv','nombre-titular','doc-num','direccion'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', function () {
+      if (this.value.trim()) clearError(this);
+      checkForm();
+    });
+  });
+
+  document.getElementById('tipo-tarjeta').addEventListener('change', function () {
+    if (this.value) clearError(this);
+    checkForm();
+  });
+
+  /* ── Pagar ───────────────────────────────────────── */
+  function pagar() {
+    const REQUIRED = ['cuit-select', 'direccion', 'tipo-tarjeta', 'num-tarjeta', 'vencimiento', 'cvv', 'nombre-titular', 'doc-num'];
+    let hasError = false;
+
+    REQUIRED.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (el.value.trim() === '') {
+        showError(el);
+        hasError = true;
+      } else {
+        clearError(el);
+      }
+    });
+
+    if (hasError) {
+      const first = document.querySelector('.input-wrap.error');
+      first?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    window.location.href = 'pago-exitoso.html';
+  }
 </script>
 </body>
 </html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Validación exitosa | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+
+  <style>
+    body, .page { background: #f8f9fa; }
+
+    /* card centrada, dimensiones exactas del Figma */
+    .content-area { align-items: flex-start; }
+
+    .success-card {
+      width: 705px;
+      height: 484px;
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 52px 24px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Grupo principal (ilustración+texto) + botón */
+    .success-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    /* Contenido: avatar + texto con 52px entre ellos */
+    .success-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 52px;
+      width: 400px;
+    }
+
+    /* ─── ILUSTRACIÓN AVATAR ─────────────────────────── */
+    .avatar-img {
+      width: 79px;
+      height: 100px;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    /* ─── TEXTO ──────────────────────────────────────── */
+    .text-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .success-title {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      color: var(--text-main);
+      font-feature-settings: "lnum" 1, "tnum" 1;
+    }
+
+    .success-subtitle {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--text-help);
+      letter-spacing: 0.1px;
+      font-feature-settings: "lnum" 1, "tnum" 1;
+    }
+
+    /* ─── BOTÓN ──────────────────────────────────────── */
+    .btn-continuar {
+      width: 265px;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    <span class="header-title">Validación exitosa</span>
+    <button class="icon-btn" onclick="window.location.href='login.html'" aria-label="Cerrar">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <!-- ── CONTENT ── -->
+  <main class="content-area">
+    <div class="success-card">
+      <div class="success-inner">
+
+        <div class="success-content">
+          <!-- Ilustración -->
+          <img class="avatar-img"
+               src="assets/images/avatar-identity.png"
+               alt=""
+               width="79" height="100" />
+
+          <!-- Texto -->
+          <div class="text-block">
+            <p class="success-title">Validamos tu identidad</p>
+            <p class="success-subtitle">Tus datos están correctos. Ya podés continuar con el proceso.</p>
+          </div>
+        </div>
+
+        <!-- Botón -->
+        <button class="btn-primary btn-continuar active"
+                onclick="window.location.href='clave-firma.html'">
+          <span>Continuar</span>
+        </button>
+
+      </div>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>
