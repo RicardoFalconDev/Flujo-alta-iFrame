@@ -129,27 +129,27 @@
       <div class="cert-details">
         <div class="cert-row">
           <span class="cert-label">Nombre</span>
-          <span class="cert-value">Isaac Cristian Meneses</span>
+          <span class="cert-value" id="cv-nombre">Isaac Cristian Meneses</span>
         </div>
         <div class="cert-row">
           <span class="cert-label">CUIL</span>
-          <span class="cert-value">20-12345678-2</span>
+          <span class="cert-value" id="cv-cuil">20-12345678-2</span>
         </div>
         <div class="cert-row">
           <span class="cert-label">CUIL de la empresa</span>
-          <span class="cert-value">30-12345678-1</span>
+          <span class="cert-value" id="cv-cuit-empresa">30-12345678-1</span>
         </div>
         <div class="cert-row">
           <span class="cert-label">Razón social</span>
-          <span class="cert-value">Anónima S.A</span>
+          <span class="cert-value" id="cv-razon">Anónima S.A</span>
         </div>
         <div class="cert-row">
           <span class="cert-label">Cargo</span>
-          <span class="cert-value">Presidente</span>
+          <span class="cert-value" id="cv-cargo">Presidente</span>
         </div>
         <div class="cert-row">
           <span class="cert-label">Correo</span>
-          <span class="cert-value">isacris23@gmail.com</span>
+          <span class="cert-value" id="cv-correo">isacris23@gmail.com</span>
         </div>
         <div class="cert-row">
           <span class="cert-label">N° de solicitud</span>
@@ -188,5 +188,19 @@
 
 </div>
   <script src="assets/js/exit-modal.js"></script>
+  <script>
+    (function poblarCertificado() {
+      const set = (id, key) => {
+        const val = sessionStorage.getItem(key);
+        if (val) document.getElementById(id).textContent = val;
+      };
+      set('cv-nombre',       'cert_nombre');
+      set('cv-cuil',         'cert_cuil');
+      set('cv-cuit-empresa', 'p1_cuit');
+      set('cv-razon',        'p1_razon');
+      set('cv-cargo',        'p1_cargo');
+      set('cv-correo',       'p1_email');
+    })();
+  </script>
 </body>
 </html>

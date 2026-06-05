@@ -457,7 +457,7 @@
               <div class="field">
                 <label class="field-label">Correo electrónico</label>
                 <div class="input-wrap">
-                  <input type="email" placeholder="ejemplo@mail.com" />
+                  <input type="email" id="p1-email" placeholder="ejemplo@mail.com" />
                 </div>
               </div>
               <div class="field">
@@ -549,7 +549,7 @@
               <div class="field">
                 <label class="field-label">Cargo del titular</label>
                 <div class="input-wrap" style="padding:0">
-                  <select class="field-select">
+                  <select class="field-select" id="p1-cargo">
                     <option value="" disabled selected>Seleccionar cargo</option>
                     <option>CEO / Director General</option>
                     <option>Director</option>
@@ -571,7 +571,7 @@
               <div class="field">
                 <label class="field-label">Tipo de sociedad</label>
                 <div class="input-wrap" style="padding:0">
-                  <select class="field-select">
+                  <select class="field-select" id="p1-sociedad">
                     <option value="" disabled selected>Seleccionar sociedad</option>
                     <option>S.A.</option>
                     <option>S.R.L.</option>
@@ -584,7 +584,7 @@
               <div class="field">
                 <label class="field-label">Razón social</label>
                 <div class="input-wrap">
-                  <input type="text" placeholder="Ejemplo S.A" />
+                  <input type="text" id="p1-razon" placeholder="Ejemplo S.A" />
                 </div>
               </div>
             </div>
@@ -593,7 +593,7 @@
               <div class="field">
                 <label class="field-label">CUIT</label>
                 <div class="input-wrap">
-                  <input type="text" placeholder="99-9999999-9" />
+                  <input type="text" id="p1-cuit" placeholder="99-9999999-9" />
                 </div>
               </div>
               <div class="field">
@@ -620,7 +620,7 @@
 
         <!-- Botón Continuar (deshabilitado) -->
         <div class="submit-row">
-          <button class="btn-submit" disabled onclick="window.location.href='paso2.html'">
+          <button class="btn-submit" disabled onclick="guardarYContinuar()">
             <span>Continuar</span>
           </button>
         </div>
@@ -681,7 +681,7 @@
       <div class="price-card">
         <div class="price-row-inner">
           <span class="price-label-txt">Precio</span>
-          <span class="price-amount">*$1.000.000</span>
+          <span class="price-amount">*$200.000</span>
         </div>
         <p class="price-note">*Pueden aplicarse percepciones impositivas según condición fiscal</p>
       </div>
@@ -693,6 +693,20 @@
 </div><!-- /page -->
 
 <script>
+  function guardarYContinuar() {
+    const email   = document.getElementById('p1-email')?.value  || '';
+    const cargo   = document.getElementById('p1-cargo')?.value  || '';
+    const sociedad = document.getElementById('p1-sociedad')?.value || '';
+    const razon   = document.getElementById('p1-razon')?.value  || '';
+    const cuit    = document.getElementById('p1-cuit')?.value   || '';
+    if (email)    sessionStorage.setItem('p1_email',    email);
+    if (cargo)    sessionStorage.setItem('p1_cargo',    cargo);
+    if (sociedad) sessionStorage.setItem('p1_sociedad', sociedad);
+    if (razon)    sessionStorage.setItem('p1_razon',    razon);
+    if (cuit)     sessionStorage.setItem('p1_cuit',     cuit);
+    window.location.href = 'paso2.html';
+  }
+
   // Eye toggle — mostrar/ocultar contraseña
   function toggleEye(inputId, iconId) {
     const input = document.getElementById(inputId);

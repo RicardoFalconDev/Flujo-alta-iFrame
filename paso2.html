@@ -191,7 +191,7 @@
           <button class="btn-outline" onclick="irAEditar()">
             <span>No soy esa persona</span>
           </button>
-          <button class="btn-primary" onclick="window.location.href='otp-correo.html'">
+          <button class="btn-primary" onclick="confirmarDatos()">
             <span>Confirmar</span>
           </button>
         </div>
@@ -203,6 +203,13 @@
 </div>
 
 <script>
+  function confirmarDatos() {
+    sessionStorage.setItem('cert_nombre', document.getElementById('val-nombre').textContent.trim());
+    sessionStorage.setItem('cert_cuil',   document.getElementById('val-cuil').textContent.trim());
+    sessionStorage.setItem('cert_dni',    document.getElementById('val-dni').textContent.trim());
+    window.location.href = 'otp-correo.html';
+  }
+
   function irAEditar() {
     const generoTexto = document.getElementById('val-genero').textContent.trim().toLowerCase()
       .replace('é', 'e').replace(' ', '_');
