@@ -154,6 +154,30 @@
 
     .pass-requirements { display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
 
+    .field-error {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      line-height: 18px;
+      color: #bc251d;
+    }
+    .field-error.visible { display: flex; }
+    .field-error .icon { font-size: 16px; font-variation-settings: 'FILL' 1; flex-shrink: 0; }
+
+    .field-success {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 12px;
+      line-height: 18px;
+      color: #000000;
+    }
+    .field-success.visible { display: flex; }
+    .field-success img { width: 20px; height: 20px; flex-shrink: 0; }
+
     .pw-req {
       display: flex;
       align-items: center;
@@ -468,10 +492,10 @@
             <div class="form-row">
               <div class="field">
                 <label class="pass-label">Contraseña de la cuenta</label>
-                <div class="pass-input-wrap">
-                  <input type="password" id="pw1" placeholder="Ingresa tu contraseña" oninput="checkPwReqs()" />
-                  <button class="eye-btn" aria-label="Mostrar contraseña">
-                    <span class="icon">visibility_off</span>
+                <div class="pass-input-wrap" id="wrap1">
+                  <input type="password" id="pw1" placeholder="Ingresa tu contraseña" autocomplete="new-password" />
+                  <button class="eye-btn" type="button" onclick="toggleEye('pw1','eye1')" aria-label="Mostrar/ocultar">
+                    <span class="icon" id="eye1">visibility_off</span>
                   </button>
                 </div>
                 <p class="pass-helper-title">Tu clave debe contener:</p>
@@ -495,12 +519,20 @@
               </div>
               <div class="field">
                 <label class="pass-label">Confirmar contraseña</label>
-                <div class="pass-input-wrap">
-                  <input type="password" placeholder="Repetí tu clave..." />
-                  <button class="eye-btn" aria-label="Mostrar contraseña">
-                    <span class="icon">visibility_off</span>
+                <div class="pass-input-wrap" id="wrap2">
+                  <input type="password" id="pw2" placeholder="Repetí tu clave..." autocomplete="new-password" />
+                  <button class="eye-btn" type="button" onclick="toggleEye('pw2','eye2')" aria-label="Mostrar/ocultar">
+                    <span class="icon" id="eye2">visibility_off</span>
                   </button>
                 </div>
+                <p class="field-error" id="error-match">
+                  <span class="icon">error</span>
+                  Las contraseñas no coinciden
+                </p>
+                <p class="field-success" id="success-match">
+                  <img src="assets/icons/check-req.svg" alt="" />
+                  Las contraseñas coinciden
+                </p>
               </div>
             </div>
 
@@ -661,20 +693,52 @@
 
 <script>
   // Eye toggle — mostrar/ocultar contraseña
-  document.querySelectorAll('.eye-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const wrap = btn.closest('.pass-input-wrap');
-      const input = wrap.querySelector('input');
-      const icon  = btn.querySelector('.icon');
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.textContent = 'visibility';
-      } else {
-        input.type = 'password';
-        icon.textContent = 'visibility_off';
-      }
-    });
-  });
+  function toggleEye(inputId, iconId) {
+    const input = document.getElementById(inputId);
+    const icon  = document.getElementById(iconId);
+    input.type  = input.type === 'password' ? 'text' : 'password';
+    icon.textContent = input.type === 'text' ? 'visibility' : 'visibility_off';
+  }
+
+  // Validación de requisitos de contraseña + coincidencia
+  const pw1        = document.getElementById('pw1');
+  const pw2        = document.getElementById('pw2');
+  const wrap2      = document.getElementById('wrap2');
+  const errorMsg   = document.getElementById('error-match');
+  const successMsg = document.getElementById('success-match');
+
+  const reqs = {
+    len:  { el: document.getElementById('req-len'),  test: v => v.length >= 8 && v.length <= 20 },
+    case: { el: document.getElementById('req-case'), test: v => /[A-Z]/.test(v) && /[a-z]/.test(v) },
+    sym:  { el: document.getElementById('req-sym'),  test: v => /[\d\W]/.test(v) },
+  };
+
+  function checkReqs(val) {
+    let allOk = true;
+    for (const r of Object.values(reqs)) {
+      const ok = r.test(val);
+      r.el.querySelector('.icon-dot').style.display   = ok ? 'none'  : '';
+      r.el.querySelector('.icon-check').style.display = ok ? ''      : 'none';
+      r.el.classList.toggle('ok', ok);
+      if (!ok) allOk = false;
+    }
+    return allOk;
+  }
+
+  function updateBtn() {
+    const v1 = pw1.value;
+    const v2 = pw2.value;
+    const allReqs = checkReqs(v1);
+    const hasError = v2.length > 0 && v1 !== v2;
+    const matches  = v1 && v2 && v1 === v2;
+
+    wrap2.classList.toggle('error', hasError);
+    errorMsg.classList.toggle('visible', hasError);
+    successMsg.classList.toggle('visible', !!matches);
+  }
+
+  pw1.addEventListener('input', updateBtn);
+  pw2.addEventListener('input', updateBtn);
 
   // Checkbox TyC → activa el botón Continuar
   const tycBtn = document.querySelector('.tyc-checkbox');
@@ -686,20 +750,6 @@
     submitBtn.classList.toggle('active', checked);
     submitBtn.disabled = !checked;
   });
-
-  // Validación de requisitos de contraseña
-  function checkPwReqs() {
-    const pw = document.getElementById('pw1').value;
-    setReq('req-len',  pw.length >= 8 && pw.length <= 20);
-    setReq('req-case', /[a-z]/.test(pw) && /[A-Z]/.test(pw));
-    setReq('req-sym',  /[\d!@#$%^&*()_\-+=.,:;?]/.test(pw));
-  }
-
-  function setReq(id, ok) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.toggle('ok', ok);
-  }
 </script>
 </body>
 </html>
