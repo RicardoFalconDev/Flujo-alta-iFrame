@@ -41,7 +41,90 @@
     .info-icon {
       font-size: 16px;
       color: #aab0c0;
-      cursor: default;
+      cursor: pointer;
+      position: relative;
+    }
+
+    /* Tooltip popover */
+    .tooltip-popover {
+      position: fixed;
+      z-index: 9999;
+      background: #f5f6fe;
+      color: #3b3a45;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: 0.1px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid #e1e1eb;
+      max-width: 260px;
+      width: 260px;
+      box-shadow: 0 0 16px rgba(72,70,82,0.05);
+      display: none;
+      flex-direction: column;
+    }
+    .tooltip-popover.visible { display: flex; }
+    .tooltip-content {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      width: 100%;
+    }
+    .tooltip-text {
+      flex: 1;
+      margin: 0;
+      font-feature-settings: "lnum" 1, "tnum" 1;
+    }
+    .tooltip-close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+      color: #898999;
+      font-size: 16px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      border-radius: 8px;
+    }
+    .tooltip-close-btn:hover { color: #3b3a45; }
+    /* Flecha hacia abajo (tooltip encima del ícono) — borde */
+    .tooltip-popover.arrow-down::before {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: var(--arrow-left, 14px);
+      border: 10px solid transparent;
+      border-top-color: #e1e1eb;
+    }
+    /* Flecha hacia abajo — relleno */
+    .tooltip-popover.arrow-down::after {
+      content: '';
+      position: absolute;
+      top: calc(100% - 1px);
+      left: calc(var(--arrow-left, 14px) + 1px);
+      border: 9px solid transparent;
+      border-top-color: #f5f6fe;
+    }
+    /* Flecha hacia arriba (tooltip debajo del ícono) — borde */
+    .tooltip-popover.arrow-up::before {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: var(--arrow-left, 14px);
+      border: 10px solid transparent;
+      border-bottom-color: #e1e1eb;
+    }
+    /* Flecha hacia arriba — relleno */
+    .tooltip-popover.arrow-up::after {
+      content: '';
+      position: absolute;
+      bottom: calc(100% - 1px);
+      left: calc(var(--arrow-left, 14px) + 1px);
+      border: 9px solid transparent;
+      border-bottom-color: #f5f6fe;
     }
 
     /* Drop area */
@@ -261,7 +344,7 @@
         <div class="drop-field">
           <div class="drop-label">
             <span class="drop-label-text">Acta constitutiva</span>
-            <span class="icon info-icon" title="Documento que formaliza la creación de la empresa">info</span>
+            <span class="icon info-icon" data-tooltip="Debe tener autenticidad ante organismos como la Inspección General de Justicia (IGJ), AFIP o la Dirección Provincial de Personas Jurídicas (DPPJ) en Argentina.">info</span>
           </div>
           <div class="drop-area" id="drop-0" ondragover="onDragOver(event,0)" ondragleave="onDragLeave(0)" ondrop="onDrop(event,0)">
             <p class="drop-hint">Arrastrá y soltá tu archivo aquí o presioná el botón "Cargar archivo".</p>
@@ -292,7 +375,7 @@
         <div class="drop-field">
           <div class="drop-label">
             <span class="drop-label-text">Poder</span>
-            <span class="icon info-icon" title="Documento que acredita la representación legal">info</span>
+            <span class="icon info-icon" data-tooltip="Documento notarial que acredita que el firmante tiene facultades para actuar en nombre de la empresa.">info</span>
           </div>
           <div class="drop-area" id="drop-1" ondragover="onDragOver(event,1)" ondragleave="onDragLeave(1)" ondrop="onDrop(event,1)">
             <p class="drop-hint">Arrastrá y soltá tu archivo aquí o presioná el botón "Cargar archivo".</p>
@@ -323,7 +406,7 @@
         <div class="drop-field">
           <div class="drop-label">
             <span class="drop-label-text">Designación de cargos</span>
-            <span class="icon info-icon" title="Documento que designa a los responsables de la empresa">info</span>
+            <span class="icon info-icon" data-tooltip="Documento que identifica a las personas que ocupan cargos de autoridad dentro de la empresa (directores, gerentes, etc.).">info</span>
           </div>
           <div class="drop-area" id="drop-2" ondragover="onDragOver(event,2)" ondragleave="onDragLeave(2)" ondrop="onDrop(event,2)">
             <p class="drop-hint">Arrastrá y soltá tu archivo aquí o presioná el botón "Cargar archivo".</p>
@@ -354,7 +437,7 @@
         <div class="drop-field">
           <div class="drop-label">
             <span class="drop-label-text">Ultima acta de asamblea</span>
-            <span class="icon info-icon" title="Resoluciones de la última asamblea de socios">info</span>
+            <span class="icon info-icon" data-tooltip="Registro de las decisiones tomadas en la última reunión de socios o accionistas de la empresa.">info</span>
           </div>
           <div class="drop-area" id="drop-3" ondragover="onDragOver(event,3)" ondragleave="onDragLeave(3)" ondrop="onDrop(event,3)">
             <p class="drop-hint">Arrastrá y soltá tu archivo aquí o presioná el botón "Cargar archivo".</p>
@@ -557,6 +640,82 @@
     if (!uploaded.every(Boolean)) return;
     window.location.href = 'paso4.html';
   }
+  // Tooltip popover (click-to-open, X to close)
+  const popover = document.createElement('div');
+  popover.className = 'tooltip-popover';
+  popover.innerHTML = `
+    <div class="tooltip-content">
+      <p class="tooltip-text"></p>
+      <button class="tooltip-close-btn" aria-label="Cerrar">
+        <span class="icon">close</span>
+      </button>
+    </div>
+  `;
+  document.body.appendChild(popover);
+
+  const popoverText = popover.querySelector('.tooltip-text');
+  let activeIcon = null;
+
+  popover.querySelector('.tooltip-close-btn').addEventListener('click', () => {
+    popover.classList.remove('visible');
+    activeIcon = null;
+  });
+
+  document.querySelectorAll('.info-icon[data-tooltip]').forEach(icon => {
+    icon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (activeIcon === icon && popover.classList.contains('visible')) {
+        popover.classList.remove('visible');
+        activeIcon = null;
+        return;
+      }
+      activeIcon = icon;
+      popoverText.textContent = icon.dataset.tooltip;
+      popover.classList.add('visible');
+
+      // Medir popover (visible pero fuera de pantalla para obtener altura real)
+      popover.style.visibility = 'hidden';
+      popover.style.top = '-9999px';
+      popover.classList.add('visible');
+      const popH = popover.offsetHeight;
+      popover.style.visibility = '';
+
+      const rect = icon.getBoundingClientRect();
+      const iconCenterX = rect.left + rect.width / 2;
+
+      // Posición horizontal: centrada en el ícono, ajustada a los límites
+      let left = iconCenterX - 20; // flecha a 16px + 4px del borde
+      if (left + 260 > window.innerWidth - 12) left = window.innerWidth - 272;
+      if (left < 8) left = 8;
+
+      // Flecha apunta al ícono: calculamos su posición relativa al popover
+      const arrowLeft = Math.max(10, Math.min(iconCenterX - left - 9, 240));
+      popover.style.setProperty('--arrow-left', arrowLeft + 'px');
+
+      // Preferir encima; si no hay espacio, abajo
+      const spaceAbove = rect.top;
+      const spaceBelow = window.innerHeight - rect.bottom;
+
+      popover.classList.remove('arrow-down', 'arrow-up');
+
+      if (spaceAbove >= popH + 14) {
+        popover.style.top  = (rect.top - popH - 10) + 'px';
+        popover.classList.add('arrow-down');
+      } else {
+        popover.style.top  = (rect.bottom + 10) + 'px';
+        popover.classList.add('arrow-up');
+      }
+      popover.style.left = left + 'px';
+    });
+  });
+
+  // Cerrar al hacer click fuera
+  document.addEventListener('click', (e) => {
+    if (!popover.contains(e.target)) {
+      popover.classList.remove('visible');
+      activeIcon = null;
+    }
+  });
 </script>
 </body>
 </html>
