@@ -114,8 +114,12 @@
     .btn-row { width: 500px; }
     .btn-outline { flex: 1; }
     .btn-primary { flex: 1; }
+
+    @media (max-width: 480px) {
+      .data-card { width: 100%; }
+      .btn-row { width: 100%; }
+    }
   </style>
-  <link rel="stylesheet" href="assets/css/exit-modal.css" />
 </head>
 <body>
 <div class="page">
@@ -123,9 +127,13 @@
   <!-- ── HEADER ── -->
   <header class="header">
     <img class="header-logo"
-         src="https://www.figma.com/api/mcp/asset/f419695b-9c40-4cf1-8c13-87318dc06d4c"
+         src="assets/icons/logo-fid.svg"
          alt="FID by Lakaut"
          width="55" height="38" />
+
+    <button class="icon-btn" onclick="volverAtras()" aria-label="Volver">
+      <span class="icon">arrow_back</span>
+    </button>
 
     <span class="header-title">Datos personales</span>
 
@@ -191,7 +199,7 @@
           <button class="btn-outline" onclick="irAEditar()">
             <span>No soy esa persona</span>
           </button>
-          <button class="btn-primary" onclick="confirmarDatos()">
+          <button class="btn-primary" onclick="window.location.href='otp-correo.html'">
             <span>Confirmar</span>
           </button>
         </div>
@@ -203,11 +211,8 @@
 </div>
 
 <script>
-  function confirmarDatos() {
-    sessionStorage.setItem('cert_nombre', document.getElementById('val-nombre').textContent.trim());
-    sessionStorage.setItem('cert_cuil',   document.getElementById('val-cuil').textContent.trim());
-    sessionStorage.setItem('cert_dni',    document.getElementById('val-dni').textContent.trim());
-    window.location.href = 'otp-correo.html';
+  function volverAtras() {
+    window.location.href = sessionStorage.getItem('flow') === 'pf' ? 'pf-paso1.html' : 'paso1.html';
   }
 
   function irAEditar() {
@@ -279,6 +284,5 @@
     sessionStorage.removeItem('renaper_genero');
   }
 </script>
-  <script src="assets/js/exit-modal.js"></script>
 </body>
 </html>

@@ -135,11 +135,18 @@
     }
 
     /* ─── BOTONES — sizing específico ───────────────── */
-    .btn-row { gap: 16px; width: 100%; margin-top: 38px; } /* 16px gap + 38px = 54px total */
+    .btn-row { gap: 16px; width: 100%; margin-top: 38px; }
+
+    @media (max-width: 480px) {
+      :root { --otp-size: 46px; }
+      .otp-grid { gap: 10px; }
+      .otp-cell { font-size: 18px; }
+      .otp-input-wrap { margin-top: 24px; }
+      .btn-row { margin-top: 20px; }
+    }
     .btn-resend { flex: 1; }
     .btn-continue { flex: 1; }
   </style>
-  <link rel="stylesheet" href="assets/css/exit-modal.css" />
 </head>
 <body>
 <div class="page">
@@ -147,9 +154,12 @@
   <!-- ── HEADER ── -->
   <header class="header">
     <img class="header-logo"
-         src="https://www.figma.com/api/mcp/asset/f419695b-9c40-4cf1-8c13-87318dc06d4c"
+         src="assets/icons/logo-fid.svg"
          alt="FID by Lakaut"
          width="55" height="38" />
+    <button class="icon-btn" onclick="history.back()" aria-label="Volver">
+      <span class="icon">arrow_back</span>
+    </button>
     <span class="header-title">Validación de teléfono</span>
     <button class="icon-btn" aria-label="Cerrar">
       <span class="icon">close</span>
@@ -356,9 +366,8 @@
   /* ── Continuar ───────────────────────────────────── */
   function continuar() {
     if (!grid.classList.contains('verified')) return;
-    window.location.href = 'paso3.html';
+    window.location.href = sessionStorage.getItem('flow') === 'pf' ? 'pago.html' : 'paso3.html';
   }
 </script>
-  <script src="assets/js/exit-modal.js"></script>
 </body>
 </html>
