@@ -154,30 +154,6 @@
 
     .pass-requirements { display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
 
-    .field-error {
-      display: none;
-      align-items: center;
-      gap: 6px;
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      line-height: 18px;
-      color: #bc251d;
-    }
-    .field-error.visible { display: flex; }
-    .field-error .icon { font-size: 16px; font-variation-settings: 'FILL' 1; flex-shrink: 0; }
-
-    .field-success {
-      display: none;
-      align-items: center;
-      gap: 6px;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 12px;
-      line-height: 18px;
-      color: #000000;
-    }
-    .field-success.visible { display: flex; }
-    .field-success img { width: 20px; height: 20px; flex-shrink: 0; }
-
     .pw-req {
       display: flex;
       align-items: center;
@@ -397,25 +373,99 @@
       line-height: 1.65;
       color: #818ea1;
     }
-    /* ─── Pantallas < 1280px ──────────────────────────────── */
+    /* ─── Pantallas < 1440px ──────────────────────────────── */
     @media (max-width: 1439px) {
+      .form-area { flex: 1 1 0%; width: auto; min-width: 0; }
+      .form-content { width: calc(100% - 64px); max-width: 656px; }
+      .sidebar { flex: 0 0 420px; width: 420px; padding: 58px 40px 86px; }
+    }
+
+    /* ─── Mobile ≤ 768px ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      body, .page {
+        height: auto;
+        overflow: auto;
+        background: var(--bg-page);
+      }
+
+      .layout {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+        max-width: 100%;
+      }
+
       .form-area {
-        flex: 1 1 0%;
-        width: auto;
+        width: 100%;
+        padding: 24px 16px;
+        height: auto;
+        overflow-x: hidden;
+        align-items: stretch;
+      }
+
+      .form-content {
+        width: 100%;
+        max-width: 100%;
         min-width: 0;
       }
-      .form-content {
-        width: calc(100% - 64px);
-        max-width: 656px;
-      }
+
+      .form-rows { gap: 24px; }
+      .form-row { flex-direction: column; gap: 16px; align-items: stretch; }
+
+      /* Cards: reducir padding para coincidir con Figma (296px inputs en 360px frame) */
+      .card { padding: 16px; gap: 20px; }
+
+      /* El título largo no aparece en mobile (el header ya lo comunica) */
+      .page-title { display: none; }
+
+      /* Sidebar → dropdown colapsable */
       .sidebar {
-        flex: 0 0 420px;
-        width: 420px;
-        padding: 58px 40px 86px;
+        flex: none;
+        width: 100%;
+        height: auto;
+        padding: 0;
+        overflow: visible;
+        order: -1; /* aparece arriba del form */
+        background: var(--bg-page);
+        border-bottom: 1px solid var(--border-hdr);
       }
+
+      .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 16px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-dark);
+      }
+
+      .sidebar-toggle .icon { font-size: 20px; color: var(--text-sub); transition: transform .2s; }
+      .sidebar.open .sidebar-toggle .icon { transform: rotate(180deg); }
+
+      .sidebar-body {
+        display: none;
+        padding: 0 16px 20px;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .sidebar.open .sidebar-body { display: flex; }
+
+      .sidebar-section, .price-card { all: unset; display: block; }
+
+      /* Pass section headers heredados */
+      .sidebar-heading { font-size: 13px; margin-bottom: 12px; display: block; }
+      .price-row-inner { display: flex; justify-content: space-between; margin-bottom: 4px; }
+
+      /* Botón submit full-width en mobile */
+      .btn-submit { width: 100%; }
     }
   </style>
-  <link rel="stylesheet" href="assets/css/exit-modal.css" />
 </head>
 <body>
 
@@ -428,10 +478,10 @@
          alt="FID by Lakaut"
          width="55" height="38" />
 
-
     <button class="icon-btn" onclick="window.location.href='index.html'" aria-label="Volver">
       <span class="icon">arrow_back</span>
     </button>
+
     <span class="header-title">Iniciar solicitud</span>
 
     <button class="icon-btn" aria-label="Cerrar">
@@ -457,7 +507,7 @@
               <div class="field">
                 <label class="field-label">Correo electrónico</label>
                 <div class="input-wrap">
-                  <input type="email" id="p1-email" placeholder="ejemplo@mail.com" />
+                  <input type="email" placeholder="ejemplo@mail.com" />
                 </div>
               </div>
               <div class="field">
@@ -479,7 +529,7 @@
               </div>
               <div class="field">
                 <label class="field-label">Género</label>
-                <div class="input-wrap" style="padding:0">
+                <div class="sel-wrap">
                   <select class="field-select">
                     <option value="" disabled selected>Seleccionar</option>
                     <option>Masculino</option>
@@ -493,10 +543,10 @@
             <div class="form-row">
               <div class="field">
                 <label class="pass-label">Contraseña de la cuenta</label>
-                <div class="pass-input-wrap" id="wrap1">
-                  <input type="password" id="pw1" placeholder="Ingresa tu contraseña" autocomplete="new-password" />
-                  <button class="eye-btn" type="button" onclick="toggleEye('pw1','eye1')" aria-label="Mostrar/ocultar">
-                    <span class="icon" id="eye1">visibility_off</span>
+                <div class="pass-input-wrap">
+                  <input type="password" id="pw1" placeholder="Ingresa tu contraseña" oninput="checkPwReqs()" />
+                  <button class="eye-btn" aria-label="Mostrar contraseña">
+                    <span class="icon">visibility_off</span>
                   </button>
                 </div>
                 <p class="pass-helper-title">Tu clave debe contener:</p>
@@ -520,20 +570,12 @@
               </div>
               <div class="field">
                 <label class="pass-label">Confirmar contraseña</label>
-                <div class="pass-input-wrap" id="wrap2">
-                  <input type="password" id="pw2" placeholder="Repetí tu clave..." autocomplete="new-password" />
-                  <button class="eye-btn" type="button" onclick="toggleEye('pw2','eye2')" aria-label="Mostrar/ocultar">
-                    <span class="icon" id="eye2">visibility_off</span>
+                <div class="pass-input-wrap">
+                  <input type="password" placeholder="Repetí tu clave..." />
+                  <button class="eye-btn" aria-label="Mostrar contraseña">
+                    <span class="icon">visibility_off</span>
                   </button>
                 </div>
-                <p class="field-error" id="error-match">
-                  <span class="icon">error</span>
-                  Las contraseñas no coinciden
-                </p>
-                <p class="field-success" id="success-match">
-                  <img src="assets/icons/check-req.svg" alt="" />
-                  Las contraseñas coinciden
-                </p>
               </div>
             </div>
 
@@ -548,8 +590,8 @@
             <div class="form-row">
               <div class="field">
                 <label class="field-label">Cargo del titular</label>
-                <div class="input-wrap" style="padding:0">
-                  <select class="field-select" id="p1-cargo">
+                <div class="sel-wrap">
+                  <select class="field-select">
                     <option value="" disabled selected>Seleccionar cargo</option>
                     <option>CEO / Director General</option>
                     <option>Director</option>
@@ -570,8 +612,8 @@
             <div class="form-row">
               <div class="field">
                 <label class="field-label">Tipo de sociedad</label>
-                <div class="input-wrap" style="padding:0">
-                  <select class="field-select" id="p1-sociedad">
+                <div class="sel-wrap">
+                  <select class="field-select">
                     <option value="" disabled selected>Seleccionar sociedad</option>
                     <option>S.A.</option>
                     <option>S.R.L.</option>
@@ -584,7 +626,7 @@
               <div class="field">
                 <label class="field-label">Razón social</label>
                 <div class="input-wrap">
-                  <input type="text" id="p1-razon" placeholder="Ejemplo S.A" />
+                  <input type="text" placeholder="Ejemplo S.A" />
                 </div>
               </div>
             </div>
@@ -593,7 +635,7 @@
               <div class="field">
                 <label class="field-label">CUIT</label>
                 <div class="input-wrap">
-                  <input type="text" id="p1-cuit" placeholder="99-9999999-9" />
+                  <input type="text" placeholder="99-9999999-9" />
                 </div>
               </div>
               <div class="field">
@@ -620,7 +662,7 @@
 
         <!-- Botón Continuar (deshabilitado) -->
         <div class="submit-row">
-          <button class="btn-submit" disabled onclick="guardarYContinuar()">
+          <button class="btn-submit" disabled onclick="window.location.href='paso2.html'">
             <span>Continuar</span>
           </button>
         </div>
@@ -629,7 +671,15 @@
     </section>
 
     <!-- ── SIDEBAR ── -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
+      <button class="sidebar-toggle" onclick="toggleSidebar()" style="display:none">
+        <span class="sidebar-toggle-label">Detalles del Plan</span>
+        <span class="sidebar-toggle-price">*$1.000.000</span>
+        <div class="sidebar-chevron-pill">
+          <span class="icon">expand_more</span>
+        </div>
+      </button>
+      <div class="sidebar-body">
 
       <div class="sidebar-section">
         <p class="sidebar-heading">Detalles del plan PyME</p>
@@ -681,11 +731,12 @@
       <div class="price-card">
         <div class="price-row-inner">
           <span class="price-label-txt">Precio</span>
-          <span class="price-amount">*$200.000</span>
+          <span class="price-amount">*$1.000.000</span>
         </div>
         <p class="price-note">*Pueden aplicarse percepciones impositivas según condición fiscal</p>
       </div>
 
+      </div><!-- /sidebar-body -->
     </aside>
 
   </div>
@@ -693,67 +744,23 @@
 </div><!-- /page -->
 
 <script>
-  function guardarYContinuar() {
-    const email   = document.getElementById('p1-email')?.value  || '';
-    const cargo   = document.getElementById('p1-cargo')?.value  || '';
-    const sociedad = document.getElementById('p1-sociedad')?.value || '';
-    const razon   = document.getElementById('p1-razon')?.value  || '';
-    const cuit    = document.getElementById('p1-cuit')?.value   || '';
-    if (email)    sessionStorage.setItem('p1_email',    email);
-    if (cargo)    sessionStorage.setItem('p1_cargo',    cargo);
-    if (sociedad) sessionStorage.setItem('p1_sociedad', sociedad);
-    if (razon)    sessionStorage.setItem('p1_razon',    razon);
-    if (cuit)     sessionStorage.setItem('p1_cuit',     cuit);
-    window.location.href = 'paso2.html';
-  }
+  sessionStorage.setItem('flow', 'empresa');
 
   // Eye toggle — mostrar/ocultar contraseña
-  function toggleEye(inputId, iconId) {
-    const input = document.getElementById(inputId);
-    const icon  = document.getElementById(iconId);
-    input.type  = input.type === 'password' ? 'text' : 'password';
-    icon.textContent = input.type === 'text' ? 'visibility' : 'visibility_off';
-  }
-
-  // Validación de requisitos de contraseña + coincidencia
-  const pw1        = document.getElementById('pw1');
-  const pw2        = document.getElementById('pw2');
-  const wrap2      = document.getElementById('wrap2');
-  const errorMsg   = document.getElementById('error-match');
-  const successMsg = document.getElementById('success-match');
-
-  const reqs = {
-    len:  { el: document.getElementById('req-len'),  test: v => v.length >= 8 && v.length <= 20 },
-    case: { el: document.getElementById('req-case'), test: v => /[A-Z]/.test(v) && /[a-z]/.test(v) },
-    sym:  { el: document.getElementById('req-sym'),  test: v => /[\d\W]/.test(v) },
-  };
-
-  function checkReqs(val) {
-    let allOk = true;
-    for (const r of Object.values(reqs)) {
-      const ok = r.test(val);
-      r.el.querySelector('.icon-dot').style.display   = ok ? 'none'  : '';
-      r.el.querySelector('.icon-check').style.display = ok ? ''      : 'none';
-      r.el.classList.toggle('ok', ok);
-      if (!ok) allOk = false;
-    }
-    return allOk;
-  }
-
-  function updateBtn() {
-    const v1 = pw1.value;
-    const v2 = pw2.value;
-    const allReqs = checkReqs(v1);
-    const hasError = v2.length > 0 && v1 !== v2;
-    const matches  = v1 && v2 && v1 === v2;
-
-    wrap2.classList.toggle('error', hasError);
-    errorMsg.classList.toggle('visible', hasError);
-    successMsg.classList.toggle('visible', !!matches);
-  }
-
-  pw1.addEventListener('input', updateBtn);
-  pw2.addEventListener('input', updateBtn);
+  document.querySelectorAll('.eye-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const wrap = btn.closest('.pass-input-wrap');
+      const input = wrap.querySelector('input');
+      const icon  = btn.querySelector('.icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility_off';
+      }
+    });
+  });
 
   // Checkbox TyC → activa el botón Continuar
   const tycBtn = document.querySelector('.tyc-checkbox');
@@ -765,7 +772,32 @@
     submitBtn.classList.toggle('active', checked);
     submitBtn.disabled = !checked;
   });
+
+  // Validación de requisitos de contraseña
+  function checkPwReqs() {
+    const pw = document.getElementById('pw1').value;
+    setReq('req-len',  pw.length >= 8 && pw.length <= 20);
+    setReq('req-case', /[a-z]/.test(pw) && /[A-Z]/.test(pw));
+    setReq('req-sym',  /[\d!@#$%^&*()_\-+=.,:;?]/.test(pw));
+  }
+
+  function setReq(id, ok) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.toggle('ok', ok);
+  }
+
+  /* ── Sidebar dropdown (mobile) ───────────────────── */
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+  function initSidebarMobile() {
+    const toggle = document.querySelector('.sidebar-toggle');
+    if (window.innerWidth <= 768) toggle.style.display = 'flex';
+    else toggle.style.display = 'none';
+  }
+  initSidebarMobile();
+  window.addEventListener('resize', initSidebarMobile);
 </script>
-  <script src="assets/js/exit-modal.js"></script>
 </body>
 </html>

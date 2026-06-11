@@ -62,8 +62,13 @@
 
     /* ─── BOTÓN — sizing específico ─────────────────── */
     .btn-inicio { width: 265px; }
+
+    @media (max-width: 480px) {
+      .main-card { width: 100%; height: auto; padding: 40px 16px; }
+      .text-content { width: 100%; }
+      .btn-inicio { width: 100%; }
+    }
   </style>
-  <link rel="stylesheet" href="assets/css/exit-modal.css" />
 </head>
 <body>
 <div class="page">
@@ -95,7 +100,7 @@
       </div>
 
       <!-- Botón -->
-      <a class="btn-inicio" href="login.html">
+      <a class="btn-inicio" href="mail-continuacion-tramite.html">
         <span>Volver al inicio</span>
       </a>
 
@@ -103,6 +108,5 @@
   </main>
 
 </div>
-  <script src="assets/js/exit-modal.js"></script>
 </body>
 </html>

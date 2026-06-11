@@ -605,9 +605,13 @@
     /* ── Móvil — frame 360px de Figma ─────────────────── */
     @media (max-width: 600px) {
 
-      /* NAVBAR */
+      /* Prevenir scroll horizontal en mobile */
+      html, body { overflow-x: hidden; max-width: 100%; }
+
+      /* NAVBAR — solo logo + hamburger */
       .navbar-inner { padding: 15px 16px 16px; }
       .navbar-logo { width: 46px; height: 32px; }
+      .nav-links { display: none; }
 
       /* HERO */
       .hero { padding: 40px 20px; }
@@ -627,8 +631,22 @@
 
       /* TAB: full width, texto en 2 líneas */
       .tab-switcher { width: 100%; gap: 6.84px; padding: 6.84px; }
-      .tab-item { flex: 1; padding: 6.84px 10.26px; border-radius: 20.52px; }
-      .tab-item span { font-size: 11.7px; letter-spacing: -0.234px; white-space: normal; line-height: 1.35; }
+      .tab-item {
+        flex: 1;
+        padding: 6.84px 10.26px;
+        border-radius: 20.52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tab-item.active { border-radius: 999px; }
+      .tab-item span {
+        font-size: 11.7px;
+        letter-spacing: -0.234px;
+        white-space: normal;
+        line-height: 1.35;
+        text-align: center;
+      }
 
       /* CARDS */
       .cards-row { grid-template-columns: 320px; gap: 32px; justify-content: center; }
@@ -713,6 +731,7 @@
         width: calc(100% + 32px);
       }
     }
+
   </style>
 </head>
 <body>
@@ -771,15 +790,169 @@
     <div class="pricing-inner">
 
       <div class="tab-switcher">
-        <div class="tab-item">
+        <div class="tab-item" data-tab="pf" onclick="switchTab('pf')">
           <span>Personas y profesionales</span>
         </div>
-        <div class="tab-item active">
+        <div class="tab-item active" data-tab="empresa" onclick="switchTab('empresa')">
           <span>Empresas y organizaciones</span>
         </div>
       </div>
 
-      <div class="cards-row">
+      <!-- ── CARDS PERSONAS Y PROFESIONALES ── -->
+      <div class="cards-row" id="cards-pf" style="display:none">
+
+        <!-- Personal -->
+        <div class="card">
+          <div class="card-content">
+            <div class="card-main">
+              <div class="content-top">
+                <div class="info-text">
+                  <p class="card-name">Personal</p>
+                  <p class="card-desc">Para uso personal y trámites cotidianos que requieren firma digital</p>
+                </div>
+                <div class="price-section">
+                  <p class="price-label">50 firmas digitales</p>
+                  <div>
+                    <div class="price-row">
+                      <span class="price-amount">$25.000</span>
+                      <span class="badge">Un solo pago</span>
+                    </div>
+                    <div class="price-notes">
+                      <span class="note-iva">(*) Precio final con IVA incluido.</span>
+                      <span class="note-simp">Precio s/imp. nac.&nbsp; $20.661</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <ul class="feature-list">
+                <li class="feature-item center">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">1 Certificado digital personal</span>
+                </li>
+                <li class="feature-item center">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Vigencia: 1 año</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Soporte vía mail/chat con respuesta en hasta 24 hs</span>
+                </li>
+              </ul>
+            </div>
+            <button class="btn-outline-card" onclick="contratarPF('Personal')"><span>Contratar Personal</span></button>
+          </div>
+        </div>
+
+        <!-- Profesional (destacada) -->
+        <div class="card-featured">
+          <div class="featured-badge">
+            <span>Más elegido</span>
+          </div>
+          <div class="featured-body">
+            <div class="featured-main">
+              <div class="content-top">
+                <div class="info-text">
+                  <p class="card-name">Profesional</p>
+                  <p class="card-desc" style="font-size:13px">Para profesionales independientes que firman frecuentemente</p>
+                </div>
+                <div class="price-section">
+                  <p class="price-label">200 firmas digitales</p>
+                  <div>
+                    <div class="price-row">
+                      <span class="price-amount">$50.000</span>
+                      <span class="badge">Un solo pago</span>
+                    </div>
+                    <div class="price-notes">
+                      <span class="note-iva">(*) Precio final con IVA incluido.</span>
+                      <span class="note-simp">Precio s/imp. nac.&nbsp; $41.322</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <ul class="feature-list tight">
+                <li class="feature-item center">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">1 Certificado digital personal</span>
+                </li>
+                <li class="feature-item center">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Vigencia: 2 años</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Soporte prioritario vía mail/chat</span>
+                </li>
+                <li class="feature-item center">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Acceso a app móvil FID</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Posibilidad de adquirir firmas digitales adicionales</span>
+                </li>
+              </ul>
+            </div>
+            <button class="btn-primary-card" onclick="contratarPF('Profesional')"><span>Contratar Profesional</span></button>
+          </div>
+        </div>
+
+        <!-- Autónomo -->
+        <div class="card">
+          <div class="card-content">
+            <div class="card-main">
+              <div class="content-top">
+                <div class="info-text">
+                  <p class="card-name">Autónomo</p>
+                  <p class="card-desc" style="font-size:13px">Para trabajadores independientes con alto volumen de documentos</p>
+                </div>
+                <div class="price-section">
+                  <p class="price-label">Firmas ilimitadas</p>
+                  <div>
+                    <div class="price-row">
+                      <span class="price-amount">$90.000</span>
+                      <span class="badge">Un solo pago</span>
+                    </div>
+                    <div class="price-notes">
+                      <span class="note-iva">(*) Precio final con IVA incluido.</span>
+                      <span class="note-simp">Precio s/imp. nac.&nbsp; $74.380</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <ul class="feature-list">
+                <li class="feature-item center">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">1 Certificado digital personal</span>
+                </li>
+                <li class="feature-item center">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Vigencia: 2 años</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Soporte técnico especializado</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Posibilidad de integración vía API</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Posibilidad de adquirir firmas digitales adicionales</span>
+                </li>
+              </ul>
+            </div>
+            <button class="btn-outline-card" onclick="contratarPF('Autónomo')"><span>Contratar Autónomo</span></button>
+          </div>
+        </div>
+
+      </div><!-- /cards-pf -->
+
+      <!-- ── CARDS EMPRESAS Y ORGANIZACIONES ── -->
+      <div class="cards-row" id="cards-empresa">
 
         <!-- PyME -->
         <div class="card">
@@ -999,6 +1172,19 @@
   function toggleMenu() {
     document.getElementById('navMobile').classList.toggle('open');
     document.getElementById('hamburger').classList.toggle('open');
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
+    document.querySelector(`.tab-item[data-tab="${tab}"]`).classList.add('active');
+    document.getElementById('cards-pf').style.display      = tab === 'pf'      ? 'grid' : 'none';
+    document.getElementById('cards-empresa').style.display = tab === 'empresa' ? 'grid' : 'none';
+  }
+
+  function contratarPF(plan) {
+    sessionStorage.setItem('flow', 'pf');
+    sessionStorage.setItem('pf_plan', plan);
+    window.location.href = 'pf-paso1.html';
   }
 </script>
 </body>
