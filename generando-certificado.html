@@ -57,6 +57,11 @@
       font-feature-settings: "lnum" 1, "tnum" 1;
     }
 
+    @media (max-width: 480px) {
+      .loading-card { width: 100%; height: auto; padding: 48px 16px; }
+      .loading-inner { width: 100%; }
+    }
+
     .loading-subtitle {
       font-weight: 400;
       font-size: 14px;
@@ -67,7 +72,6 @@
       margin-top: 4px;
     }
   </style>
-  <link rel="stylesheet" href="assets/css/exit-modal.css" />
 </head>
 <body>
 <div class="page">
@@ -75,6 +79,9 @@
   <!-- ── HEADER ── -->
   <header class="header">
     <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    <button class="icon-btn" onclick="history.back()" aria-label="Volver">
+      <span class="icon">arrow_back</span>
+    </button>
     <span class="header-title">Certificado Digital</span>
     <button class="icon-btn" onclick="window.location.href='login.html'" aria-label="Cerrar">
       <span class="icon">close</span>
@@ -99,6 +106,5 @@
 <script>
   setTimeout(() => { window.location.href = 'certificado-listo.html'; }, 3000);
 </script>
-  <script src="assets/js/exit-modal.js"></script>
 </body>
 </html>

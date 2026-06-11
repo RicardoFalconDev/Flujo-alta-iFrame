@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iniciar solicitud | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+  <link rel="stylesheet" href="assets/css/inputs.css" />
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(to right,
+        var(--bg-page)    calc(50vw + 236px),
+        var(--bg-sidebar) calc(50vw + 236px)
+      );
+    }
+
+    .page {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      overflow: hidden;
+      background: linear-gradient(to right,
+        var(--bg-page)    calc(50vw + 236px),
+        var(--bg-sidebar) calc(50vw + 236px)
+      );
+    }
+
+    .layout {
+      display: flex;
+      flex: 1;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+      height: calc(100vh - 80px);
+      overflow: hidden;
+    }
+
+    .form-area {
+      width: 956px;
+      flex-shrink: 0;
+      background: var(--bg-page);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 54px 0;
+      overflow-y: auto;
+      height: 100%;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .form-area::-webkit-scrollbar { display: none; }
+
+    .form-content {
+      width: 656px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .page-title {
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 28px;
+      color: var(--blue);
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card-title {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 28px;
+      color: var(--text-dark);
+    }
+
+    .form-rows { display: flex; flex-direction: column; gap: 32px; }
+    .form-row  { display: flex; gap: 32px; align-items: flex-start; }
+
+    .field {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .phone-flag {
+      width: 24px;
+      height: 16px;
+      flex-shrink: 0;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .pass-label {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--text-main);
+      letter-spacing: 0.1px;
+    }
+
+    .pass-helper-title {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      color: #505050;
+    }
+
+    .pass-requirements { display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
+
+    .pw-req {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #505050;
+    }
+
+    .pw-req .icon-dot   { display: inline-block; flex-shrink: 0; }
+    .pw-req .icon-check { display: none;         flex-shrink: 0; }
+    .pw-req.ok .icon-dot   { display: none; }
+    .pw-req.ok .icon-check { display: inline-block; }
+
+    .tyc-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .tyc-checkbox {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2px;
+    }
+
+    .tyc-checkbox-inner {
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid #adb5bd;
+      border-radius: 6px;
+      background: #fff;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tyc-checkbox.on .tyc-checkbox-inner {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .tyc-checkbox.on .tyc-checkbox-inner::after {
+      content: '';
+      width: 11px;
+      height: 8px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L4.5 7.5L11 1' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+
+    .tyc-text {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
+      color: #212529;
+      flex: 1;
+    }
+
+    .tyc-link {
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .btn-submit { width: 256px; }
+
+    /* ─── SIDEBAR ─────────────────────────────────────── */
+    .sidebar {
+      flex: 1;
+      background: var(--bg-sidebar);
+      padding: 58px 40px 86px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .sidebar-section { display: flex; flex-direction: column; gap: 16px; }
+
+    .sidebar-heading {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+      color: #333;
+    }
+
+    .plan-card {
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .plan-box {
+      background: var(--bg-plan);
+      border: 1px solid #e2e5ef;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .plan-box-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 12px;
+    }
+
+    .plan-icon-wrap {
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px 10px 16px 10px;
+      flex-shrink: 0;
+    }
+
+    .plan-icon-container {
+      width: 62px;
+      height: 66px;
+      position: relative;
+    }
+
+    .plan-icon-container img {
+      position: absolute;
+      object-fit: contain;
+    }
+
+    .plan-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .plan-info-line {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--blue);
+      letter-spacing: 0.08px;
+    }
+
+    .feature-list-sm {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .feature-item-sm {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .feature-item-sm.center { align-items: center; }
+
+    .check-sm {
+      color: var(--blue);
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .feature-text-sm {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: normal;
+      color: var(--text-sub);
+      flex: 1;
+    }
+
+    .price-card {
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .price-row-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .price-label-txt {
+      font-weight: 600;
+      font-size: 20px;
+      color: #000;
+    }
+
+    .price-amount {
+      font-weight: 600;
+      font-size: 20px;
+      color: #000;
+    }
+
+    .price-note {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #818ea1;
+    }
+
+    /* ─── Pantallas < 1440px ──────────────────────────────── */
+    @media (max-width: 1439px) {
+      .form-area { flex: 1 1 0%; width: auto; min-width: 0; }
+      .form-content { width: calc(100% - 64px); max-width: 656px; }
+      .sidebar { flex: 0 0 420px; width: 420px; padding: 58px 40px 86px; }
+    }
+
+    /* ─── Mobile ≤ 768px ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      body, .page {
+        height: auto;
+        overflow: auto;
+        background: var(--bg-page);
+      }
+
+      .layout {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+        max-width: 100%;
+      }
+
+      .form-area {
+        width: 100%;
+        padding: 24px 16px;
+        height: auto;
+        overflow-x: hidden;
+        align-items: stretch;
+      }
+
+      .form-content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .form-rows { gap: 24px; }
+      .form-row { flex-direction: column; gap: 16px; align-items: stretch; }
+
+      .card { padding: 16px; gap: 20px; }
+
+      .page-title { display: none; }
+
+      .sidebar {
+        flex: none;
+        width: 100%;
+        height: auto;
+        padding: 0;
+        overflow: visible;
+        order: -1;
+        background: var(--bg-page);
+        border-bottom: 1px solid var(--border-hdr);
+      }
+
+      .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 16px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-dark);
+      }
+
+      .sidebar-toggle .icon { font-size: 20px; color: var(--text-sub); transition: transform .2s; }
+      .sidebar.open .sidebar-toggle .icon { transform: rotate(180deg); }
+
+      .sidebar-body {
+        display: none;
+        padding: 0 16px 20px;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .sidebar.open .sidebar-body { display: flex; }
+
+      .sidebar-section, .price-card { all: unset; display: block; }
+
+      .sidebar-heading { font-size: 13px; margin-bottom: 12px; display: block; }
+      .price-row-inner { display: flex; justify-content: space-between; margin-bottom: 4px; }
+
+      .btn-submit { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <img class="header-logo"
+         src="assets/icons/logo-fid.svg"
+         alt="FID by Lakaut"
+         width="55" height="38" />
+
+    <button class="icon-btn" onclick="window.location.href='index.html'" aria-label="Volver">
+      <span class="icon">arrow_back</span>
+    </button>
+
+    <span class="header-title">Iniciar solicitud</span>
+
+    <button class="icon-btn" aria-label="Cerrar">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <!-- ── MAIN LAYOUT ── -->
+  <div class="layout">
+
+    <!-- ── FORM AREA ── -->
+    <section class="form-area">
+      <div class="form-content">
+
+        <h1 class="page-title" id="page-title">Solicitud de Certificado Personal</h1>
+
+        <!-- Card: Datos de cuenta -->
+        <div class="card">
+          <p class="card-title">Datos para crear la cuenta</p>
+          <div class="form-rows">
+
+            <div class="form-row">
+              <div class="field">
+                <label class="field-label">Correo electrónico</label>
+                <div class="input-wrap">
+                  <input type="email" placeholder="ejemplo@mail.com" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label">Número de teléfono</label>
+                <div class="input-wrap">
+                  <img class="phone-flag" src="assets/icons/flag-ar.svg" alt="AR" />
+                  <input type="tel" placeholder="11 1234 5678" />
+                </div>
+                <span class="field-helper">Código de área + número, sin el 9 ni el 15.</span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label class="field-label">DNI</label>
+                <div class="input-wrap">
+                  <input type="text" placeholder="99.999.999" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label">Género</label>
+                <div class="sel-wrap">
+                  <select class="field-select">
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option>Masculino</option>
+                    <option>Femenino</option>
+                    <option>No binario</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label class="pass-label">Contraseña de la cuenta</label>
+                <div class="pass-input-wrap">
+                  <input type="password" id="pw1" placeholder="Ingresá tu contraseña" oninput="checkPwReqs()" />
+                  <button class="eye-btn" aria-label="Mostrar contraseña">
+                    <span class="icon">visibility_off</span>
+                  </button>
+                </div>
+                <p class="pass-helper-title">Tu clave debe contener:</p>
+                <div class="pass-requirements">
+                  <div class="pw-req" id="req-len">
+                    <img class="icon-dot"   src="assets/icons/dot-outline.svg" width="20" height="20" alt="">
+                    <img class="icon-check" src="assets/icons/check-req.svg"   width="20" height="20" alt="">
+                    Entre 8 y 20 caracteres.
+                  </div>
+                  <div class="pw-req" id="req-case">
+                    <img class="icon-dot"   src="assets/icons/dot-outline.svg" width="20" height="20" alt="">
+                    <img class="icon-check" src="assets/icons/check-req.svg"   width="20" height="20" alt="">
+                    Al menos una mayúscula y una minúscula.
+                  </div>
+                  <div class="pw-req" id="req-sym">
+                    <img class="icon-dot"   src="assets/icons/dot-outline.svg" width="20" height="20" alt="">
+                    <img class="icon-check" src="assets/icons/check-req.svg"   width="20" height="20" alt="">
+                    Un número o un símbolo (ej. ! o *).
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label class="pass-label">Confirmar contraseña</label>
+                <div class="pass-input-wrap">
+                  <input type="password" placeholder="Repetí tu clave..." />
+                  <button class="eye-btn" aria-label="Mostrar contraseña">
+                    <span class="icon">visibility_off</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Términos y condiciones -->
+        <div class="tyc-row">
+          <button class="tyc-checkbox" aria-label="Aceptar términos">
+            <div class="tyc-checkbox-inner"></div>
+          </button>
+          <p class="tyc-text">
+            Confirmo que he leído, comprendido y acepto los
+            <span class="tyc-link">términos y condiciones del acuerdo con suscriptores</span>
+          </p>
+        </div>
+
+        <!-- Botón Continuar -->
+        <div class="submit-row">
+          <button class="btn-submit" id="btn-submit" disabled onclick="irAPaso2()">
+            <span>Continuar</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar" id="sidebar">
+      <button class="sidebar-toggle" onclick="toggleSidebar()" style="display:none">
+        <span class="sidebar-toggle-label">Detalles del Plan</span>
+        <span class="sidebar-toggle-price" id="sidebar-toggle-price">$50.000</span>
+        <div class="sidebar-chevron-pill">
+          <span class="icon">expand_more</span>
+        </div>
+      </button>
+      <div class="sidebar-body">
+
+        <div class="sidebar-section">
+          <p class="sidebar-heading" id="sidebar-heading">Detalles del plan Profesional</p>
+
+          <div class="plan-card">
+            <div class="plan-box">
+              <div class="plan-box-inner">
+                <div class="plan-icon-wrap">
+                  <div class="plan-icon-container">
+                    <img src="assets/images/plan-icon-1.svg"
+                         alt=""
+                         style="inset:0 14% 17% 17%;width:69%;height:83%" />
+                    <img src="assets/images/plan-icon-2.svg"
+                         alt=""
+                         style="inset:23% 0 0 0;width:100%;height:77%" />
+                    <img src="assets/images/plan-icon-3.svg"
+                         alt=""
+                         style="inset:23% 0 0 0;width:100%;height:77%" />
+                  </div>
+                </div>
+                <div class="plan-info">
+                  <span class="plan-info-line">1 Certificado digital personal</span>
+                  <span class="plan-info-line" id="plan-firmas">200 firmas digitales</span>
+                </div>
+              </div>
+            </div>
+
+            <ul class="feature-list-sm" id="features-list">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+        </div>
+
+        <div class="price-card">
+          <div class="price-row-inner">
+            <span class="price-label-txt">Precio</span>
+            <span class="price-amount" id="plan-price">$50.000</span>
+          </div>
+          <p class="price-note" id="plan-nota">(*) Precio final con IVA incluido.</p>
+        </div>
+
+      </div><!-- /sidebar-body -->
+    </aside>
+
+  </div>
+
+</div><!-- /page -->
+
+<script>
+  /* ── Datos de planes PF ──────────────────────────── */
+  const PLANES = {
+    'Personal': {
+      firmas: '50 firmas digitales',
+      precio: '$25.000',
+      features: [
+        'Vigencia de 1 año',
+        'Soporte vía mail/chat con respuesta en hasta 24 hs',
+        'Posibilidad de adquirir firmas adicionales'
+      ]
+    },
+    'Profesional': {
+      firmas: '200 firmas digitales',
+      precio: '$50.000',
+      features: [
+        'Vigencia de 2 años',
+        'Soporte prioritario vía mail/chat',
+        'Acceso a app móvil FID',
+        'Posibilidad de adquirir firmas adicionales'
+      ]
+    },
+    'Autónomo': {
+      firmas: 'Firmas ilimitadas',
+      precio: '$90.000',
+      features: [
+        'Vigencia de 2 años',
+        'Soporte técnico especializado',
+        'Posibilidad de integración vía API',
+        'Posibilidad de adquirir firmas adicionales'
+      ]
+    }
+  };
+
+  /* ── Setear plan en sessionStorage y renderizar ── */
+  sessionStorage.setItem('flow', 'pf');
+  const planName = sessionStorage.getItem('pf_plan') || 'Profesional';
+  const plan = PLANES[planName] || PLANES['Profesional'];
+
+  document.getElementById('page-title').textContent =
+    `Plan ${planName} – Solicitud de Certificado Personal`;
+  document.getElementById('sidebar-heading').textContent =
+    `Detalles del plan ${planName}`;
+  document.getElementById('plan-firmas').textContent = plan.firmas;
+  document.getElementById('plan-price').textContent = plan.precio;
+  document.getElementById('sidebar-toggle-price').textContent = plan.precio;
+
+  const featuresList = document.getElementById('features-list');
+  featuresList.innerHTML = plan.features.map(f => `
+    <li class="feature-item-sm center">
+      <span class="icon check-sm">check_circle</span>
+      <span class="feature-text-sm">${f}</span>
+    </li>
+  `).join('');
+
+  /* ── Continuar → paso2 ───────────────────────────── */
+  function irAPaso2() {
+    sessionStorage.setItem('flow', 'pf');
+    window.location.href = 'paso2.html';
+  }
+
+  /* ── Eye toggle ─────────────────────────────────── */
+  document.querySelectorAll('.eye-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const wrap  = btn.closest('.pass-input-wrap');
+      const input = wrap.querySelector('input');
+      const icon  = btn.querySelector('.icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility_off';
+      }
+    });
+  });
+
+  /* ── Checkbox TyC → activa botón Continuar ──────── */
+  const tycBtn   = document.querySelector('.tyc-checkbox');
+  const submitBtn = document.getElementById('btn-submit');
+
+  tycBtn.addEventListener('click', () => {
+    tycBtn.classList.toggle('on');
+    const checked = tycBtn.classList.contains('on');
+    submitBtn.classList.toggle('active', checked);
+    submitBtn.disabled = !checked;
+  });
+
+  /* ── Validación requisitos contraseña ───────────── */
+  function checkPwReqs() {
+    const pw = document.getElementById('pw1').value;
+    setReq('req-len',  pw.length >= 8 && pw.length <= 20);
+    setReq('req-case', /[a-z]/.test(pw) && /[A-Z]/.test(pw));
+    setReq('req-sym',  /[\d!@#$%^&*()_\-+=.,:;?]/.test(pw));
+  }
+
+  function setReq(id, ok) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('ok', ok);
+  }
+
+  /* ── Sidebar dropdown (mobile) ───────────────────── */
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  function initSidebarMobile() {
+    const toggle = document.querySelector('.sidebar-toggle');
+    if (window.innerWidth <= 768) toggle.style.display = 'flex';
+    else toggle.style.display = 'none';
+  }
+
+  initSidebarMobile();
+  window.addEventListener('resize', initSidebarMobile);
+</script>
+</body>
+</html>

@@ -26,6 +26,10 @@
     .btn-back    { flex: 1; }
     .btn-submit  { flex: 1; }
 
+    @media (max-width: 480px) {
+      .form-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
     /* ─── TELÉFONO: flag dentro del input ────────────── */
     .phone-flag {
       width: 36px;
@@ -35,7 +39,6 @@
       border-radius: 2px;
     }
   </style>
-  <link rel="stylesheet" href="assets/css/exit-modal.css" />
 </head>
 <body>
 <div class="page">
@@ -76,7 +79,7 @@
         <!-- Género -->
         <div class="field">
           <label class="field-label" for="field-genero">Género</label>
-          <div class="input-wrap" style="padding:0">
+          <div class="sel-wrap">
             <select id="field-genero" class="field-select selected" onchange="checkChanges()">
               <option value="masculino" selected>Masculino</option>
               <option value="femenino">Femenino</option>
@@ -115,7 +118,7 @@
         </button>
         <button class="btn-primary btn-submit" id="btn-confirmar"
                 onclick="confirmarCambios()">
-          <span>Guardar cambios</span>
+          <span>Confirmar</span>
         </button>
       </div>
 
@@ -225,6 +228,5 @@
     window.location.href = 'paso2.html';
   }
 </script>
-  <script src="assets/js/exit-modal.js"></script>
 </body>
 </html>

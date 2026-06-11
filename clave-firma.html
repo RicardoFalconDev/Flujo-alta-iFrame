@@ -77,21 +77,20 @@
       font-family: 'Open Sans', sans-serif;
       font-size: 12px;
       line-height: 18px;
-      color: #000000;
+      color: #3f860a;
     }
 
     .field-success.visible { display: flex; }
     .field-success img { width: 20px; height: 20px; flex-shrink: 0; }
 
     /* ─── BOTÓN CENTRADO ─────────────────────────────── */
-    .btn-wrap {
-      display: flex;
-      justify-content: center;
-    }
-
+    .btn-wrap { display: flex; justify-content: center; }
     .btn-generar { width: 256px; }
+
+    @media (max-width: 480px) {
+      .btn-generar { width: 100%; }
+    }
   </style>
-  <link rel="stylesheet" href="assets/css/exit-modal.css" />
 </head>
 <body>
 <div class="page">
@@ -99,6 +98,9 @@
   <!-- ── HEADER ── -->
   <header class="header">
     <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    <button class="icon-btn" onclick="history.back()" aria-label="Volver">
+      <span class="icon">arrow_back</span>
+    </button>
     <span class="header-title">Clave de firma</span>
     <button class="icon-btn" onclick="window.location.href='login.html'" aria-label="Cerrar">
       <span class="icon">close</span>
@@ -242,6 +244,5 @@
     window.location.href = 'generando-certificado.html';
   }
 </script>
-  <script src="assets/js/exit-modal.js"></script>
 </body>
 </html>

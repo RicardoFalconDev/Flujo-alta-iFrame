@@ -29,6 +29,7 @@
       border-radius: 24px;
       padding: 54px 80px;
       width: 620px;
+      max-width: calc(100% - 32px); /* evita desborde en pantallas < 652px */
     }
 
     .card-content {
@@ -227,6 +228,15 @@
 
     .modal-actions .btn-resend,
     .modal-actions .btn-continue { flex: 1; }
+
+    @media (max-width: 480px) {
+      body { padding: 16px; align-items: flex-start; padding-top: 40px; }
+      .card { width: 100%; padding: 32px 20px; border-radius: 16px; }
+      .modal-card { width: calc(100% - 32px); padding: 24px 16px; border-radius: 12px; }
+      /* OTP cells: 72px × 6 = 432px → no caben. Reducir a 40px */
+      :root { --otp-size: 40px; }
+      .otp-cell { font-size: 18px; }
+    }
   </style>
 </head>
 <body>

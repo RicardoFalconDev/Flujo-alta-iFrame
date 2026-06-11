@@ -97,8 +97,15 @@
 
     /* ─── BOTÓN ──────────────────────────────────────── */
     .btn-finalizar { width: 256px; }
+
+    @media (max-width: 480px) {
+      .cert-feed { padding: 16px; }
+      .cert-card { padding: 32px 16px; }
+      .cert-content { width: 100%; }
+      .cert-details { width: 100%; }
+      .btn-finalizar { width: 100%; }
+    }
   </style>
-  <link rel="stylesheet" href="assets/css/exit-modal.css" />
 </head>
 <body>
 <div class="page">
@@ -106,6 +113,9 @@
   <!-- ── HEADER ── -->
   <header class="header">
     <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    <button class="icon-btn" onclick="history.back()" aria-label="Volver">
+      <span class="icon">arrow_back</span>
+    </button>
     <span class="header-title">Clave de firma</span>
     <button class="icon-btn" onclick="window.location.href='login.html'" aria-label="Cerrar">
       <span class="icon">close</span>
@@ -129,27 +139,15 @@
       <div class="cert-details">
         <div class="cert-row">
           <span class="cert-label">Nombre</span>
-          <span class="cert-value" id="cv-nombre">Isaac Cristian Meneses</span>
+          <span class="cert-value">Isaac Cristian Meneses</span>
         </div>
         <div class="cert-row">
           <span class="cert-label">CUIL</span>
-          <span class="cert-value" id="cv-cuil">20-12345678-2</span>
-        </div>
-        <div class="cert-row">
-          <span class="cert-label">CUIL de la empresa</span>
-          <span class="cert-value" id="cv-cuit-empresa">30-12345678-1</span>
-        </div>
-        <div class="cert-row">
-          <span class="cert-label">Razón social</span>
-          <span class="cert-value" id="cv-razon">Anónima S.A</span>
-        </div>
-        <div class="cert-row">
-          <span class="cert-label">Cargo</span>
-          <span class="cert-value" id="cv-cargo">Presidente</span>
+          <span class="cert-value">20-12345678-2</span>
         </div>
         <div class="cert-row">
           <span class="cert-label">Correo</span>
-          <span class="cert-value" id="cv-correo">isacris23@gmail.com</span>
+          <span class="cert-value">isacris23@gmail.com</span>
         </div>
         <div class="cert-row">
           <span class="cert-label">N° de solicitud</span>
@@ -187,20 +185,5 @@
   </main>
 
 </div>
-  <script src="assets/js/exit-modal.js"></script>
-  <script>
-    (function poblarCertificado() {
-      const set = (id, key) => {
-        const val = sessionStorage.getItem(key);
-        if (val) document.getElementById(id).textContent = val;
-      };
-      set('cv-nombre',       'cert_nombre');
-      set('cv-cuil',         'cert_cuil');
-      set('cv-cuit-empresa', 'p1_cuit');
-      set('cv-razon',        'p1_razon');
-      set('cv-cargo',        'p1_cargo');
-      set('cv-correo',       'p1_email');
-    })();
-  </script>
 </body>
 </html>
