@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Procesando pago | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+
+  <style>
+    body, .page { background: var(--bg-page); }
+
+    .content-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 24px;
+    }
+
+    /* Card centrada */
+    .processing-card {
+      width: 705px;
+      background: #fff;
+      border: 1px solid #dee2e6;
+      border-radius: 12px;
+      padding: 80px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      min-height: 400px;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid #e1e1eb;
+      border-top-color: var(--blue);
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Textos */
+    .processing-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      color: #3b3a45;
+      text-align: center;
+      margin: 0;
+    }
+
+    .processing-sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: #575768;
+      letter-spacing: 0.1px;
+      text-align: center;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      .processing-card { width: 100%; min-height: 300px; padding: 48px 16px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <img class="header-logo"
+         src="assets/icons/logo-fid.svg"
+         alt="FID by Lakaut" />
+    <span class="header-title">Pago</span>
+    <button class="icon-btn" aria-label="Cerrar" onclick="window.location.href='login.html'">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <!-- ── CONTENT ── -->
+  <main class="content-area">
+    <div class="processing-card">
+      <div class="spinner"></div>
+      <div style="display:flex;flex-direction:column;gap:4px;align-items:center;">
+        <h2 class="processing-title">Estamos procesando tu pago</h2>
+        <p class="processing-sub">Aguardá unos segundos.</p>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+  // Redirige a pago-exitoso después de 2.5s
+  setTimeout(() => {
+    window.location.href = 'pago-exitoso.html';
+  }, 2500);
+</script>
+</body>
+</html>
