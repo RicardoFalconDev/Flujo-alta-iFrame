@@ -79,12 +79,20 @@
 
 /* ─── SELECT — patrón Flujo Empresas ──────────────────── */
 
-/* Wrapper posicionador: provee contexto para la flecha y ocupa todo el ancho del padre */
+/* Wrapper posicionador: actúa como el input-wrap para selects */
 .sel-wrap {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
+  height: 48px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color .15s;
 }
+
+.sel-wrap:focus-within { border-color: var(--blue); }
 
 /* El select es el elemento visual: tiene su propio border/height/fondo */
 .field-select {
