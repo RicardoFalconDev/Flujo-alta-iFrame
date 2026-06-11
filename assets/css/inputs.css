@@ -77,29 +77,39 @@
   pointer-events: none;
 }
 
-/* Select nativo estilizado */
-.input-wrap.select-wrap { cursor: pointer; }
+/* ─── SELECT — patrón Flujo Empresas ──────────────────── */
 
-.field-select {
-  flex: 1;
+/* Wrapper posicionador: provee contexto para la flecha y ocupa todo el ancho del padre */
+.sel-wrap {
+  position: relative;
+  display: block;
   width: 100%;
-  height: 46px;
-  padding: 0 14px;
+}
+
+/* El select es el elemento visual: tiene su propio border/height/fondo */
+.field-select {
+  width: 100%;
+  height: 48px;
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 0 36px 0 14px;
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
   font-size: 16px;
   color: var(--text-ph);
-  background: transparent;
-  border: none;
   outline: none;
   appearance: none;
   -webkit-appearance: none;
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%23c0c0cc' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  transition: border-color .15s;
+  /* Chevron como background-image (más confiable que position:absolute sobre <select>) */
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 8l5 5 5-5' stroke='%236c757d' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
 }
 
+.field-select:focus { border-color: var(--blue); }
 .field-select.selected { color: var(--text-main); }
 
 /* Helper text debajo del campo */
@@ -128,3 +138,22 @@
 }
 
 .pw-req img { width: 20px; height: 20px; flex-shrink: 0; }
+
+/* ─── RESPONSIVE ≤ 768px — inputs mobile ────────────── */
+@media (max-width: 768px) {
+  .input-wrap, .pass-input-wrap {
+    height: 48px;
+    padding: 0 16px;
+  }
+
+  .field-select {
+    font-size: 16px; /* evita zoom en iOS */
+    padding: 0 40px 0 16px;
+    background-position: right 14px center;
+  }
+
+  .input-wrap input,
+  .pass-input-wrap input {
+    font-size: 16px; /* evita zoom en iOS */
+  }
+}
