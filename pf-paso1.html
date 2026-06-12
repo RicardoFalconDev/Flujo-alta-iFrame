@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iniciar solicitud – Plan PYME | FID by Lakaut</title>
+  <title>Iniciar solicitud | FID by Lakaut</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
@@ -26,7 +26,6 @@
       );
     }
 
-    /* ─── PAGE WRAPPER — override split background ───── */
     .page {
       display: flex;
       flex-direction: column;
@@ -40,7 +39,6 @@
       );
     }
 
-    /* ─── BODY LAYOUT ─────────────────────────────────── */
     .layout {
       display: flex;
       flex: 1;
@@ -51,7 +49,6 @@
       overflow: hidden;
     }
 
-    /* ─── FORM AREA (left 956px) — scrollea solo esta columna ─── */
     .form-area {
       width: 956px;
       flex-shrink: 0;
@@ -62,11 +59,10 @@
       padding: 54px 0;
       overflow-y: auto;
       height: 100%;
-      scrollbar-width: none;        /* Firefox */
-      -ms-overflow-style: none;     /* IE/Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
 
-    /* Webkit — ocultar scrollbar */
     .form-area::-webkit-scrollbar { display: none; }
 
     .form-content {
@@ -83,7 +79,6 @@
       color: var(--blue);
     }
 
-    /* ─── CARDS ──────────────────────────────────────── */
     .card {
       background: #fff;
       border: 1px solid var(--border-card);
@@ -101,11 +96,9 @@
       color: var(--text-dark);
     }
 
-    /* ─── FORM ROWS ──────────────────────────────────── */
     .form-rows { display: flex; flex-direction: column; gap: 32px; }
     .form-row  { display: flex; gap: 32px; align-items: flex-start; }
 
-    /* ─── FIELD ──────────────────────────────────────── */
     .field {
       flex: 1;
       min-width: 0;
@@ -114,18 +107,6 @@
       gap: 8px;
     }
 
-    /* Dropdown simulado (específico de paso1) */
-    .input-select {
-      flex: 1;
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      font-size: 15px;
-      color: var(--text-ph);
-      pointer-events: none;
-    }
-    .input-select.selected { color: var(--text-main); }
-
-    /* ─── PHONE FLAG ─────────────────────────────────────── */
     .phone-flag {
       width: 24px;
       height: 16px;
@@ -134,7 +115,6 @@
       border-radius: 2px;
     }
 
-    /* ─── PASSWORD LABEL (igual a field-label) ───────────── */
     .pass-label {
       font-family: 'Open Sans', sans-serif;
       font-weight: 700;
@@ -144,7 +124,6 @@
       letter-spacing: 0.1px;
     }
 
-    /* ─── PASSWORD REQUIREMENTS ─────────────────────────── */
     .pass-helper-title {
       font-weight: 400;
       font-size: 12px;
@@ -162,14 +141,11 @@
       color: #505050;
     }
 
-    /* Ícono: dot por defecto, check cuando cumple */
     .pw-req .icon-dot   { display: inline-block; flex-shrink: 0; }
     .pw-req .icon-check { display: none;         flex-shrink: 0; }
-
     .pw-req.ok .icon-dot   { display: none; }
     .pw-req.ok .icon-check { display: inline-block; }
 
-    /* ─── TERMS ──────────────────────────────────────── */
     .tyc-row {
       display: flex;
       gap: 8px;
@@ -198,7 +174,6 @@
       justify-content: center;
     }
 
-    /* Estado ON */
     .tyc-checkbox.on .tyc-checkbox-inner {
       background: var(--blue);
       border-color: var(--blue);
@@ -225,7 +200,6 @@
       cursor: pointer;
     }
 
-    /* ─── SUBMIT BUTTON — sizing específico ─────────── */
     .btn-submit { width: 256px; }
 
     /* ─── SIDEBAR ─────────────────────────────────────── */
@@ -236,15 +210,8 @@
       display: flex;
       flex-direction: column;
       gap: 24px;
-      /* Sidebar se queda fijo — no scrollea */
       height: 100%;
       overflow: hidden;
-    }
-
-    .sidebar-body {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
     }
 
     .sidebar-section { display: flex; flex-direction: column; gap: 16px; }
@@ -256,7 +223,6 @@
       color: #333;
     }
 
-    /* Plan card */
     .plan-card {
       background: #fff;
       border: 1px solid var(--border-card);
@@ -313,7 +279,6 @@
       letter-spacing: 0.08px;
     }
 
-    /* Feature list sidebar */
     .feature-list-sm {
       display: flex;
       flex-direction: column;
@@ -344,7 +309,6 @@
       flex: 1;
     }
 
-    /* Price card */
     .price-card {
       background: #fff;
       border: 1px solid var(--border-card);
@@ -379,6 +343,7 @@
       line-height: 1.65;
       color: #818ea1;
     }
+
     /* ─── Pantallas < 1440px ──────────────────────────────── */
     @media (max-width: 1439px) {
       .form-area { flex: 1 1 0%; width: auto; min-width: 0; }
@@ -418,20 +383,17 @@
       .form-rows { gap: 24px; }
       .form-row { flex-direction: column; gap: 16px; align-items: stretch; }
 
-      /* Cards: reducir padding para coincidir con Figma (296px inputs en 360px frame) */
       .card { padding: 16px; gap: 20px; }
 
-      /* El título largo no aparece en mobile (el header ya lo comunica) */
       .page-title { display: none; }
 
-      /* Sidebar → dropdown colapsable */
       .sidebar {
         flex: none;
         width: 100%;
         height: auto;
         padding: 0;
         overflow: visible;
-        order: -1; /* aparece arriba del form */
+        order: -1;
         background: var(--bg-page);
         border-bottom: 1px solid var(--border-hdr);
       }
@@ -464,11 +426,9 @@
 
       .sidebar-section, .price-card { all: unset; display: block; }
 
-      /* Pass section headers heredados */
       .sidebar-heading { font-size: 13px; margin-bottom: 12px; display: block; }
       .price-row-inner { display: flex; justify-content: space-between; margin-bottom: 4px; }
 
-      /* Botón submit full-width en mobile */
       .btn-submit { width: 100%; }
     }
   </style>
@@ -484,9 +444,6 @@
          alt="FID by Lakaut"
          width="55" height="38" />
 
-    <button class="icon-btn" onclick="window.location.href='index.html'" aria-label="Volver">
-      <span class="icon">arrow_back</span>
-    </button>
 
     <span class="header-title">Iniciar solicitud</span>
 
@@ -502,9 +459,9 @@
     <section class="form-area">
       <div class="form-content">
 
-        <h1 class="page-title">Plan PYME - Solicitud de Certificado Jurídico</h1>
+        <h1 class="page-title" id="page-title">Solicitud de Certificado Personal</h1>
 
-        <!-- Card 1: Datos de cuenta -->
+        <!-- Card: Datos de cuenta -->
         <div class="card">
           <p class="card-title">Datos para crear la cuenta</p>
           <div class="form-rows">
@@ -550,7 +507,7 @@
               <div class="field">
                 <label class="pass-label">Contraseña de la cuenta</label>
                 <div class="pass-input-wrap">
-                  <input type="password" id="pw1" placeholder="Ingresa tu contraseña" oninput="checkPwReqs()" />
+                  <input type="password" id="pw1" placeholder="Ingresá tu contraseña" oninput="checkPwReqs()" />
                   <button class="eye-btn" aria-label="Mostrar contraseña">
                     <span class="icon">visibility_off</span>
                   </button>
@@ -588,73 +545,6 @@
           </div>
         </div>
 
-        <!-- Card 2: Datos de la empresa -->
-        <div class="card">
-          <p class="card-title">Datos de la empresa</p>
-          <div class="form-rows">
-
-            <div class="form-row">
-              <div class="field">
-                <label class="field-label">Cargo del titular</label>
-                <div class="sel-wrap">
-                  <select class="field-select">
-                    <option value="" disabled selected>Seleccionar cargo</option>
-                    <option>CEO / Director General</option>
-                    <option>Director</option>
-                    <option>Gerente</option>
-                    <option>Responsable de área</option>
-                    <option>Otro</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field">
-                <label class="field-label">Sector/Departamento</label>
-                <div class="input-wrap">
-                  <input type="text" placeholder="Ej. Presidencia" />
-                </div>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="field">
-                <label class="field-label">Tipo de sociedad</label>
-                <div class="sel-wrap">
-                  <select class="field-select">
-                    <option value="" disabled selected>Seleccionar sociedad</option>
-                    <option>S.A.</option>
-                    <option>S.R.L.</option>
-                    <option>S.A.S.</option>
-                    <option>Cooperativa</option>
-                    <option>Otra</option>
-                  </select>
-                </div>
-              </div>
-              <div class="field">
-                <label class="field-label">Razón social</label>
-                <div class="input-wrap">
-                  <input type="text" placeholder="Ejemplo S.A" />
-                </div>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="field">
-                <label class="field-label">CUIT</label>
-                <div class="input-wrap">
-                  <input type="text" placeholder="99-9999999-9" />
-                </div>
-              </div>
-              <div class="field">
-                <label class="field-label">Dirección fiscal</label>
-                <div class="input-wrap">
-                  <input type="text" placeholder="Av. ejemplo 123" />
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
         <!-- Términos y condiciones -->
         <div class="tyc-row">
           <button class="tyc-checkbox" aria-label="Aceptar términos">
@@ -666,9 +556,9 @@
           </p>
         </div>
 
-        <!-- Botón Continuar (deshabilitado) -->
+        <!-- Botón Continuar -->
         <div class="submit-row">
-          <button class="btn-submit" disabled onclick="window.location.href='paso2.html'">
+          <button class="btn-submit" id="btn-submit" disabled onclick="irAPaso2()">
             <span>Continuar</span>
           </button>
         </div>
@@ -680,67 +570,52 @@
     <aside class="sidebar" id="sidebar">
       <button class="sidebar-toggle" onclick="toggleSidebar()" style="display:none">
         <span class="sidebar-toggle-label">Detalles del Plan</span>
-        <span class="sidebar-toggle-price">*$1.000.000</span>
+        <span class="sidebar-toggle-price" id="sidebar-toggle-price">$50.000</span>
         <div class="sidebar-chevron-pill">
           <span class="icon">expand_more</span>
         </div>
       </button>
       <div class="sidebar-body">
 
-      <div class="sidebar-section">
-        <p class="sidebar-heading">Detalles del plan PyME</p>
+        <div class="sidebar-section">
+          <p class="sidebar-heading" id="sidebar-heading">Detalles del plan Profesional</p>
 
-        <div class="plan-card">
-          <div class="plan-box">
-            <div class="plan-box-inner">
-              <div class="plan-icon-wrap">
-                <div class="plan-icon-container">
-                  <img src="assets/images/plan-icon-1.svg"
-                       alt=""
-                       style="inset:0 14% 17% 17%;width:69%;height:83%" />
-                  <img src="assets/images/plan-icon-2.svg"
-                       alt=""
-                       style="inset:23% 0 0 0;width:100%;height:77%" />
-                  <img src="assets/images/plan-icon-3.svg"
-                       alt=""
-                       style="inset:23% 0 0 0;width:100%;height:77%" />
+          <div class="plan-card">
+            <div class="plan-box">
+              <div class="plan-box-inner">
+                <div class="plan-icon-wrap">
+                  <div class="plan-icon-container">
+                    <img src="assets/images/plan-icon-1.svg"
+                         alt=""
+                         style="inset:0 14% 17% 17%;width:69%;height:83%" />
+                    <img src="assets/images/plan-icon-2.svg"
+                         alt=""
+                         style="inset:23% 0 0 0;width:100%;height:77%" />
+                    <img src="assets/images/plan-icon-3.svg"
+                         alt=""
+                         style="inset:23% 0 0 0;width:100%;height:77%" />
+                  </div>
+                </div>
+                <div class="plan-info">
+                  <span class="plan-info-line">1 Certificado digital personal</span>
+                  <span class="plan-info-line" id="plan-firmas">200 firmas digitales</span>
                 </div>
               </div>
-              <div class="plan-info">
-                <span class="plan-info-line">1 Certificado digital jurídico</span>
-                <span class="plan-info-line">500 firmas digitales</span>
-              </div>
             </div>
+
+            <ul class="feature-list-sm" id="features-list">
+              <!-- Populated by JS -->
+            </ul>
           </div>
-
-          <ul class="feature-list-sm">
-            <li class="feature-item-sm center">
-              <span class="icon check-sm">check_circle</span>
-              <span class="feature-text-sm">Vigencia de 2 años</span>
-            </li>
-            <li class="feature-item-sm">
-              <span class="icon check-sm">check_circle</span>
-              <span class="feature-text-sm">Panel de control y trazabilidad de documentos</span>
-            </li>
-            <li class="feature-item-sm">
-              <span class="icon check-sm">check_circle</span>
-              <span class="feature-text-sm">Soporte vía mail/chat con respuesta en hasta 24 hs</span>
-            </li>
-            <li class="feature-item-sm">
-              <span class="icon check-sm">check_circle</span>
-              <span class="feature-text-sm">Posibilidad de adquirir firmas digitales adicionales</span>
-            </li>
-          </ul>
         </div>
-      </div>
 
-      <div class="price-card">
-        <div class="price-row-inner">
-          <span class="price-label-txt">Precio</span>
-          <span class="price-amount">*$1.000.000</span>
+        <div class="price-card">
+          <div class="price-row-inner">
+            <span class="price-label-txt">Precio</span>
+            <span class="price-amount" id="plan-price">$50.000</span>
+          </div>
+          <p class="price-note" id="plan-nota">(*) Precio final con IVA incluido.</p>
         </div>
-        <p class="price-note">*Pueden aplicarse percepciones impositivas según condición fiscal</p>
-      </div>
 
       </div><!-- /sidebar-body -->
     </aside>
@@ -750,12 +625,70 @@
 </div><!-- /page -->
 
 <script>
-  sessionStorage.setItem('flow', 'empresa');
+  /* ── Datos de planes PF ──────────────────────────── */
+  const PLANES = {
+    'Personal': {
+      firmas: '50 firmas digitales',
+      precio: '$25.000',
+      features: [
+        'Vigencia de 1 año',
+        'Soporte vía mail/chat con respuesta en hasta 24 hs',
+        'Posibilidad de adquirir firmas adicionales'
+      ]
+    },
+    'Profesional': {
+      firmas: '200 firmas digitales',
+      precio: '$50.000',
+      features: [
+        'Vigencia de 2 años',
+        'Soporte prioritario vía mail/chat',
+        'Acceso a app móvil FID',
+        'Posibilidad de adquirir firmas adicionales'
+      ]
+    },
+    'Autónomo': {
+      firmas: 'Firmas ilimitadas',
+      precio: '$90.000',
+      features: [
+        'Vigencia de 2 años',
+        'Soporte técnico especializado',
+        'Posibilidad de integración vía API',
+        'Posibilidad de adquirir firmas adicionales'
+      ]
+    }
+  };
 
-  // Eye toggle — mostrar/ocultar contraseña
+  /* ── Setear plan en sessionStorage y renderizar ── */
+  sessionStorage.setItem('flow', 'pf');
+  const planName = sessionStorage.getItem('pf_plan') || 'Profesional';
+  const plan = PLANES[planName] || PLANES['Profesional'];
+
+  document.getElementById('page-title').textContent =
+    `Plan ${planName} – Solicitud de Certificado Personal`;
+  document.getElementById('sidebar-heading').textContent =
+    `Detalles del plan ${planName}`;
+  document.getElementById('plan-firmas').textContent = plan.firmas;
+  document.getElementById('plan-price').textContent = plan.precio;
+  document.getElementById('sidebar-toggle-price').textContent = plan.precio;
+
+  const featuresList = document.getElementById('features-list');
+  featuresList.innerHTML = plan.features.map(f => `
+    <li class="feature-item-sm center">
+      <span class="icon check-sm">check_circle</span>
+      <span class="feature-text-sm">${f}</span>
+    </li>
+  `).join('');
+
+  /* ── Continuar → paso2 ───────────────────────────── */
+  function irAPaso2() {
+    sessionStorage.setItem('flow', 'pf');
+    window.location.href = 'paso2.html';
+  }
+
+  /* ── Eye toggle ─────────────────────────────────── */
   document.querySelectorAll('.eye-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const wrap = btn.closest('.pass-input-wrap');
+      const wrap  = btn.closest('.pass-input-wrap');
       const input = wrap.querySelector('input');
       const icon  = btn.querySelector('.icon');
       if (input.type === 'password') {
@@ -768,9 +701,9 @@
     });
   });
 
-  // Checkbox TyC → activa el botón Continuar
-  const tycBtn = document.querySelector('.tyc-checkbox');
-  const submitBtn = document.querySelector('.btn-submit');
+  /* ── Checkbox TyC → activa botón Continuar ──────── */
+  const tycBtn   = document.querySelector('.tyc-checkbox');
+  const submitBtn = document.getElementById('btn-submit');
 
   tycBtn.addEventListener('click', () => {
     tycBtn.classList.toggle('on');
@@ -779,7 +712,7 @@
     submitBtn.disabled = !checked;
   });
 
-  // Validación de requisitos de contraseña
+  /* ── Validación requisitos contraseña ───────────── */
   function checkPwReqs() {
     const pw = document.getElementById('pw1').value;
     setReq('req-len',  pw.length >= 8 && pw.length <= 20);
@@ -789,19 +722,20 @@
 
   function setReq(id, ok) {
     const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.toggle('ok', ok);
+    if (el) el.classList.toggle('ok', ok);
   }
 
   /* ── Sidebar dropdown (mobile) ───────────────────── */
   function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('open');
   }
+
   function initSidebarMobile() {
     const toggle = document.querySelector('.sidebar-toggle');
     if (window.innerWidth <= 768) toggle.style.display = 'flex';
     else toggle.style.display = 'none';
   }
+
   initSidebarMobile();
   window.addEventListener('resize', initSidebarMobile);
 
