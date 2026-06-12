@@ -456,6 +456,25 @@
       margin-top: 6px;
     }
 
+    .coupon-success-msg {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      color: #27ae60;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height .22s ease, opacity .2s ease, margin-top .2s ease;
+      margin-top: 0;
+    }
+
+    .coupon-success-msg.visible {
+      max-height: 26px;
+      opacity: 1;
+      margin-top: 6px;
+    }
+
     .breakdown-row.discount .breakdown-value { color: #27ae60; }
 
     .security-block { display: flex; flex-direction: column; gap: 12px; }
@@ -807,7 +826,7 @@
                   <button class="coupon-apply" id="coupon-apply" onclick="applyCoupon(event)">Aplicar</button>
                 </div>
                 <div class="coupon-right-item coupon-hidden" id="coupon-check-wrap">
-                  <img class="coupon-state-icon" id="coupon-check" src="assets/icons/coupon-check.svg" alt="" />
+                  <img class="coupon-state-icon" id="coupon-check" src="assets/icons/coupon-check-green.svg" alt="" />
                 </div>
                 <div class="coupon-right-item coupon-hidden" id="coupon-warn-wrap">
                   <img class="coupon-state-icon" id="coupon-warn" src="assets/icons/coupon-warn.svg" alt="" />
@@ -819,7 +838,8 @@
                 </div>
               </div>
             </div>
-            <p class="coupon-error-msg" id="coupon-error-msg">Código incorrecto, probá con otro.</p>
+            <p class="coupon-error-msg"   id="coupon-error-msg">Código incorrecto, probá con otro.</p>
+            <p class="coupon-success-msg" id="coupon-success-msg">Cupón aplicado con éxito</p>
           </div>
 
           <hr class="divider" />
@@ -967,6 +987,7 @@
     setHidden('coupon-warn-wrap',  state !== 'error');
     setHidden('coupon-clear-wrap', !showClear);
     document.getElementById('coupon-error-msg').classList.toggle('visible', state === 'error');
+    document.getElementById('coupon-success-msg').classList.toggle('visible', state === 'filled');
   }
 
   function focusCoupon() {
