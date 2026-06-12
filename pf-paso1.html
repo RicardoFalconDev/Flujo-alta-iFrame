@@ -22,7 +22,7 @@
       overflow: hidden;
       background: linear-gradient(to right,
         var(--bg-page)    calc(50vw + 236px),
-        var(--bg-sidebar) calc(50vw + 236px)
+        #fff calc(50vw + 236px)
       );
     }
 
@@ -35,7 +35,7 @@
       overflow: hidden;
       background: linear-gradient(to right,
         var(--bg-page)    calc(50vw + 236px),
-        var(--bg-sidebar) calc(50vw + 236px)
+        #fff calc(50vw + 236px)
       );
     }
 
@@ -202,144 +202,141 @@
 
     .btn-submit { width: 256px; }
 
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-brands { display: flex; align-items: center; }
+    .card-brands img { width: 28px; height: 29px; margin-right: -8px; position: relative; }
+    .card-brands img:nth-child(1) { z-index: 6; }
+    .card-brands img:nth-child(2) { z-index: 5; }
+    .card-brands img:nth-child(3) { z-index: 4; }
+    .card-brands img:nth-child(4) { z-index: 3; }
+    .card-brands img:nth-child(5) { z-index: 2; }
+    .card-brands img:nth-child(6) { z-index: 1; margin-right: 0; }
+
+    .input-icon {
+      color: #c0c0cc;
+      font-size: 20px;
+      flex-shrink: 0;
+      pointer-events: none;
+    }
+
     /* ─── SIDEBAR ─────────────────────────────────────── */
     .sidebar {
       flex: 1;
-      background: var(--bg-sidebar);
-      padding: 58px 40px 86px;
+      background: #fff;
+      padding: 68px 80px 86px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
       height: 100%;
       overflow: hidden;
     }
 
-    .sidebar-section { display: flex; flex-direction: column; gap: 16px; }
+    .sidebar-body {
+      display: flex;
+      flex-direction: column;
+      gap: 54px;
+    }
 
     .sidebar-heading {
+      font-family: 'Inter', sans-serif;
       font-weight: 500;
       font-size: 20px;
       line-height: 24px;
       color: #333;
     }
 
-    .plan-card {
-      background: #fff;
-      border: 1px solid var(--border-card);
-      border-radius: 12px;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
+    .purchase-block { display: flex; flex-direction: column; gap: 24px; }
 
-    .plan-box {
-      background: var(--bg-plan);
+    .purchase-card {
+      background: #fff;
       border: 1px solid #e2e5ef;
       border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .plan-box-inner {
-      display: flex;
-      align-items: center;
-      gap: 16px;
       padding: 16px 12px;
-    }
-
-    .plan-icon-wrap {
-      background: #fff;
-      border-radius: 8px;
-      padding: 10px 10px 16px 10px;
-      flex-shrink: 0;
-    }
-
-    .plan-icon-container {
-      width: 62px;
-      height: 66px;
-      position: relative;
-    }
-
-    .plan-icon-container img {
-      position: absolute;
-      object-fit: contain;
-    }
-
-    .plan-info {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .plan-info-line {
-      font-weight: 600;
+    .purchase-plan-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .purchase-plan-name {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
       font-size: 16px;
       line-height: 1.65;
-      color: var(--blue);
-      letter-spacing: 0.08px;
+      color: #111729;
     }
 
-    .feature-list-sm {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      list-style: none;
-    }
-
-    .feature-item-sm {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-    }
-
-    .feature-item-sm.center { align-items: center; }
-
-    .check-sm {
-      color: var(--blue);
+    .purchase-plan-price {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
       font-size: 16px;
-      flex-shrink: 0;
-      margin-top: 1px;
+      line-height: 1.65;
+      color: #111729;
+      white-space: nowrap;
     }
 
-    .feature-text-sm {
-      font-weight: 400;
+    .purchase-detail {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
       font-size: 14px;
-      line-height: normal;
-      color: var(--text-sub);
-      flex: 1;
+      line-height: 1.65;
+      color: #677489;
     }
 
-    .price-card {
-      background: #fff;
-      border: 1px solid var(--border-card);
-      border-radius: 12px;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .divider { width: 100%; height: 1px; background: #d1d1d1; opacity: 0.5; border: none; }
 
-    .price-row-inner {
+    .breakdown-rows { display: flex; flex-direction: column; gap: 16px; }
+
+    .breakdown-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-    }
-
-    .price-label-txt {
-      font-weight: 600;
-      font-size: 20px;
-      color: #000;
-    }
-
-    .price-amount {
-      font-weight: 600;
-      font-size: 20px;
-      color: #000;
-    }
-
-    .price-note {
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
-      font-size: 14px;
+      font-size: 16px;
+    }
+
+    .breakdown-label { color: #818ea1; }
+    .breakdown-value { color: #000; }
+
+    .total-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 20px;
+      color: #000;
+    }
+
+    .security-block { display: flex; flex-direction: column; gap: 12px; }
+
+    .security-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      color: #000;
+    }
+
+    .security-title .icon { font-size: 24px; color: var(--blue); flex-shrink: 0; }
+
+    .security-desc {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
       line-height: 1.65;
       color: #818ea1;
     }
@@ -545,6 +542,77 @@
           </div>
         </div>
 
+        <!-- Card: Datos de la tarjeta -->
+        <div class="card">
+          <div class="card-header-row">
+            <p class="card-title">Datos de la tarjeta</p>
+            <div class="card-brands">
+              <img src="assets/images/card-visa.png" alt="Visa" />
+              <img src="assets/images/card-mastercard.png" alt="Mastercard" />
+              <img src="assets/images/card-amex.png" alt="Amex" />
+              <img src="assets/images/card-4.png" alt="Card" />
+              <img src="assets/images/card-5.png" alt="Card" />
+              <img src="assets/images/card-6.png" alt="Card" />
+            </div>
+          </div>
+          <div class="form-rows">
+            <div class="form-row">
+              <div class="field">
+                <label class="field-label">Tipo de tarjeta</label>
+                <div class="sel-wrap">
+                  <select class="field-select" id="tipo-tarjeta" onchange="this.classList.toggle('selected', this.value !== ''); checkForm()">
+                    <option value="" disabled selected>Seleccionar tipo de tarjeta</option>
+                    <option value="VISA">VISA</option>
+                    <option value="VISA_DEBITO">VISA DEBITO</option>
+                    <option value="MASTERCARD">MASTERCARD</option>
+                    <option value="MASTERCARD_DEBITO">MASTERCARD DEBITO</option>
+                    <option value="MAESTRO">MAESTRO</option>
+                    <option value="AMEX">AMEX</option>
+                    <option value="CABAL">CABAL</option>
+                    <option value="CABAL_DEBITO">CABAL DEBITO</option>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label">Número de tarjeta</label>
+                <div class="input-wrap">
+                  <input type="text" id="num-tarjeta" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCard(this); checkForm()" />
+                  <span class="icon input-icon">credit_card</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label class="field-label">Vencimiento</label>
+                <div class="input-wrap">
+                  <input type="text" id="vencimiento" placeholder="MM/AA" maxlength="5" oninput="formatExpiry(this); checkForm()" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label">Código de seguridad (CVV)</label>
+                <div class="input-wrap">
+                  <input type="text" id="cvv" placeholder="000" maxlength="4" oninput="checkForm()" />
+                  <span class="icon input-icon">help</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label class="field-label">Nombre del titular</label>
+                <div class="input-wrap">
+                  <input type="text" id="nombre-titular" placeholder="Ej: Marina Martinez" oninput="checkForm()" />
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label">DNI del titular</label>
+                <div class="input-wrap">
+                  <input type="text" id="doc-num" placeholder="9 999 999" maxlength="9" oninput="checkForm()" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Términos y condiciones -->
         <div class="tyc-row">
           <button class="tyc-checkbox" aria-label="Aceptar términos">
@@ -556,10 +624,10 @@
           </p>
         </div>
 
-        <!-- Botón Continuar -->
+        <!-- Botón Pagar -->
         <div class="submit-row">
-          <button class="btn-submit" id="btn-submit" disabled onclick="irAPaso2()">
-            <span>Continuar</span>
+          <button class="btn-submit" id="btn-submit" disabled onclick="pagar()">
+            <span>Pagar</span>
           </button>
         </div>
 
@@ -569,52 +637,43 @@
     <!-- ── SIDEBAR ── -->
     <aside class="sidebar" id="sidebar">
       <button class="sidebar-toggle" onclick="toggleSidebar()" style="display:none">
-        <span class="sidebar-toggle-label">Detalles del Plan</span>
-        <span class="sidebar-toggle-price" id="sidebar-toggle-price">$50.000</span>
-        <div class="sidebar-chevron-pill">
-          <span class="icon">expand_more</span>
-        </div>
+        <span>Detalles de la compra</span>
+        <span class="icon">expand_more</span>
       </button>
       <div class="sidebar-body">
 
-        <div class="sidebar-section">
-          <p class="sidebar-heading" id="sidebar-heading">Detalles del plan Profesional</p>
-
-          <div class="plan-card">
-            <div class="plan-box">
-              <div class="plan-box-inner">
-                <div class="plan-icon-wrap">
-                  <div class="plan-icon-container">
-                    <img src="assets/images/plan-icon-1.svg"
-                         alt=""
-                         style="inset:0 14% 17% 17%;width:69%;height:83%" />
-                    <img src="assets/images/plan-icon-2.svg"
-                         alt=""
-                         style="inset:23% 0 0 0;width:100%;height:77%" />
-                    <img src="assets/images/plan-icon-3.svg"
-                         alt=""
-                         style="inset:23% 0 0 0;width:100%;height:77%" />
-                  </div>
-                </div>
-                <div class="plan-info">
-                  <span class="plan-info-line">1 Certificado digital personal</span>
-                  <span class="plan-info-line" id="plan-firmas">200 firmas digitales</span>
-                </div>
-              </div>
+        <div class="purchase-block">
+          <h2 class="sidebar-heading">Detalles de la compra</h2>
+          <div class="purchase-card">
+            <div class="purchase-plan-row">
+              <span class="purchase-plan-name" id="sidebar-plan-name">Plan Smart</span>
+              <span class="purchase-plan-price" id="sidebar-plan-price">$61.700</span>
             </div>
-
-            <ul class="feature-list-sm" id="features-list">
-              <!-- Populated by JS -->
-            </ul>
+            <p class="purchase-detail">1 Certificado digital personal</p>
+            <p class="purchase-detail" id="sidebar-plan-firmas">20 firmas digitales</p>
+          </div>
+          <hr class="divider" />
+          <div class="breakdown-rows">
+            <div class="breakdown-row">
+              <span class="breakdown-label">Subtotal</span>
+              <span class="breakdown-value" id="sidebar-subtotal">$61.700</span>
+            </div>
+          </div>
+          <hr class="divider" />
+          <div class="total-row">
+            <span>Total</span>
+            <span id="sidebar-total">$61.700</span>
           </div>
         </div>
 
-        <div class="price-card">
-          <div class="price-row-inner">
-            <span class="price-label-txt">Precio</span>
-            <span class="price-amount" id="plan-price">$50.000</span>
+        <div class="security-block">
+          <div class="security-title">
+            <span class="icon">lock</span>
+            Pago Seguro - Encriptado SSL
           </div>
-          <p class="price-note" id="plan-nota">(*) Precio final con IVA incluido.</p>
+          <p class="security-desc">
+            Garantizando que tus datos financieros y personales estén seguros en cada transacción.
+          </p>
         </div>
 
       </div><!-- /sidebar-body -->
@@ -627,63 +686,57 @@
 <script>
   /* ── Datos de planes PF ──────────────────────────── */
   const PLANES = {
-    'Personal': {
-      firmas: '50 firmas digitales',
-      precio: '$25.000',
-      features: [
-        'Vigencia de 1 año',
-        'Soporte vía mail/chat con respuesta en hasta 24 hs',
-        'Posibilidad de adquirir firmas adicionales'
-      ]
+    'Smart': {
+      firmas: '20 firmas digitales',
+      precio: '$61.700'
     },
     'Profesional': {
-      firmas: '200 firmas digitales',
-      precio: '$50.000',
-      features: [
-        'Vigencia de 2 años',
-        'Soporte prioritario vía mail/chat',
-        'Acceso a app móvil FID',
-        'Posibilidad de adquirir firmas adicionales'
-      ]
-    },
-    'Autónomo': {
-      firmas: 'Firmas ilimitadas',
-      precio: '$90.000',
-      features: [
-        'Vigencia de 2 años',
-        'Soporte técnico especializado',
-        'Posibilidad de integración vía API',
-        'Posibilidad de adquirir firmas adicionales'
-      ]
+      firmas: 'Firmas digitales ilimitadas',
+      precio: '$363.000'
     }
   };
 
-  /* ── Setear plan en sessionStorage y renderizar ── */
+  /* ── Renderizar plan en sidebar ──────────────────── */
   sessionStorage.setItem('flow', 'pf');
-  const planName = sessionStorage.getItem('pf_plan') || 'Profesional';
-  const plan = PLANES[planName] || PLANES['Profesional'];
+  const planName = sessionStorage.getItem('pf_plan') || 'Smart';
+  const plan = PLANES[planName] || PLANES['Smart'];
 
   document.getElementById('page-title').textContent =
-    `Plan ${planName} – Solicitud de Certificado Personal`;
-  document.getElementById('sidebar-heading').textContent =
-    `Detalles del plan ${planName}`;
-  document.getElementById('plan-firmas').textContent = plan.firmas;
-  document.getElementById('plan-price').textContent = plan.precio;
-  document.getElementById('sidebar-toggle-price').textContent = plan.precio;
+    `Firma digital – Plan ${planName}`;
+  document.getElementById('sidebar-plan-name').textContent = `Plan ${planName}`;
+  document.getElementById('sidebar-plan-price').textContent = plan.precio;
+  document.getElementById('sidebar-plan-firmas').textContent = plan.firmas;
+  document.getElementById('sidebar-subtotal').textContent = plan.precio;
+  document.getElementById('sidebar-total').textContent = plan.precio;
 
-  const featuresList = document.getElementById('features-list');
-  featuresList.innerHTML = plan.features.map(f => `
-    <li class="feature-item-sm center">
-      <span class="icon check-sm">check_circle</span>
-      <span class="feature-text-sm">${f}</span>
-    </li>
-  `).join('');
-
-  /* ── Continuar → paso2 ───────────────────────────── */
-  function irAPaso2() {
-    sessionStorage.setItem('flow', 'pf');
-    window.location.href = 'paso2.html';
+  /* ── Formato tarjeta ─────────────────────────────── */
+  function formatCard(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1 ').trim();
   }
+
+  function formatExpiry(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 4);
+    if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
+    input.value = v;
+  }
+
+  /* ── Validación form completo ────────────────────── */
+  function checkForm() {
+    const CARD_FIELDS = ['tipo-tarjeta', 'num-tarjeta', 'vencimiento', 'cvv', 'nombre-titular', 'doc-num'];
+    const cardOk = CARD_FIELDS.every(id => document.getElementById(id)?.value.trim() !== '');
+    const tycOk  = document.querySelector('.tyc-checkbox')?.classList.contains('on');
+    const submitBtn = document.getElementById('btn-submit');
+    const ok = cardOk && tycOk;
+    submitBtn.classList.toggle('active', ok);
+    submitBtn.disabled = !ok;
+  }
+
+  /* ── Checkbox TyC ────────────────────────────────── */
+  document.querySelector('.tyc-checkbox').addEventListener('click', function() {
+    this.classList.toggle('on');
+    checkForm();
+  });
 
   /* ── Eye toggle ─────────────────────────────────── */
   document.querySelectorAll('.eye-btn').forEach(btn => {
@@ -701,17 +754,6 @@
     });
   });
 
-  /* ── Checkbox TyC → activa botón Continuar ──────── */
-  const tycBtn   = document.querySelector('.tyc-checkbox');
-  const submitBtn = document.getElementById('btn-submit');
-
-  tycBtn.addEventListener('click', () => {
-    tycBtn.classList.toggle('on');
-    const checked = tycBtn.classList.contains('on');
-    submitBtn.classList.toggle('active', checked);
-    submitBtn.disabled = !checked;
-  });
-
   /* ── Validación requisitos contraseña ───────────── */
   function checkPwReqs() {
     const pw = document.getElementById('pw1').value;
@@ -723,6 +765,12 @@
   function setReq(id, ok) {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('ok', ok);
+  }
+
+  /* ── Pagar → procesando-pago ─────────────────────── */
+  function pagar() {
+    sessionStorage.setItem('flow', 'pf');
+    window.location.href = 'procesando-pago.html';
   }
 
   /* ── Sidebar dropdown (mobile) ───────────────────── */
@@ -739,7 +787,7 @@
   initSidebarMobile();
   window.addEventListener('resize', initSidebarMobile);
 
-  /* ── Modal Acuerdo de Suscriptores ───────────────────── */
+  /* ── Modal Acuerdo de Suscriptores ───────────────── */
   function openTycModal(e) {
     e.stopPropagation();
     document.getElementById('tycModal').classList.add('open');
