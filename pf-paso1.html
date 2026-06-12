@@ -347,10 +347,7 @@
       min-width: 0;
     }
 
-    .coupon-icon { font-size: 22px; color: #818ea1; flex-shrink: 0; }
-    .coupon-field.active .coupon-icon,
-    .coupon-field.filled .coupon-icon { color: var(--blue); }
-    .coupon-field.error .coupon-icon  { color: #818ea1; }
+    .coupon-icon { width: 24px; height: 24px; flex-shrink: 0; display: block; }
 
     .coupon-input {
       border: none;
@@ -395,8 +392,7 @@
       flex-shrink: 0;
     }
 
-    .coupon-check  { color: #27ae60; }
-    .coupon-warn   { color: #bc251d; }
+    .coupon-state-icon { width: 24px; height: 24px; flex-shrink: 0; display: block; }
 
     .coupon-clear-btn {
       background: none;
@@ -410,7 +406,7 @@
       flex-shrink: 0;
     }
 
-    .coupon-clear-btn .icon { font-size: 20px; }
+    .coupon-clear-btn img { width: 20px; height: 20px; opacity: 0.6; }
 
     .coupon-error-msg {
       font-family: 'Inter', sans-serif;
@@ -762,7 +758,7 @@
           <div class="coupon-wrap">
             <div class="coupon-field" id="coupon-field" onclick="focusCoupon()">
               <div class="coupon-left">
-                <span class="icon coupon-icon">confirmation_number</span>
+                <img class="coupon-icon" id="coupon-icon" src="assets/icons/coupon-ticket.svg" alt="" />
                 <input class="coupon-input" id="coupon-input" type="text"
                        placeholder="Código de descuento"
                        oninput="onCouponInput()"
@@ -771,10 +767,10 @@
               </div>
               <div class="coupon-right" id="coupon-right">
                 <button class="coupon-apply" id="coupon-apply" onclick="applyCoupon(event)">Aplicar</button>
-                <span class="icon coupon-state-icon coupon-check" id="coupon-check" style="display:none">check_circle</span>
-                <span class="icon coupon-state-icon coupon-warn"  id="coupon-warn"  style="display:none">error</span>
+                <img class="coupon-state-icon" id="coupon-check" src="assets/icons/coupon-check.svg" alt="" style="display:none" />
+                <img class="coupon-state-icon" id="coupon-warn"  src="assets/icons/coupon-warn.svg"  alt="" style="display:none" />
                 <button class="coupon-clear-btn" id="coupon-clear" style="display:none" onclick="clearCoupon(event)">
-                  <span class="icon">delete</span>
+                  <img src="assets/icons/delete.svg" alt="Eliminar" onerror="this.outerHTML='<span class=\'icon\' style=\'font-size:18px;color:#666\'>delete</span>'" />
                 </button>
               </div>
             </div>
@@ -908,8 +904,13 @@
     field.classList.remove('active', 'typing', 'filled', 'error');
     if (state) field.classList.add(state);
 
-    const hasText  = document.getElementById('coupon-input').value.trim() !== '';
+    const hasText   = document.getElementById('coupon-input').value.trim() !== '';
     const showClear = ['active', 'typing', 'filled', 'error'].includes(state);
+    const useBlue   = ['active', 'typing', 'filled'].includes(state);
+
+    document.getElementById('coupon-icon').src = useBlue
+      ? 'assets/icons/coupon-ticket-blue.svg'
+      : 'assets/icons/coupon-ticket.svg';
 
     document.getElementById('coupon-check').style.display = state === 'filled' ? '' : 'none';
     document.getElementById('coupon-warn').style.display  = state === 'error'  ? '' : 'none';
