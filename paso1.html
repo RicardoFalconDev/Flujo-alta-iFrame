@@ -662,7 +662,7 @@
           </button>
           <p class="tyc-text">
             Confirmo que he leído, comprendido y acepto los
-            <span class="tyc-link">términos y condiciones del acuerdo con suscriptores</span>
+            <span class="tyc-link" onclick="openTycModal(event)">términos y condiciones del acuerdo con suscriptores</span>
           </p>
         </div>
 
@@ -804,6 +804,203 @@
   }
   initSidebarMobile();
   window.addEventListener('resize', initSidebarMobile);
+
+  /* ── Modal Acuerdo de Suscriptores ───────────────────── */
+  function openTycModal(e) {
+    e.stopPropagation();
+    document.getElementById('tycModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeTycModal() {
+    document.getElementById('tycModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeTycModal();
+  });
 </script>
+
+<!-- Modal Acuerdo con Suscriptores -->
+<div id="tycModal" class="tyc-modal-overlay" onclick="closeTycModal()">
+  <div class="tyc-modal" onclick="event.stopPropagation()">
+    <div class="tyc-modal-header">
+      <h2 class="tyc-modal-title">Términos y Condiciones del acuerdo con suscriptores</h2>
+      <button class="tyc-modal-close" onclick="closeTycModal()" aria-label="Cerrar">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="tyc-modal-body">
+      <h3>INTRODUCCIÓN</h3>
+      <p>El presente acuerdo entre Lakaut S.A. y el suscriptor determina los derechos y obligaciones de las partes en lo que respecta a la solicitud, aceptación y uso de certificados de firma digital.</p>
+
+      <h3>1 - SOLICITUD DE CERTIFICADO Y DESCRIPCIÓN DE LOS CERTIFICADOS</h3>
+      <p>Los certificados digitales emitidos bajo la Política Única de Certificación del Certificador Licenciado Lakaut S.A., en adelante LAKAUT AC, son expedidos a título oneroso a favor de personas humanas o de personas jurídicas públicas o privadas, en adelante SUSCRIPTORES. En ambos casos la vigencia de los certificados digitales será de hasta DOS (2) años, según determine el Certificador Licenciado.</p>
+      <p>Para facilitar el costo económico de la firma a sus adherentes, Lakaut AC puede admitir que el pago del servicio se realice en forma anual por el período de vigencia del certificado o en forma total. La ruptura de la cadena de pagos permitirá a Lakaut AC revocar la firma emitida, después de efectuada la notificación del incumplimiento de pago en forma fehaciente, sin posibilidad de reclamo posterior alguno.</p>
+      <p>Para que la solicitud, aceptación y uso de su certificado digital adquiera plena legitimidad y eficacia jurídica en el marco de este acuerdo, el suscriptor acepta que:</p>
+      <p>a) Toda información que suministra a Lakaut AC en la solicitud del certificado es veraz.<br>
+      b) La información suministrada en la solicitud del certificado no ha sido, ni será utilizada, para ningún propósito contrario a la Política Única de Certificación de Lakaut AC para personas físicas o jurídicas.<br>
+      c) Es la única persona que ha tenido y tendrá único y exclusivo acceso a su propia clave privada y, asimismo, se responsabiliza plenamente ante Lakaut AC a efectos de que ningún tercero tenga posibilidad de acceder a ella.<br>
+      d) La utilización de su certificado digital será, exclusivamente, para propósitos legítimos y autorizados, de conformidad con los términos del presente Acuerdo y a la Política Única de Certificación.</p>
+      <p>Deberá informar a Lakaut AC:</p>
+      <p>a) Cualquier circunstancia que pueda haber comprometido la privacidad de su clave privada.<br>
+      b) El cese en sus funciones de representante legal en caso de personas jurídicas o bien la revocación del poder de apoderado que en el certificado figura como tal.<br>
+      c) El cese de la existencia de la persona jurídica, comunicación que deberá ser realizada por su representante legal.<br>
+      d) Cualquier cambio en los atributos de su certificado.<br>
+      e) La presente enumeración es meramente enunciativa y no reviste el carácter de taxativa.</p>
+      <p>Declara expresamente que:</p>
+      <p>a) Ha sido informado suficientemente acerca de los alcances de este Acuerdo.<br>
+      b) Ha leído y acepta los términos y condiciones de la Política Única de Certificación de Lakaut AC.<br>
+      c) Entiende las consecuencias legales del uso de la firma digital expedida por Lakaut AC.</p>
+      <p>El suscriptor manifiesta su total y expresa conformidad con la aceptación del presente acuerdo, y presta expresa conformidad para que Lakaut AC pueda incluir y publicar el estado de su certificado en la lista de certificados revocados, cuando se hubiera producido la revocación.</p>
+      <p>La Política Única de Certificación de Lakaut AC contempla:</p>
+      <p>a) Certificados solicitados cuyas claves privadas fueron generadas y almacenadas en dispositivos criptográficos (token).<br>
+      b) Certificados cuyas claves privadas fueron generadas y almacenadas en dispositivos informáticos o Smartphones vía software.<br>
+      c) Certificados digitales con custodia centraliza o Firma Nube.</p>
+
+      <h3>2 - PROCESAMIENTO DE LA SOLICITUD DE CERTIFICADO DEL SUSCRIPTOR</h3>
+      <p>El proceso de solicitud puede ser iniciado solamente por el interesado, desde el dispositivo informático donde residirá el certificado digital en el caso de las de seguridad alta. Para continuar el trámite posteriormente debe acreditar su identidad, presentando la documentación correspondiente ante la Autoridad de Registro.</p>
+      <p>Los pasos para ingresar la solicitud son los siguientes:</p>
+      <p>1) Ingresar al sitio web del Certificador https://www.lakautac.com.ar/ seleccionando el enlace a la aplicación de solicitud de certificado.<br>
+      2) Completar la solicitud con los datos requeridos de acuerdo al tipo de certificado, seleccionando.<br>
+      3) Aceptar el presente Acuerdo con suscriptores.<br>
+      4) Enviar su solicitud a Lakaut AC.</p>
+      <p>Concluido el proceso de solicitud, el suscriptor valida su identidad (toma de datos biométricos que se validan contra la base de datos del RENAPER) ya sea en forma presencial ante un Oficial de Registro de la Autoridad de Certificación o Autoridad de Registro correspondiente o de forma telemática o remota y aportando la documentación requerida según el caso conforme a la Política Única de Certificación de Lakaut AC.</p>
+
+      <h3>CONSENTIMIENTO INFORMADO</h3>
+      <p>El presente consentimiento para el tratamiento de mis datos personales alcanza a los incluidos en mi Documento Nacional de Identidad (INCLUYENDO DATOS BIOMÉTRICOS DE HUELLA DACTILAR Y DE RECONOCIMIENTO FACIAL) en confronte con lo que informa el REGISTRO NACIONAL DE LAS PERSONAS.</p>
+      <p>a) Los datos serán tratados con la exclusiva finalidad de validar mi identidad y verificar la vigencia de mi Documento Nacional de Identidad para la emisión de mi Certificado de Firma Digital.<br>
+      b) Los datos confrontados serán destruidos una vez verificada la validez del Documento Nacional de Identidad y validada la misma, no pudiendo ser almacenados.<br>
+      c) Los datos son facilitados con carácter obligatorio, por cuanto es imprescindible identificar fehacientemente al titular.<br>
+      d) El titular de los datos podrá ejercer los derechos de acceso, rectificación y supresión de sus datos en cualquier momento y a su sola solicitud ante el RENAPER.</p>
+
+      <h3>3 - OBLIGACIONES ANTE LA REVOCACIÓN O EXPIRACIÓN DEL CERTIFICADO</h3>
+      <p>Con respecto a la clave privada, el Suscriptor se compromete a su uso responsable, de acuerdo con los fines estipulados en el presente Acuerdo y en la Política Única de Certificación de Lakaut AC.</p>
+      <p>El Suscriptor está obligado a iniciar en forma diligente la revocación inmediata en los siguientes supuestos: sospecha fundada de que la clave privada está comprometida; pérdida del dispositivo criptográfico; cambios en los datos del Certificado; cese en las funciones del representante legal; o fallecimiento del titular.</p>
+
+      <h3>4 - POLÍTICA DE PRIVACIDAD</h3>
+      <p>Toda información referida a solicitantes y Suscriptores que sea recibida por Lakaut AC en sus requerimientos, será considerada confidencial y no puede hacerse pública sin el consentimiento previo de aquellos, salvo que sea requerida por autoridad competente o sea información obtenida de fuentes públicas.</p>
+
+      <h3>5 - LIMITACIONES DE LA RESPONSABILIDAD</h3>
+      <p>Lakaut AC en su calidad de Certificador Licenciado no será responsable, por ningún concepto y bajo ninguna circunstancia, por los daños y perjuicios que resulten del uso no autorizado de un certificado digital, ni por las inexactitudes en el Certificado Digital que resulten de la información facilitada por el Suscriptor.</p>
+
+      <h3>6 - LEGISLACIÓN APLICABLE Y PROCEDIMIENTO DE RESOLUCIÓN DE CONFLICTOS</h3>
+      <p>La legislación aplicable está constituida por la Ley N° 25.506 de Firma Digital y sus normas complementarias. Supletoriamente se aplicarán el Código Civil y otras normas concordantes dictadas por la Autoridad Competente.</p>
+
+      <h3>7 - CESIÓN DE DERECHOS</h3>
+      <p>Un Suscriptor de Certificado Digital no puede ceder, bajo ninguna circunstancia, los derechos que posee como Suscriptor ni transferir ninguno de los derechos y/o acciones que le correspondan en tal carácter.</p>
+
+      <h3>8 - CONTACTOS</h3>
+      <p>Contacto: Responsable de Mesa de Ayuda<br>
+      Domicilio: Lima 355, Piso 12 - Of. A<br>
+      E-mail: soportefirmadigital@lakaut.com.ar<br>
+      Teléfono: 4382-2856</p>
+
+      <h3>9 - VIGENCIA</h3>
+      <p>El presente acuerdo será válido desde el momento de su aceptación y hasta el cese de su calidad de Suscriptor de acuerdo a la Política Única de Certificación de Lakaut AC.</p>
+
+      <h3>10 - MODIFICACIONES AL ACUERDO</h3>
+      <p>Toda modificación y/o alteración de los términos del presente Acuerdo, será notificada al Suscriptor, al correo electrónico informado.</p>
+    </div>
+    <div class="tyc-modal-footer">
+      <button class="tyc-modal-btn" onclick="closeTycModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.tyc-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.tyc-modal-overlay.open {
+  display: flex;
+}
+.tyc-modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 835px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+  animation: modalIn 0.2s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.tyc-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.tyc-modal-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  line-height: 1.4;
+}
+.tyc-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  padding: 2px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s;
+}
+.tyc-modal-close:hover { color: #111; }
+.tyc-modal-body {
+  padding: 20px 24px;
+  overflow-y: auto;
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #333;
+}
+.tyc-modal-body h3 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #111;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 22px 0 8px;
+}
+.tyc-modal-body h3:first-child { margin-top: 0; }
+.tyc-modal-body p { margin: 0 0 10px; }
+.tyc-modal-footer {
+  padding: 16px 24px 20px;
+  border-top: 1px solid #e8e8e8;
+  display: flex;
+  justify-content: center;
+}
+.tyc-modal-btn {
+  background: #3B3BF9;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  padding: 14px 80px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.tyc-modal-btn:hover { opacity: 0.88; }
+.tyc-link { cursor: pointer; }
+</style>
 </body>
 </html>
