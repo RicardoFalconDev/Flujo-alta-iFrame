@@ -309,6 +309,10 @@
       width: 100%;
     }
 
+    #cards-pf {
+      grid-template-columns: 500px 500px;
+    }
+
     /* ─── CARD ESTÁNDAR ──────────────────────────────── */
     .card {
       width: 100%;
@@ -594,6 +598,7 @@
       .hamburger { display: flex; }
 
       .cards-row { grid-template-columns: minmax(0, 480px); align-items: stretch; }
+      #cards-pf { grid-template-columns: minmax(0, 500px); }
       .card { height: auto; min-height: 0; }
       .card-featured { order: -1; }
       .tab-item span { font-size: 16px; }
@@ -790,36 +795,36 @@
     <div class="pricing-inner">
 
       <div class="tab-switcher">
-        <div class="tab-item" data-tab="pf" onclick="switchTab('pf')">
+        <div class="tab-item active" data-tab="pf" onclick="switchTab('pf')">
           <span>Personas y profesionales</span>
         </div>
-        <div class="tab-item active" data-tab="empresa" onclick="switchTab('empresa')">
+        <div class="tab-item" data-tab="empresa" onclick="switchTab('empresa')">
           <span>Empresas y organizaciones</span>
         </div>
       </div>
 
       <!-- ── CARDS PERSONAS Y PROFESIONALES ── -->
-      <div class="cards-row" id="cards-pf" style="display:none">
+      <div class="cards-row" id="cards-pf">
 
-        <!-- Personal -->
+        <!-- Smart -->
         <div class="card">
           <div class="card-content">
             <div class="card-main">
               <div class="content-top">
                 <div class="info-text">
-                  <p class="card-name">Personal</p>
-                  <p class="card-desc">Para uso personal y trámites cotidianos que requieren firma digital</p>
+                  <p class="card-name">Smart</p>
+                  <p class="card-desc">Ideal si firmás contratos o trámites de manera ocasional</p>
                 </div>
                 <div class="price-section">
-                  <p class="price-label">50 firmas digitales</p>
+                  <p class="price-label">20 firmas digitales</p>
                   <div>
                     <div class="price-row">
-                      <span class="price-amount">$25.000</span>
+                      <span class="price-amount">$61.700</span>
                       <span class="badge">Un solo pago</span>
                     </div>
                     <div class="price-notes">
-                      <span class="note-iva">(*) Precio final con IVA incluido.</span>
-                      <span class="note-simp">Precio s/imp. nac.&nbsp; $20.661</span>
+                      <span class="note-iva">Precio final con IVA incluido</span>
+                      <span class="note-simp">Precio s/imp. nac. $50.991,74</span>
                     </div>
                   </div>
                 </div>
@@ -828,19 +833,27 @@
               <ul class="feature-list">
                 <li class="feature-item center">
                   <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">1 Certificado digital personal</span>
+                  <span class="feature-text">Vigencia: 2 años</span>
                 </li>
                 <li class="feature-item center">
                   <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">Vigencia: 1 año</span>
+                  <span class="feature-text">Certificado digital personal bonificado</span>
+                </li>
+                <li class="feature-item center">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Firmador de documentos</span>
                 </li>
                 <li class="feature-item">
                   <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">Soporte vía mail/chat con respuesta en hasta 24 hs</span>
+                  <span class="feature-text">Soporte vía mail con respuesta en hasta 24 hs</span>
+                </li>
+                <li class="feature-item">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Posibilidad de adquirir firmas digitales adicionales</span>
                 </li>
               </ul>
             </div>
-            <button class="btn-outline-card" onclick="contratarPF('Personal')"><span>Contratar Personal</span></button>
+            <button class="btn-outline-card" onclick="contratarPF('Smart')"><span>Contratar Smart</span></button>
           </div>
         </div>
 
@@ -854,18 +867,18 @@
               <div class="content-top">
                 <div class="info-text">
                   <p class="card-name">Profesional</p>
-                  <p class="card-desc" style="font-size:13px">Para profesionales independientes que firman frecuentemente</p>
+                  <p class="card-desc">Para profesionales que firman documentos con mayor frecuencia</p>
                 </div>
                 <div class="price-section">
-                  <p class="price-label">200 firmas digitales</p>
+                  <p class="price-label">Firmas digitales ilimitadas</p>
                   <div>
                     <div class="price-row">
-                      <span class="price-amount">$50.000</span>
+                      <span class="price-amount">$363.000</span>
                       <span class="badge">Un solo pago</span>
                     </div>
                     <div class="price-notes">
-                      <span class="note-iva">(*) Precio final con IVA incluido.</span>
-                      <span class="note-simp">Precio s/imp. nac.&nbsp; $41.322</span>
+                      <span class="note-iva">Precio final con IVA incluido, pueden aplicarse percepciones impositivas según condición fiscal</span>
+                      <span class="note-simp">Precio s/imp. nac. $300.000</span>
                     </div>
                   </div>
                 </div>
@@ -874,19 +887,19 @@
               <ul class="feature-list tight">
                 <li class="feature-item center">
                   <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">1 Certificado digital personal</span>
-                </li>
-                <li class="feature-item center">
-                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
                   <span class="feature-text">Vigencia: 2 años</span>
                 </li>
-                <li class="feature-item">
+                <li class="feature-item center">
                   <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">Soporte prioritario vía mail/chat</span>
+                  <span class="feature-text">Certificado digital personal bonificado</span>
                 </li>
                 <li class="feature-item center">
                   <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">Acceso a app móvil FID</span>
+                  <span class="feature-text">Firmador e historial de documentos</span>
+                </li>
+                <li class="feature-item center">
+                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
+                  <span class="feature-text">Soporte prioritario vía mail</span>
                 </li>
                 <li class="feature-item">
                   <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
@@ -898,61 +911,10 @@
           </div>
         </div>
 
-        <!-- Autónomo -->
-        <div class="card">
-          <div class="card-content">
-            <div class="card-main">
-              <div class="content-top">
-                <div class="info-text">
-                  <p class="card-name">Autónomo</p>
-                  <p class="card-desc" style="font-size:13px">Para trabajadores independientes con alto volumen de documentos</p>
-                </div>
-                <div class="price-section">
-                  <p class="price-label">Firmas ilimitadas</p>
-                  <div>
-                    <div class="price-row">
-                      <span class="price-amount">$90.000</span>
-                      <span class="badge">Un solo pago</span>
-                    </div>
-                    <div class="price-notes">
-                      <span class="note-iva">(*) Precio final con IVA incluido.</span>
-                      <span class="note-simp">Precio s/imp. nac.&nbsp; $74.380</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="divider"></div>
-              <ul class="feature-list">
-                <li class="feature-item center">
-                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">1 Certificado digital personal</span>
-                </li>
-                <li class="feature-item center">
-                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">Vigencia: 2 años</span>
-                </li>
-                <li class="feature-item">
-                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">Soporte técnico especializado</span>
-                </li>
-                <li class="feature-item">
-                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">Posibilidad de integración vía API</span>
-                </li>
-                <li class="feature-item">
-                  <img class="feature-icon" src="assets/icons/check-rounded.svg" width="24" height="24" alt="" />
-                  <span class="feature-text">Posibilidad de adquirir firmas digitales adicionales</span>
-                </li>
-              </ul>
-            </div>
-            <button class="btn-outline-card" onclick="contratarPF('Autónomo')"><span>Contratar Autónomo</span></button>
-          </div>
-        </div>
-
       </div><!-- /cards-pf -->
 
       <!-- ── CARDS EMPRESAS Y ORGANIZACIONES ── -->
-      <div class="cards-row" id="cards-empresa">
+      <div class="cards-row" id="cards-empresa" style="display:none">
 
         <!-- PyME -->
         <div class="card">
