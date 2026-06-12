@@ -202,6 +202,17 @@
 
     .btn-submit { width: 256px; }
 
+    .bonificado-card { text-align: center; }
+    .bonificado-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px 0; }
+    .bonificado-icon-wrap {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #dcfce7;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bonificado-icon { font-size: 32px; color: #166534; }
+    .bonificado-title { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px; color: #111827; margin: 0; }
+    .bonificado-desc  { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: #6b7280; margin: 0; line-height: 1.5; }
+
     .card-header-row {
       display: flex;
       align-items: center;
@@ -701,8 +712,19 @@
           </div>
         </div>
 
+        <!-- Card: Pago bonificado (100% descuento) -->
+        <div class="card bonificado-card" id="bonificado-card" style="display:none">
+          <div class="bonificado-inner">
+            <div class="bonificado-icon-wrap">
+              <span class="icon bonificado-icon">check_circle</span>
+            </div>
+            <p class="bonificado-title">Tu pago esta bonificado</p>
+            <p class="bonificado-desc">Tu cupón <strong id="bonificado-code"></strong> cubre todo el costo. Podés avanzar sin ingresar medio de pago.</p>
+          </div>
+        </div>
+
         <!-- Card: Datos de la tarjeta -->
-        <div class="card">
+        <div class="card" id="card-tarjeta">
           <div class="card-header-row">
             <p class="card-title">Datos de la tarjeta</p>
             <div class="card-brands">
@@ -919,7 +941,8 @@
   /* ── Validación form completo ────────────────────── */
   function checkForm() {
     const CARD_FIELDS = ['tipo-tarjeta', 'num-tarjeta', 'vencimiento', 'cvv', 'nombre-titular', 'doc-num'];
-    const cardOk = CARD_FIELDS.every(id => document.getElementById(id)?.value.trim() !== '');
+    const isBonificado = document.getElementById('bonificado-card').style.display !== 'none';
+    const cardOk = isBonificado || CARD_FIELDS.every(id => document.getElementById(id)?.value.trim() !== '');
     const tycOk  = document.querySelector('.tyc-checkbox')?.classList.contains('on');
     const submitBtn = document.getElementById('btn-submit');
     const ok = cardOk && tycOk;
@@ -1034,6 +1057,18 @@
       document.getElementById('discount-row').style.display = '';
       document.getElementById('sidebar-discount').textContent = '-' + formatPrice(descAmount);
       document.getElementById('sidebar-total').textContent = formatPrice(total);
+
+      if (discount === 1) {
+        document.getElementById('card-tarjeta').style.display = 'none';
+        document.getElementById('bonificado-card').style.display = '';
+        document.getElementById('bonificado-code').textContent = code;
+        document.getElementById('btn-submit').querySelector('span').textContent = 'Continuar';
+      } else {
+        document.getElementById('card-tarjeta').style.display = '';
+        document.getElementById('bonificado-card').style.display = 'none';
+        document.getElementById('btn-submit').querySelector('span').textContent = 'Pagar';
+      }
+      checkForm();
     } else {
       setCouponState('error');
       document.getElementById('coupon-clear').style.display = '';
@@ -1051,6 +1086,10 @@
     const raw = PLANES[planName]?.raw || 61700;
     document.getElementById('discount-row').style.display = 'none';
     document.getElementById('sidebar-total').textContent = formatPrice(raw);
+    document.getElementById('card-tarjeta').style.display = '';
+    document.getElementById('bonificado-card').style.display = 'none';
+    document.getElementById('btn-submit').querySelector('span').textContent = 'Pagar';
+    checkForm();
   }
 
   /* ── Pagar → procesando-pago ─────────────────────── */
