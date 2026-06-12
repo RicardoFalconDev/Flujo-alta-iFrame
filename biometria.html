@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Biometría | FID by Lakaut</title>
+  <title>Validación de identidad | FID by Lakaut</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@500;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
@@ -13,176 +13,200 @@
   <link rel="stylesheet" href="assets/css/buttons.css" />
 
   <style>
-    /* ─── Override de fondo ──────────────────────────────── */
     body, .page { background: #f8f9fa; }
 
-    /* ─── CARD EXTERIOR ─────────────────────────────────── */
+    /* ── CARD EXTERIOR ── */
     .bio-card {
-      width: 600px;
+      width: 705px;
       background: #fff;
-      border: 1px solid var(--border-card);
+      border: 1px solid #dee2e6;
       border-radius: 12px;
       padding: 32px 24px;
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 24px;
     }
 
-    /* ─── VERIFF WIDGET ──────────────────────────────────── */
-    .veriff-widget {
+    /* ── TÍTULOS ── */
+    .bio-title {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 28px;
+      color: #0b0c0e;
+      margin: 0 0 4px;
+    }
+
+    .bio-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+      color: #575768;
+      letter-spacing: 0.1px;
+      margin: 0;
+    }
+
+    /* ── INNER CARD (cámara + info) ── */
+    .camera-card {
+      background: #fafafa;
+      border: 1px solid #f2f2f8;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .camera-card-inner {
+      padding: 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 24px;
     }
 
-    /* Header: X izquierda + logo centrado */
-    .veriff-header {
+    /* ── CÍRCULO DE CÁMARA ── */
+    .circle-wrap {
+      position: relative;
+      width: 266px;
+      height: 266px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #3b3a45;
+      background: #000;
+      flex-shrink: 0;
+      transition: border-color 0.4s ease, border-width 0.4s ease;
+    }
+
+    .circle-wrap.success {
+      border-color: #108F50;
+      border-width: 4px;
+    }
+
+    .circle-wrap video,
+    .circle-wrap img.photo-preview {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Flash al tomar foto */
+    .flash-overlay {
+      position: absolute;
+      inset: 0;
+      background: white;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.05s ease;
+    }
+
+    .flash-overlay.active {
+      opacity: 1;
+    }
+
+    /* ── INSTRUCCIONES (estado 1) ── */
+    .instructions-card {
+      background: #fff;
+      border: 1px solid #f2f2f8;
+      border-radius: 16px;
+      width: 320px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .instruction-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .instruction-row + .instruction-row {
+      padding-top: 12px;
+      border-top: 1px solid #f2f2f8;
+    }
+
+    .instr-icon-wrap {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
 
-    .veriff-x {
-      position: absolute;
-      left: 0;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      color: var(--text-sub);
-      display: flex;
-      align-items: center;
-    }
-    .veriff-x .icon { font-size: 18px; }
-
-    .veriff-fid-logo {
-      height: 26px;
-      object-fit: contain;
+    .instr-icon-wrap .icon {
+      font-size: 20px;
+      color: #575768;
+      font-variation-settings: 'FILL' 0, 'wght' 300;
     }
 
-    /* Título */
-    .veriff-title {
-      font-family: 'Open Sans', sans-serif;
-      font-weight: 600;
-      font-size: 18px;
-      line-height: 24px;
-      color: var(--text-dark);
-      text-align: center;
-    }
-
-    /* Fila smartphone */
-    .veriff-step {
-      width: 100%;
-      background: #f8f9fa;
-      border-radius: 8px;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .veriff-step .icon {
-      font-size: 28px;
-      color: var(--text-main);
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-    }
-
-    .step-title {
-      font-family: 'Open Sans', sans-serif;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--text-dark);
-    }
-
-    .step-desc {
-      font-family: 'Open Sans', sans-serif;
+    .instr-text {
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
-      font-size: 12px;
-      line-height: 17px;
-      color: var(--text-sub);
-      margin-top: 2px;
-    }
-
-    /* Sección QR */
-    .veriff-qr-section {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .qr-text { flex: 1; }
-
-    .qr-title {
-      font-family: 'Open Sans', sans-serif;
-      font-weight: 600;
       font-size: 13px;
       line-height: 18px;
-      color: var(--blue);
-      margin-bottom: 6px;
+      color: #575768;
+      letter-spacing: 0.1px;
     }
 
-    .qr-desc {
-      font-family: 'Open Sans', sans-serif;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 17px;
-      color: var(--text-sub);
+    /* ── TARJETA ÉXITO (estado 2) ── */
+    .success-card {
+      background: #fff;
+      border: 1px solid #f2f2f8;
+      border-radius: 16px;
+      width: 320px;
+      padding: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
     }
 
-    /* QR code con brackets azules integrados en el SVG */
-    .qr-code-wrap {
+    .success-icon-wrap {
+      width: 40px;
+      height: 40px;
       flex-shrink: 0;
-      width: 90px;
-      height: 90px;
+      background: #f1fff8;
+      border: 1px solid #ace1c6;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    /* Textos inferiores del widget */
-    .veriff-privacy {
-      font-family: 'Open Sans', sans-serif;
+    .success-icon-wrap .icon {
+      font-size: 20px;
+      color: #108F50;
+      font-variation-settings: 'FILL' 0, 'wght' 400;
+    }
+
+    .success-text {
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
-      font-size: 11px;
-      line-height: 16px;
-      color: var(--text-sub);
-      text-align: center;
+      font-size: 14px;
+      line-height: 20px;
+      color: #3b3a45;
+      letter-spacing: 0.1px;
     }
 
-    .veriff-privacy a,
-    .veriff-alt a {
-      color: var(--blue);
-      text-decoration: none;
+    /* ── BOTONES ── */
+    .btn-row {
+      display: flex;
+      gap: 16px;
+      width: 100%;
     }
 
-    .veriff-alt {
-      font-family: 'Open Sans', sans-serif;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 17px;
-      color: var(--text-sub);
-      text-align: center;
+    .btn-row .btn-secondary,
+    .btn-row .btn-outline,
+    .btn-row .btn-primary {
+      flex: 1;
     }
 
-    .veriff-powered {
-      font-family: 'Open Sans', sans-serif;
-      font-weight: 400;
-      font-size: 11px;
-      line-height: 16px;
-      color: #aaa;
-      text-align: center;
-    }
+    .btn-tomar { width: 265px; align-self: center; }
 
-    .veriff-brand {
-      font-style: italic;
-      font-weight: 700;
-      color: #3558e0;
-    }
+    /* Estado oculto */
+    .state-2 { display: none; }
 
     /* ─── BOTÓN ─────────────────────────────────────────── */
     .btn-biometria { width: 265px; align-self: center; }
@@ -190,6 +214,9 @@
     @media (max-width: 480px) {
       .bio-card { width: 100%; padding: 24px 16px; }
       .btn-biometria { width: 100%; }
+      .instructions-card,
+      .success-card { width: 100%; }
+      .circle-wrap { width: 220px; height: 220px; }
     }
   </style>
 </head>
@@ -201,11 +228,8 @@
     <img class="header-logo"
          src="assets/icons/logo-fid.svg"
          alt="FID by Lakaut" />
-    <button class="icon-btn" onclick="history.back()" aria-label="Volver">
-      <span class="icon">arrow_back</span>
-    </button>
-    <span class="header-title">Biometría</span>
-    <button class="icon-btn" onclick="window.location.href='login.html'" aria-label="Cerrar">
+    <span class="header-title">Validación de identidad</span>
+    <button class="icon-btn" onclick="closePage()" aria-label="Cerrar">
       <span class="icon">close</span>
     </button>
   </header>
@@ -214,163 +238,138 @@
   <main class="content-area">
     <div class="bio-card">
 
-      <!-- ── VERIFF WIDGET ── -->
-      <div class="veriff-widget">
-
-        <!-- Header: logo FID -->
-        <div class="veriff-header">
-          <img class="veriff-fid-logo"
-               src="assets/icons/logo-fid.svg"
-               alt="FID by Lakaut" />
-        </div>
-
-        <!-- Título -->
-        <h2 class="veriff-title">Vamos a verificarte</h2>
-
-        <!-- Paso: smartphone -->
-        <div class="veriff-step">
-          <span class="icon">smartphone</span>
-          <div>
-            <p class="step-title">Utiliza un smartphone</p>
-            <p class="step-desc">Necesitas un smartphone para continuar</p>
-          </div>
-        </div>
-
-        <!-- QR code -->
-        <div class="veriff-qr-section">
-          <div class="qr-text">
-            <p class="qr-title">Escanea el código QR</p>
-            <p class="qr-desc">Escanea el código QR para continuar en otro dispositivo.</p>
-          </div>
-          <div class="qr-code-wrap">
-            <svg width="90" height="90" viewBox="-6 -6 75 75" xmlns="http://www.w3.org/2000/svg" style="display:block">
-              <!-- Brackets azules en las 4 esquinas -->
-              <path d="M-4,10 L-4,-4 L10,-4" stroke="#2A39D0" stroke-width="2.5" fill="none" stroke-linecap="square"/>
-              <path d="M53,-4 L67,-4 L67,10" stroke="#2A39D0" stroke-width="2.5" fill="none" stroke-linecap="square"/>
-              <path d="M-4,53 L-4,67 L10,67" stroke="#2A39D0" stroke-width="2.5" fill="none" stroke-linecap="square"/>
-              <path d="M53,67 L67,67 L67,53" stroke="#2A39D0" stroke-width="2.5" fill="none" stroke-linecap="square"/>
-              <rect width="63" height="63" fill="white"/>
-              <!-- Finder top-left -->
-              <rect x="0"  y="0"  width="21" height="21" fill="#1a1a1a"/>
-              <rect x="3"  y="3"  width="15" height="15" fill="white"/>
-              <rect x="6"  y="6"  width="9"  height="9"  fill="#1a1a1a"/>
-              <!-- Finder top-right -->
-              <rect x="42" y="0"  width="21" height="21" fill="#1a1a1a"/>
-              <rect x="45" y="3"  width="15" height="15" fill="white"/>
-              <rect x="48" y="6"  width="9"  height="9"  fill="#1a1a1a"/>
-              <!-- Finder bottom-left -->
-              <rect x="0"  y="42" width="21" height="21" fill="#1a1a1a"/>
-              <rect x="3"  y="45" width="15" height="15" fill="white"/>
-              <rect x="6"  y="48" width="9"  height="9"  fill="#1a1a1a"/>
-              <!-- Timing col-6 -->
-              <rect x="18" y="21" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="18" y="27" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="18" y="33" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="18" y="39" width="3" height="3" fill="#1a1a1a"/>
-              <!-- Timing row-6 -->
-              <rect x="21" y="18" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="27" y="18" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="33" y="18" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="39" y="18" width="3" height="3" fill="#1a1a1a"/>
-              <!-- Data modules – centro -->
-              <rect x="21" y="21" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="27" y="21" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="33" y="21" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="24" y="24" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="30" y="24" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="39" y="24" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="21" y="27" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="36" y="27" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="24" y="30" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="30" y="30" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="39" y="30" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="27" y="33" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="33" y="33" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="21" y="36" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="36" y="36" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="24" y="39" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="30" y="39" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="39" y="39" width="3" height="3" fill="#1a1a1a"/>
-              <!-- Data modules – derecha -->
-              <rect x="42" y="21" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="48" y="21" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="57" y="21" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="45" y="24" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="54" y="24" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="60" y="24" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="42" y="27" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="51" y="27" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="57" y="27" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="48" y="30" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="60" y="30" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="45" y="33" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="54" y="33" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="42" y="36" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="51" y="36" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="57" y="39" width="3" height="3" fill="#1a1a1a"/>
-              <!-- Data modules – abajo centro -->
-              <rect x="21" y="42" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="30" y="42" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="39" y="42" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="24" y="45" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="33" y="45" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="27" y="48" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="36" y="48" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="21" y="51" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="30" y="51" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="39" y="51" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="24" y="54" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="33" y="54" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="27" y="57" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="36" y="57" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="21" y="60" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="30" y="60" width="3" height="3" fill="#1a1a1a"/>
-              <!-- Data modules – abajo derecha -->
-              <rect x="42" y="42" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="51" y="42" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="60" y="42" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="45" y="45" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="54" y="45" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="42" y="48" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="57" y="48" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="48" y="51" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="60" y="51" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="45" y="54" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="54" y="54" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="42" y="57" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="51" y="57" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="57" y="60" width="3" height="3" fill="#1a1a1a"/>
-              <rect x="48" y="60" width="3" height="3" fill="#1a1a1a"/>
-            </svg>
-          </div>
-        </div>
-
-        <!-- Privacidad -->
-        <p class="veriff-privacy">
-          Más información sobre el tratamiento de tus datos de Veriff en
-          <a href="#">Declaración de Privacidad</a>.
-        </p>
-
-        <!-- Sin smartphone -->
-        <p class="veriff-alt">
-          ¿No tienes smartphone? <a href="#">Continuar con este dispositivo</a>
-        </p>
-
-        <!-- Powered by -->
-        <p class="veriff-powered">Powered by <span class="veriff-brand">veriff</span></p>
-
+      <!-- Título -->
+      <div>
+        <h2 class="bio-title">Sacá una foto de tu rostro</h2>
+        <p class="bio-subtitle">Vamos a confirmar que sos la misma persona que figura en tu documento.</p>
       </div>
-      <!-- /veriff-widget -->
 
-      <!-- ── BOTÓN ── -->
-      <button class="btn-primary btn-biometria active"
-              onclick="window.location.href='validando-identidad.html'">
-        <span>Validar biometría</span>
+      <!-- Inner card con cámara -->
+      <div class="camera-card">
+        <div class="camera-card-inner">
+
+          <!-- Círculo cámara -->
+          <div class="circle-wrap" id="circleWrap">
+            <video id="cameraVideo" autoplay playsinline muted></video>
+            <img id="photoPreview" class="photo-preview" style="display:none;" alt="Foto tomada" />
+            <canvas id="photoCanvas" style="display:none;"></canvas>
+            <div class="flash-overlay" id="flashOverlay"></div>
+          </div>
+
+          <!-- Estado 1: instrucciones -->
+          <div class="instructions-card state-1" id="state1Info">
+            <div class="instruction-row">
+              <div class="instr-icon-wrap">
+                <span class="material-symbols-outlined icon">ar_on_you</span>
+              </div>
+              <p class="instr-text">Ubica tu cara en el círculo, y presiona en tomar foto</p>
+            </div>
+            <div class="instruction-row">
+              <div class="instr-icon-wrap">
+                <span class="material-symbols-outlined icon">eyeglasses</span>
+              </div>
+              <p class="instr-text">Evitá elementos que tapen tu cara o hagan sombra. Ej. anteojos o sombreros.</p>
+            </div>
+          </div>
+
+          <!-- Estado 2: éxito -->
+          <div class="success-card state-2" id="state2Info">
+            <div class="success-icon-wrap">
+              <span class="material-symbols-outlined icon">check</span>
+            </div>
+            <p class="success-text">Foto tomada exitosamente, verifica que se vea de forma correcta.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Estado 1: botón único -->
+      <button class="btn-primary btn-tomar state-1" id="btnTomar" onclick="tomarFoto()">
+        <span>Tomar foto</span>
       </button>
+
+      <!-- Estado 2: botones Tomar otra / Continuar -->
+      <div class="btn-row state-2" id="btnRow2">
+        <button class="btn-outline" onclick="reiniciarCamara()">
+          <span>Tomar otra foto</span>
+        </button>
+        <button class="btn-primary" onclick="window.location.href='validando-identidad.html'">
+          <span>Continuar</span>
+        </button>
+      </div>
 
     </div>
   </main>
 
 </div>
+
+<script>
+  const video    = document.getElementById('cameraVideo');
+  const canvas   = document.getElementById('photoCanvas');
+  const preview  = document.getElementById('photoPreview');
+  const circle   = document.getElementById('circleWrap');
+  const flash    = document.getElementById('flashOverlay');
+  let stream     = null;
+
+  // Inicia la cámara al cargar
+  async function initCamera() {
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+      video.srcObject = stream;
+    } catch (e) {
+      // Si no hay permisos, muestra placeholder
+      video.style.background = '#1a1a2e';
+    }
+  }
+
+  function tomarFoto() {
+    // Captura el frame actual del video
+    canvas.width  = video.videoWidth  || 266;
+    canvas.height = video.videoHeight || 266;
+    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    // Flash
+    flash.classList.add('active');
+    setTimeout(() => flash.classList.remove('active'), 150);
+
+    // Muestra la foto capturada
+    preview.src = canvas.toDataURL('image/jpeg', 0.92);
+    preview.style.display = 'block';
+    video.style.display = 'none';
+
+    // Detiene el stream
+    if (stream) stream.getTracks().forEach(t => t.stop());
+
+    // Borde verde
+    circle.classList.add('success');
+
+    // Cambia a estado 2
+    setTimeout(() => cambiarEstado(2), 200);
+  }
+
+  function reiniciarCamara() {
+    preview.style.display = 'none';
+    video.style.display = 'block';
+    circle.classList.remove('success');
+    cambiarEstado(1);
+    initCamera();
+  }
+
+  function cambiarEstado(n) {
+    document.querySelectorAll('.state-1').forEach(el =>
+      el.style.setProperty('display', n === 1 ? 'block' : 'none', 'important')
+    );
+    document.querySelectorAll('.state-2').forEach(el =>
+      el.style.setProperty('display', n === 2 ? 'flex' : 'none', 'important')
+    );
+  }
+
+  function closePage() {
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    window.location.href = 'login.html';
+  }
+
+  initCamera();
+</script>
 </body>
 </html>

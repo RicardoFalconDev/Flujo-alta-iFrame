@@ -131,9 +131,6 @@
          alt="FID by Lakaut"
          width="55" height="38" />
 
-    <button class="icon-btn" onclick="window.location.href='paso1.html'" aria-label="Volver">
-      <span class="icon">arrow_back</span>
-    </button>
 
     <span class="header-title">Datos personales</span>
 
@@ -211,6 +208,10 @@
 </div>
 
 <script>
+  function volverAtras() {
+    window.location.href = sessionStorage.getItem('flow') === 'pf' ? 'pf-paso1.html' : 'paso1.html';
+  }
+
   function irAEditar() {
     const generoTexto = document.getElementById('val-genero').textContent.trim().toLowerCase()
       .replace('é', 'e').replace(' ', '_');
