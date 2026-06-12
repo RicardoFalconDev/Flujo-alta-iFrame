@@ -114,7 +114,7 @@
   <header class="header">
     <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
     <span class="header-title">Certificado Digital</span>
-    <button class="icon-btn" onclick="window.location.href='login.html'" aria-label="Cerrar">
+    <button class="icon-btn" onclick="window.location.href=sessionStorage.getItem('flow')==='pf'?'index.html':'login.html'" aria-label="Cerrar">
       <span class="icon">close</span>
     </button>
   </header>
@@ -142,15 +142,15 @@
           <span class="cert-label">CUIL</span>
           <span class="cert-value">20-12345678-2</span>
         </div>
-        <div class="cert-row">
+        <div class="cert-row juridico-only">
           <span class="cert-label">CUIL de la empresa</span>
           <span class="cert-value">30-12345678-1</span>
         </div>
-        <div class="cert-row">
+        <div class="cert-row juridico-only">
           <span class="cert-label">Razón social</span>
           <span class="cert-value">Anónima S.A</span>
         </div>
-        <div class="cert-row">
+        <div class="cert-row juridico-only">
           <span class="cert-label">Cargo</span>
           <span class="cert-value">Presidente</span>
         </div>
@@ -186,7 +186,7 @@
 
       <!-- Botón -->
       <button class="btn-primary btn-finalizar active"
-              onclick="window.location.href='login.html'">
+              onclick="window.location.href=sessionStorage.getItem('flow')==='pf'?'index.html':'login.html'">
         <span>Finalizar</span>
       </button>
 
@@ -194,5 +194,11 @@
   </main>
 
 </div>
+
+<script>
+  if (sessionStorage.getItem('flow') === 'pf') {
+    document.querySelectorAll('.juridico-only').forEach(el => el.style.display = 'none');
+  }
+</script>
 </body>
 </html>
