@@ -204,12 +204,8 @@
 
     .bonificado-card { text-align: center; }
     .bonificado-inner { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px 0; }
-    .bonificado-icon-wrap {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: #dcfce7;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .bonificado-icon { font-size: 32px; color: #166534; }
+    .bonificado-icon-wrap { display: flex; align-items: center; justify-content: center; }
+    .bonificado-icon { width: 80px; height: 80px; object-fit: contain; }
     .bonificado-title { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 16px; color: #111827; margin: 0; }
     .bonificado-desc  { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: #6b7280; margin: 0; line-height: 1.5; }
 
@@ -716,7 +712,7 @@
         <div class="card bonificado-card" id="bonificado-card" style="display:none">
           <div class="bonificado-inner">
             <div class="bonificado-icon-wrap">
-              <span class="icon bonificado-icon">check_circle</span>
+              <img class="bonificado-icon" src="assets/icons/success-illustration.png" alt="" />
             </div>
             <p class="bonificado-title">Tu pago esta bonificado</p>
             <p class="bonificado-desc">Tu cupón <strong id="bonificado-code"></strong> cubre todo el costo. Podés avanzar sin ingresar medio de pago.</p>
