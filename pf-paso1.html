@@ -320,7 +320,7 @@
     }
 
     /* ─── CUPÓN DE DESCUENTO ─────────────────────────── */
-    .coupon-wrap { display: flex; flex-direction: column; gap: 8px; }
+    .coupon-wrap { display: flex; flex-direction: column; }
 
     .coupon-field {
       display: flex;
@@ -329,15 +329,19 @@
       background: #fff;
       border: 1px solid #dbdde3;
       border-radius: 8px;
-      padding: 16px;
+      padding: 0 16px;
       gap: 8px;
-      transition: border-color .15s;
+      height: 64px;
+      box-sizing: border-box;
+      transition: border-color .2s ease;
       cursor: text;
+      flex-shrink: 0;
     }
 
-    .coupon-field.active  { border-color: var(--blue); }
-    .coupon-field.filled  { border-color: #dbdde3; }
-    .coupon-field.error   { border-color: #bc251d; }
+    .coupon-field.active { border-color: var(--blue); }
+    .coupon-field.typing { border-color: var(--blue); }
+    .coupon-field.filled { border-color: #dbdde3; }
+    .coupon-field.error  { border-color: #bc251d; }
 
     .coupon-left {
       display: flex;
@@ -345,9 +349,16 @@
       gap: 8px;
       flex: 1;
       min-width: 0;
+      overflow: hidden;
     }
 
-    .coupon-icon { width: 24px; height: 24px; flex-shrink: 0; display: block; }
+    .coupon-icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      display: block;
+      transition: opacity .2s ease;
+    }
 
     .coupon-input {
       border: none;
@@ -361,14 +372,33 @@
       min-width: 0;
     }
 
-    .coupon-input::placeholder { color: #818ea1; }
+    .coupon-input::placeholder { color: #818ea1; transition: color .2s ease; }
     .coupon-input:focus::placeholder { color: transparent; }
 
+    /* ── Zona derecha ── */
     .coupon-right {
       display: flex;
       align-items: center;
-      gap: 12px;
       flex-shrink: 0;
+    }
+
+    /* Cada elemento de la zona derecha colapsa a ancho 0 cuando está oculto */
+    .coupon-right-item {
+      overflow: hidden;
+      max-width: 80px;
+      opacity: 1;
+      transition: max-width .2s ease, opacity .18s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .coupon-right-item + .coupon-right-item { margin-left: 10px; }
+
+    .coupon-hidden {
+      max-width: 0 !important;
+      opacity: 0 !important;
+      pointer-events: none;
+      margin-left: 0 !important;
     }
 
     .coupon-apply {
@@ -381,19 +411,17 @@
       cursor: pointer;
       padding: 0;
       white-space: nowrap;
-      transition: color .15s;
+      transition: color .2s ease;
     }
 
     .coupon-field.typing .coupon-apply { color: var(--blue); }
-    .coupon-field.filled .coupon-apply,
-    .coupon-field.error  .coupon-apply { display: none; }
 
     .coupon-state-icon {
-      font-size: 22px;
+      width: 24px;
+      height: 24px;
       flex-shrink: 0;
+      display: block;
     }
-
-    .coupon-state-icon { width: 24px; height: 24px; flex-shrink: 0; display: block; }
 
     .coupon-clear-btn {
       background: none;
@@ -403,22 +431,30 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #495057;
       flex-shrink: 0;
     }
 
-    .coupon-clear-btn img { width: 20px; height: 20px; opacity: 0.6; }
+    .coupon-clear-btn img { width: 20px; height: 20px; opacity: 0.55; }
 
+    /* Error message con transición de altura */
     .coupon-error-msg {
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 12px;
       line-height: 18px;
       color: #bc251d;
-      display: none;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height .22s ease, opacity .2s ease, margin-top .2s ease;
+      margin-top: 0;
     }
 
-    .coupon-error-msg.visible { display: block; }
+    .coupon-error-msg.visible {
+      max-height: 26px;
+      opacity: 1;
+      margin-top: 6px;
+    }
 
     .breakdown-row.discount .breakdown-value { color: #27ae60; }
 
@@ -767,12 +803,20 @@
                        onblur="onCouponBlur()" />
               </div>
               <div class="coupon-right" id="coupon-right">
-                <button class="coupon-apply" id="coupon-apply" onclick="applyCoupon(event)">Aplicar</button>
-                <img class="coupon-state-icon" id="coupon-check" src="assets/icons/coupon-check.svg" alt="" style="display:none" />
-                <img class="coupon-state-icon" id="coupon-warn"  src="assets/icons/coupon-warn.svg"  alt="" style="display:none" />
-                <button class="coupon-clear-btn" id="coupon-clear" style="display:none" onclick="clearCoupon(event)">
-                  <img src="assets/icons/delete.svg" alt="Eliminar" onerror="this.outerHTML='<span class=\'icon\' style=\'font-size:18px;color:#666\'>delete</span>'" />
-                </button>
+                <div class="coupon-right-item" id="coupon-apply-wrap">
+                  <button class="coupon-apply" id="coupon-apply" onclick="applyCoupon(event)">Aplicar</button>
+                </div>
+                <div class="coupon-right-item coupon-hidden" id="coupon-check-wrap">
+                  <img class="coupon-state-icon" id="coupon-check" src="assets/icons/coupon-check.svg" alt="" />
+                </div>
+                <div class="coupon-right-item coupon-hidden" id="coupon-warn-wrap">
+                  <img class="coupon-state-icon" id="coupon-warn" src="assets/icons/coupon-warn.svg" alt="" />
+                </div>
+                <div class="coupon-right-item coupon-hidden" id="coupon-clear-wrap">
+                  <button class="coupon-clear-btn" id="coupon-clear" onclick="clearCoupon(event)">
+                    <span class="icon" style="font-size:18px;color:#666">delete</span>
+                  </button>
+                </div>
               </div>
             </div>
             <p class="coupon-error-msg" id="coupon-error-msg">Código incorrecto, probá con otro.</p>
@@ -900,22 +944,28 @@
   /* ── Cupón de descuento ─────────────────────────── */
   let couponApplied = false;
 
+  function setHidden(id, hidden) {
+    document.getElementById(id).classList.toggle('coupon-hidden', hidden);
+  }
+
   function setCouponState(state) {
-    const field  = document.getElementById('coupon-field');
+    const field   = document.getElementById('coupon-field');
+    const hasText = document.getElementById('coupon-input').value.trim() !== '';
     field.classList.remove('active', 'typing', 'filled', 'error');
     if (state) field.classList.add(state);
 
-    const hasText   = document.getElementById('coupon-input').value.trim() !== '';
-    const showClear = ['active', 'typing', 'filled', 'error'].includes(state);
     const useBlue   = ['active', 'typing', 'filled'].includes(state);
+    const showClear = hasText && ['typing', 'filled', 'error'].includes(state);
+    const showApply = !state || state === 'active' || state === 'typing';
 
     document.getElementById('coupon-icon').src = useBlue
       ? 'assets/icons/coupon-ticket-blue.svg'
       : 'assets/icons/coupon-ticket.svg';
 
-    document.getElementById('coupon-check').style.display = state === 'filled' ? '' : 'none';
-    document.getElementById('coupon-warn').style.display  = state === 'error'  ? '' : 'none';
-    document.getElementById('coupon-clear').style.display = showClear && hasText ? '' : 'none';
+    setHidden('coupon-apply-wrap', !showApply);
+    setHidden('coupon-check-wrap', state !== 'filled');
+    setHidden('coupon-warn-wrap',  state !== 'error');
+    setHidden('coupon-clear-wrap', !showClear);
     document.getElementById('coupon-error-msg').classList.toggle('visible', state === 'error');
   }
 
