@@ -319,6 +319,112 @@
       color: #000;
     }
 
+    /* ─── CUPÓN DE DESCUENTO ─────────────────────────── */
+    .coupon-wrap { display: flex; flex-direction: column; gap: 8px; }
+
+    .coupon-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border: 1px solid #dbdde3;
+      border-radius: 8px;
+      padding: 16px;
+      gap: 8px;
+      transition: border-color .15s;
+      cursor: text;
+    }
+
+    .coupon-field.active  { border-color: var(--blue); }
+    .coupon-field.filled  { border-color: #dbdde3; }
+    .coupon-field.error   { border-color: #bc251d; }
+
+    .coupon-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .coupon-icon { font-size: 22px; color: #818ea1; flex-shrink: 0; }
+    .coupon-field.active .coupon-icon,
+    .coupon-field.filled .coupon-icon { color: var(--blue); }
+    .coupon-field.error .coupon-icon  { color: #818ea1; }
+
+    .coupon-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #495057;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .coupon-input::placeholder { color: #818ea1; }
+
+    .coupon-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .coupon-apply {
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      color: #adb5bd;
+      cursor: pointer;
+      padding: 0;
+      white-space: nowrap;
+      transition: color .15s;
+    }
+
+    .coupon-field.typing .coupon-apply { color: var(--blue); }
+    .coupon-field.filled .coupon-apply,
+    .coupon-field.error  .coupon-apply { display: none; }
+
+    .coupon-state-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .coupon-check  { color: #27ae60; }
+    .coupon-warn   { color: #bc251d; }
+
+    .coupon-clear-btn {
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #495057;
+      flex-shrink: 0;
+    }
+
+    .coupon-clear-btn .icon { font-size: 20px; }
+
+    .coupon-error-msg {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      color: #bc251d;
+      display: none;
+    }
+
+    .coupon-error-msg.visible { display: block; }
+
+    .breakdown-row.discount .breakdown-value { color: #27ae60; }
+
     .security-block { display: flex; flex-direction: column; gap: 12px; }
 
     .security-title {
@@ -652,11 +758,38 @@
             <p class="purchase-detail">1 Certificado digital personal</p>
             <p class="purchase-detail" id="sidebar-plan-firmas">20 firmas digitales</p>
           </div>
+          <!-- Cupón de descuento -->
+          <div class="coupon-wrap">
+            <div class="coupon-field" id="coupon-field" onclick="focusCoupon()">
+              <div class="coupon-left">
+                <span class="icon coupon-icon">confirmation_number</span>
+                <input class="coupon-input" id="coupon-input" type="text"
+                       placeholder="Código de descuento"
+                       oninput="onCouponInput()"
+                       onfocus="onCouponFocus()"
+                       onblur="onCouponBlur()" />
+              </div>
+              <div class="coupon-right" id="coupon-right">
+                <button class="coupon-apply" id="coupon-apply" onclick="applyCoupon(event)">Aplicar</button>
+                <span class="icon coupon-state-icon coupon-check" id="coupon-check" style="display:none">check_circle</span>
+                <span class="icon coupon-state-icon coupon-warn"  id="coupon-warn"  style="display:none">error</span>
+                <button class="coupon-clear-btn" id="coupon-clear" style="display:none" onclick="clearCoupon(event)">
+                  <span class="icon">delete</span>
+                </button>
+              </div>
+            </div>
+            <p class="coupon-error-msg" id="coupon-error-msg">Código incorrecto, probá con otro.</p>
+          </div>
+
           <hr class="divider" />
           <div class="breakdown-rows">
             <div class="breakdown-row">
               <span class="breakdown-label">Subtotal</span>
               <span class="breakdown-value" id="sidebar-subtotal">$61.700</span>
+            </div>
+            <div class="breakdown-row discount" id="discount-row" style="display:none">
+              <span class="breakdown-label">Descuento</span>
+              <span class="breakdown-value" id="sidebar-discount"></span>
             </div>
           </div>
           <hr class="divider" />
@@ -686,15 +819,15 @@
 <script>
   /* ── Datos de planes PF ──────────────────────────── */
   const PLANES = {
-    'Smart': {
-      firmas: '20 firmas digitales',
-      precio: '$61.700'
-    },
-    'Profesional': {
-      firmas: 'Firmas digitales ilimitadas',
-      precio: '$363.000'
-    }
+    'Smart':       { firmas: '20 firmas digitales',        precio: '$61.700',  raw: 61700  },
+    'Profesional': { firmas: 'Firmas digitales ilimitadas', precio: '$363.000', raw: 363000 }
   };
+
+  const VALID_CODES = { 'SMART100': 0.10 };
+
+  function formatPrice(n) {
+    return '$' + n.toLocaleString('es-AR');
+  }
 
   /* ── Renderizar plan en sidebar ──────────────────── */
   sessionStorage.setItem('flow', 'pf');
@@ -765,6 +898,85 @@
   function setReq(id, ok) {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('ok', ok);
+  }
+
+  /* ── Cupón de descuento ─────────────────────────── */
+  let couponApplied = false;
+
+  function setCouponState(state) {
+    const field  = document.getElementById('coupon-field');
+    field.classList.remove('active', 'typing', 'filled', 'error');
+    if (state) field.classList.add(state);
+
+    const hasText  = document.getElementById('coupon-input').value.trim() !== '';
+    const showClear = ['active', 'typing', 'filled', 'error'].includes(state);
+
+    document.getElementById('coupon-check').style.display = state === 'filled' ? '' : 'none';
+    document.getElementById('coupon-warn').style.display  = state === 'error'  ? '' : 'none';
+    document.getElementById('coupon-clear').style.display = showClear && hasText ? '' : 'none';
+    document.getElementById('coupon-error-msg').classList.toggle('visible', state === 'error');
+  }
+
+  function focusCoupon() {
+    document.getElementById('coupon-input').focus();
+  }
+
+  function onCouponFocus() {
+    if (couponApplied) return;
+    const hasText = document.getElementById('coupon-input').value.trim() !== '';
+    setCouponState(hasText ? 'typing' : 'active');
+    document.getElementById('coupon-clear').style.display = hasText ? '' : 'none';
+  }
+
+  function onCouponBlur() {
+    if (couponApplied) return;
+    const hasText = document.getElementById('coupon-input').value.trim() !== '';
+    if (!hasText) setCouponState('');
+  }
+
+  function onCouponInput() {
+    if (couponApplied) return;
+    const hasText = document.getElementById('coupon-input').value.trim() !== '';
+    setCouponState(hasText ? 'typing' : 'active');
+    document.getElementById('coupon-clear').style.display = hasText ? '' : 'none';
+    document.getElementById('coupon-error-msg').classList.remove('visible');
+  }
+
+  function applyCoupon(e) {
+    e.stopPropagation();
+    const code = document.getElementById('coupon-input').value.trim().toUpperCase();
+    if (!code) return;
+    const discount = VALID_CODES[code];
+    if (discount !== undefined) {
+      couponApplied = true;
+      setCouponState('filled');
+      document.getElementById('coupon-clear').style.display = '';
+      document.getElementById('coupon-input').disabled = true;
+
+      const raw         = PLANES[planName]?.raw || 61700;
+      const descAmount  = Math.round(raw * discount);
+      const total       = raw - descAmount;
+
+      document.getElementById('discount-row').style.display = '';
+      document.getElementById('sidebar-discount').textContent = '-' + formatPrice(descAmount);
+      document.getElementById('sidebar-total').textContent = formatPrice(total);
+    } else {
+      setCouponState('error');
+      document.getElementById('coupon-clear').style.display = '';
+    }
+  }
+
+  function clearCoupon(e) {
+    e.stopPropagation();
+    couponApplied = false;
+    const input = document.getElementById('coupon-input');
+    input.value    = '';
+    input.disabled = false;
+    setCouponState('');
+
+    const raw = PLANES[planName]?.raw || 61700;
+    document.getElementById('discount-row').style.display = 'none';
+    document.getElementById('sidebar-total').textContent = formatPrice(raw);
   }
 
   /* ── Pagar → procesando-pago ─────────────────────── */
