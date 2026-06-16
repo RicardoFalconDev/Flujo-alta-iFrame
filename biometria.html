@@ -277,7 +277,7 @@
             <div class="success-icon-wrap">
               <span class="material-symbols-outlined icon">check</span>
             </div>
-            <p class="success-text">Foto tomada exitosamente, verifica que se vea de forma correcta.</p>
+            <p class="success-text">Foto tomada exitosamente.</p>
           </div>
 
         </div>
@@ -288,15 +288,7 @@
         <span>Tomar foto</span>
       </button>
 
-      <!-- Estado 2: botones Tomar otra / Continuar -->
-      <div class="btn-row state-2" id="btnRow2">
-        <button class="btn-outline" onclick="reiniciarCamara()">
-          <span>Tomar otra foto</span>
-        </button>
-        <button class="btn-primary" onclick="window.location.href='validando-identidad.html'">
-          <span>Continuar</span>
-        </button>
-      </div>
+      <!-- Estado 2: transición automática, sin botones -->
 
     </div>
   </main>
@@ -343,8 +335,9 @@
     // Borde verde
     circle.classList.add('success');
 
-    // Cambia a estado 2
+    // Cambia a estado 2 y redirige automáticamente
     setTimeout(() => cambiarEstado(2), 200);
+    setTimeout(() => window.location.href = 'validando-identidad.html', 2000);
   }
 
   function reiniciarCamara() {
