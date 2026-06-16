@@ -376,9 +376,10 @@
 
     .beneficios-sidebar {
       position: absolute;
-      left: calc((100vw - 1200px) / 2 - 110px);
+      left: 0;
       top: 0; bottom: 0;
-      width: 609px;
+      width: calc((100vw - 1200px) / 2 + 609px);
+      min-width: 609px;
       background: var(--lg-2);
       border-radius: 0 60px 60px 0;
       pointer-events: none;
