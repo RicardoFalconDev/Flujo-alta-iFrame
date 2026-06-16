@@ -27,7 +27,7 @@
       --price-sub:   #6C757D;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-y: scroll; }
 
     body {
       background: #fff;
@@ -36,12 +36,13 @@
 
     .page {
       width: 100%;
+      padding-top: 65px;
     }
 
     /* ─── NAVBAR ─────────────────────────────────────── */
     .navbar {
-      position: sticky;
-      top: 0;
+      position: fixed;
+      top: 0; left: 0; right: 0;
       z-index: 200;
       backdrop-filter: blur(7.5px);
       -webkit-backdrop-filter: blur(7.5px);
@@ -52,7 +53,8 @@
     .navbar-inner {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 13px 20px;
+      height: 65px;
+      padding: 0 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -106,11 +108,35 @@
       background: none;
       border: none;
       padding: 0;
+      cursor: pointer;
       font-weight: 400;
       font-size: 14px;
-      line-height: 16px;
       color: var(--gray-nav);
       white-space: nowrap;
+      display: inline-flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    /* Reserva el ancho del bold para evitar layout shift al activar */
+    .nav-plain::after {
+      content: attr(data-text);
+      font-size: 14px; font-weight: 600;
+      height: 0; overflow: hidden; visibility: hidden;
+      white-space: nowrap; pointer-events: none;
+    }
+    .nav-text-btn > span:first-child {
+      display: inline-flex; flex-direction: column; overflow: hidden;
+    }
+    .nav-text-btn > span:first-child::after {
+      content: attr(data-text);
+      font-size: 14px; font-weight: 600;
+      height: 0; overflow: hidden; visibility: hidden;
+      white-space: nowrap; pointer-events: none;
+    }
+
+    .nav-plain.active {
+      color: var(--blue);
+      font-weight: 600;
     }
 
     .nav-cta-primary {
@@ -628,7 +654,7 @@
       html, body { overflow-x: hidden; max-width: 100%; }
 
       /* NAVBAR — solo logo + hamburger */
-      .navbar-inner { padding: 15px 16px 16px; }
+      .navbar-inner { padding: 0 16px; }
       .navbar-logo { width: 46px; height: 32px; }
       .nav-links { display: none; }
 
@@ -762,20 +788,23 @@
       <img class="navbar-logo"
            src="assets/icons/logo-fid.svg"
            alt="FID by Lakaut"
-           width="55" height="38" />
+           width="55" height="38"
+           style="cursor:pointer;"
+           onclick="goTo('landing.html')" />
 
       <div class="nav-links">
-        <button class="nav-text-btn">
-          <span>Consultas</span>
+        <button class="nav-plain" data-text="Inicio" onclick="goTo('landing.html')">Inicio</button>
+        <button class="nav-text-btn" onclick="goTo('landing.html#s-info')">
+          <span data-text="Información">Información</span>
           <span class="icon">expand_more</span>
         </button>
-        <button class="nav-text-btn">
-          <span>Información</span>
+        <button class="nav-text-btn" onclick="goTo('landing.html#s-consultas')">
+          <span data-text="Consultas">Consultas</span>
           <span class="icon">expand_more</span>
         </button>
-        <button class="nav-plain">Planes y precios</button>
-        <button class="nav-cta-primary"><span>Solicitar mi firma digital</span></button>
-        <button class="nav-cta-outline" onclick="window.location.href='login.html'"><span>Iniciar Sesión</span></button>
+        <button class="nav-plain active" data-text="Planes y precios">Planes y precios</button>
+        <button class="nav-cta-primary" onclick="goTo('paso1.html')"><span>Solicitar mi firma digital</span></button>
+        <button class="nav-cta-outline" onclick="goTo('login.html')"><span>Iniciar Sesión</span></button>
       </div>
 
       <button class="hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
@@ -785,11 +814,12 @@
 
     <div class="nav-mobile" id="navMobile">
       <div class="nav-mobile-inner">
-        <button>Consultas</button>
-        <button>Información</button>
-        <button>Planes y precios</button>
-        <button class="m-cta-primary">Solicitar mi firma digital</button>
-        <button class="m-cta-outline" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+        <button onclick="goTo('landing.html')">Inicio</button>
+        <button onclick="goTo('landing.html#s-info')">Información</button>
+        <button onclick="goTo('landing.html#s-consultas')">Consultas</button>
+        <button style="font-weight:600;color:var(--blue);">Planes y precios</button>
+        <button class="m-cta-primary" onclick="goTo('paso1.html')">Solicitar mi firma digital</button>
+        <button class="m-cta-outline" onclick="goTo('login.html')">Iniciar Sesión</button>
       </div>
     </div>
   </nav>
@@ -977,7 +1007,7 @@
                 </li>
               </ul>
             </div>
-            <button class="btn-outline-card" onclick="window.location.href='paso1.html'"><span>Contratar PyME</span></button>
+            <button class="btn-outline-card" onclick="goTo('paso1.html')"><span>Contratar PyME</span></button>
           </div>
         </div>
 
@@ -1160,7 +1190,11 @@
   function contratarPF(plan) {
     sessionStorage.setItem('flow', 'pf');
     sessionStorage.setItem('pf_plan', plan);
-    window.location.href = 'pf-paso1.html';
+    goTo('pf-paso1.html');
+  }
+
+  function goTo(url) {
+    window.location.href = url;
   }
 </script>
 </body>

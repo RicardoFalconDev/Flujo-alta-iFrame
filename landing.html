@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FID by Lakaut — Firma Digital Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@300;500;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+
+  <style>
+    /* ─── VARIABLES LANDING ──────────────────────────── */
+    :root {
+      --navy:       #101C82;
+      --gray-3:     #363D55;
+      --gray-4:     #4E566F;
+      --lg-1:       #F8F9FB;
+      --lg-2:       #F1F2F7;
+      --lg-3:       #E2E5EF;
+      --lg-4:       #C8CCDD;
+      --light-blue: #C7CCFA;
+    }
+
+    html { scroll-behavior: smooth; overflow-y: scroll; }
+    body { background: #fff; color: var(--gray-3); }
+    .page { width: 100%; padding-top: 65px; }
+
+    /* ─── NAVBAR ─────────────────────────────────────── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      backdrop-filter: blur(7.5px);
+      -webkit-backdrop-filter: blur(7.5px);
+      background: rgba(255,255,255,.9);
+      border-bottom: 1px solid #E2E5EF;
+    }
+
+    .navbar-inner {
+      max-width: 1200px; margin: 0 auto;
+      height: 65px; padding: 0 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    /* Evita que las secciones queden tapadas por el nav fijo al hacer scroll */
+    #s-inicio, #s-info, #s-consultas { scroll-margin-top: 65px; }
+
+    .navbar-logo { width: 55px; height: 38px; object-fit: contain; flex-shrink: 0; }
+
+    .nav-links { display: flex; align-items: center; gap: 30px; }
+
+    .nav-text-btn {
+      display: flex; align-items: center; gap: 7px;
+      background: none; border: none; padding: 0; cursor: pointer;
+    }
+    .nav-text-btn span,
+    .nav-plain {
+      font-weight: 400; font-size: 14px; color: var(--gray-4); white-space: nowrap;
+    }
+    .nav-text-btn .icon { font-family: 'Material Symbols Outlined'; font-size: 16px; color: var(--gray-4); font-style: normal; }
+
+    .nav-plain {
+      background: none; border: none; padding: 0; cursor: pointer;
+      display: inline-flex; flex-direction: column; overflow: hidden;
+    }
+    /* Reserva el ancho del bold para evitar layout shift al cambiar estado activo */
+    .nav-plain::after {
+      content: attr(data-text);
+      font-size: 14px; font-weight: 600;
+      height: 0; overflow: hidden; visibility: hidden;
+      white-space: nowrap; pointer-events: none;
+    }
+    .nav-text-btn > span:first-child {
+      display: inline-flex; flex-direction: column; overflow: hidden;
+    }
+    .nav-text-btn > span:first-child::after {
+      content: attr(data-text);
+      font-size: 14px; font-weight: 600;
+      height: 0; overflow: hidden; visibility: hidden;
+      white-space: nowrap; pointer-events: none;
+    }
+    .nav-plain.active,
+    .nav-text-btn.active span:first-child {
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .nav-cta-primary {
+      background: var(--blue); border: none; border-radius: 53px;
+      padding: 14px 20px; cursor: pointer; transition: opacity .15s;
+    }
+    .nav-cta-primary:hover { opacity: .85; }
+    .nav-cta-primary span { font-weight: 600; font-size: 14px; color: #fff; white-space: nowrap; }
+
+    .nav-cta-outline {
+      background: transparent; border: 1px solid #6B7494;
+      border-radius: 53px; padding: 14px 20px; cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .nav-cta-outline:hover { background: rgba(107,116,148,.12); }
+    .nav-cta-outline span { font-weight: 600; font-size: 14px; color: #6B7494; white-space: nowrap; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; padding: 4px; cursor: pointer; flex-shrink: 0;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px; background: var(--gray-3);
+      border-radius: 2px; transition: transform .25s, opacity .25s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      overflow: hidden; max-height: 0; transition: max-height .3s ease;
+      border-top: 0 solid #E2E5EF;
+    }
+    .nav-mobile.open { max-height: 400px; border-top-width: 1px; }
+    .nav-mobile-inner { display: flex; flex-direction: column; padding: 8px 0 20px; }
+    .nav-mobile-inner button {
+      background: none; border: none; text-align: left;
+      padding: 13px 24px; font-size: 15px; color: var(--gray-4); cursor: pointer;
+    }
+    .nav-mobile-inner .m-cta-primary {
+      margin: 8px 24px 0; background: var(--blue); border-radius: 53px;
+      padding: 14px 20px; color: #fff; font-weight: 600; font-size: 15px; text-align: center;
+    }
+    .nav-mobile-inner .m-cta-outline {
+      margin: 8px 24px 0; background: transparent; border: 1px solid #6B7494;
+      border-radius: 53px; padding: 13px 20px; color: #6B7494; font-weight: 600;
+      font-size: 15px; text-align: center;
+    }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      background-color: #101C82;
+      overflow: hidden;
+      min-height: 650px;
+    }
+
+    .hero-bg-wrap {
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%; height: 650px;
+      border-bottom-right-radius: 200px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .hero-bg-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-inner {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 163px 0 0;
+      display: flex;
+      gap: 126px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hero-info {
+      display: flex; flex-direction: column; gap: 40px;
+      width: 690px; flex-shrink: 0;
+    }
+
+    .hero-badge { height: 49px; width: 282px; display: block; }
+
+    .hero-title-block { display: flex; flex-direction: column; gap: 30px; }
+
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 55px; line-height: 1; margin: 0;
+    }
+    .hero-title .t-light { font-weight: 300; color: #363D55; display: block; }
+    .hero-title .t-bold  { font-weight: 700; color: var(--blue); display: block; }
+
+    .hero-subtitle {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 15px; line-height: 19px; color: #4E566F;
+      font-style: normal; margin: 0;
+    }
+    .hero-subtitle strong { font-weight: 700; color: #363D55; }
+
+    .btn-hero {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--blue); border: none; border-radius: 100px;
+      padding: 18px 30px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 18px;
+      color: #fff; cursor: pointer; white-space: nowrap;
+      transition: opacity .15s; align-self: flex-start;
+    }
+    .btn-hero:hover { opacity: .85; }
+
+    .hero-images {
+      position: relative;
+      display: flex; align-items: center;
+      width: 384px; height: 487px; flex-shrink: 0;
+    }
+
+    .hero-phone-wrap {
+      position: relative;
+      width: 282px; height: 487px;
+      flex-shrink: 0; overflow: hidden;
+    }
+
+    .hero-phone {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 134.96%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .hero-firma-card {
+      position: absolute; right: 0;
+      top: 50%; transform: translateY(-50%);
+      width: 257px; height: 142px;
+      box-shadow: 6px 15px 30px 0 rgba(6,11,64,.25);
+      display: block;
+    }
+
+    /* ─── QUIÉN SOS ──────────────────────────────────── */
+    .quien-sos {
+      position: relative;
+      height: 650px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background-color: #101C82;
+    }
+
+    .quien-bg {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .quien-bg img {
+      width: 100%; height: 100%; display: block;
+    }
+
+    .quien-inner {
+      position: relative;
+      max-width: 1200px; width: 100%;
+      display: flex; gap: 126px; align-items: center;
+    }
+
+    .quien-text {
+      flex: 1; display: flex; flex-direction: column; gap: 24px;
+    }
+
+    .quien-title {
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: 37.5px; line-height: 1; color: #fff; margin: 0;
+    }
+
+    .quien-subtitle {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 18px; line-height: 21.6px; color: #fff; margin: 0;
+    }
+
+    .quien-desc {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 15px; line-height: 19px; color: #C7CCFA; margin: 0;
+    }
+
+    .quien-panel {
+      width: 690px; flex-shrink: 0;
+      background: #E2E5EF; border-radius: 30px;
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .panel-tabs {
+      display: flex; gap: 24px; align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .panel-tab {
+      flex: 1; height: 58px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 29px; border: none; cursor: pointer;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 18px;
+      text-align: center; white-space: nowrap; padding: 18px 20px;
+      transition: background .2s, color .2s;
+    }
+
+    .panel-tab.active  { background: var(--blue); color: #fff; }
+    .panel-tab:not(.active) { background: #fff; color: #4E566F; }
+
+    .panel-pointer-wrap {
+      width: 100%; height: 18px; position: relative;
+    }
+    .panel-pointer-triangle {
+      position: absolute;
+      width: 0; height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 18px solid #fff;
+      transition: left .2s;
+    }
+
+    .panel-card {
+      background: #fff; border-radius: 15px; padding: 24px;
+      display: flex; gap: 37px; align-items: center;
+    }
+
+    .panel-card-info {
+      flex: 1; display: flex; flex-direction: column; gap: 18px;
+    }
+
+    .panel-card-type {
+      font-family: 'Inter', sans-serif; font-weight: 700;
+      font-size: 20px; line-height: 1; color: var(--blue); margin: 0;
+    }
+
+    .panel-bullets { display: flex; flex-direction: column; gap: 20px; }
+
+    .panel-bullet { display: flex; gap: 12px; align-items: flex-start; }
+    .panel-bullet img { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; }
+    .panel-bullet-text {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 15px; line-height: 19px; color: #4E566F; margin: 0; flex: 1;
+    }
+    .panel-bullet-text strong { font-weight: 700; }
+
+    .btn-panel {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid var(--blue); background: transparent; border-radius: 53px;
+      padding: 14px 20px; font-family: 'Inter', sans-serif; font-weight: 600;
+      font-size: 14px; color: var(--blue); cursor: pointer; white-space: nowrap;
+      align-self: flex-start;
+      transition: background .15s;
+    }
+    .btn-panel:hover { background: rgba(42,57,208,.06); }
+
+    .panel-divider {
+      width: 0; height: 200px; border-left: 1px solid #E2E5EF; flex-shrink: 0;
+    }
+
+    .panel-image {
+      width: 160px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .panel-image img { width: 100%; aspect-ratio: 300/263; object-fit: cover; }
+
+    .quien-disclaimer {
+      position: relative;
+      max-width: 1200px; width: 100%;
+      display: flex; justify-content: flex-end;
+      padding: 25px 0 0;
+    }
+    .quien-disclaimer p {
+      width: 690px; text-align: center;
+      font-family: 'Inter', sans-serif; font-size: 12px; line-height: 16px; color: #C7CCFA;
+    }
+    .quien-disclaimer strong { font-weight: 700; color: #fff; }
+
+    /* ─── BENEFICIOS ──────────────────────────────────── */
+    .beneficios {
+      position: relative;
+      background: var(--lg-1);
+      overflow: hidden;
+      padding: 110px 0;
+    }
+
+    .beneficios-sidebar {
+      position: absolute;
+      left: calc((100vw - 1200px) / 2 - 110px);
+      top: 0; bottom: 0;
+      width: 609px;
+      background: var(--lg-2);
+      border-radius: 0 60px 60px 0;
+      pointer-events: none;
+    }
+
+    .beneficios-inner {
+      position: relative;
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; flex-direction: column; gap: 7px;
+    }
+
+    .beneficios-heading {
+      display: flex; flex-direction: column; gap: 24px;
+      width: 486px; margin-bottom: 0;
+    }
+
+    .sec-title-blue {
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: 37.5px; line-height: 1; color: var(--blue); margin: 0;
+    }
+
+    .sec-subtitle-dark {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 18px; line-height: 21.6px; color: #21283C; margin: 0;
+    }
+
+    .beneficios-content {
+      display: flex; align-items: center;
+    }
+
+    .beneficios-image-col {
+      width: 384px; height: 436px;
+      position: relative; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: flex-end;
+    }
+
+    .beneficios-main-img {
+      position: absolute;
+      left: 102px; top: 0; right: 0;
+      bottom: 0;
+      border-radius: 30px 60px 30px 60px;
+      overflow: hidden;
+    }
+    .beneficios-main-img img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      display: block;
+    }
+
+    .beneficios-notif {
+      position: absolute;
+      left: 0; top: 30px;
+      background: #fff;
+      border: 1px solid #E2E5EF;
+      border-radius: 20px;
+      padding: 20px;
+      width: 299px; height: 94px;
+      display: flex; gap: 14px; align-items: center;
+      box-shadow: 8px 8px 7.5px rgba(6,11,64,.05);
+    }
+
+    .beneficios-notif img { width: 46px; height: 46px; object-fit: cover; flex-shrink: 0; }
+
+    .beneficios-notif p {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 15px; line-height: 19px; color: #4E566F; margin: 0; width: 195px;
+    }
+
+    .beneficios-lines {
+      width: 239px; height: 360.5px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .beneficios-lines img { width: 100%; height: 100%; }
+
+    .beneficios-cards {
+      width: 578px; flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 44px;
+    }
+
+    .benefit-item {
+      position: relative;
+      display: flex; align-items: center;
+      padding-left: 40px;
+    }
+
+    .benefit-card {
+      flex: 1;
+      background: #fff;
+      border: 1px solid #E2E5EF;
+      border-radius: 20px;
+      padding: 40px 40px 40px 66px;
+      display: flex; flex-direction: column; gap: 7px;
+      box-shadow: 8px 8px 7.5px rgba(6,11,64,.05);
+    }
+
+    .benefit-card-title {
+      font-family: 'Inter', sans-serif; font-weight: 700;
+      font-size: 22.5px; line-height: normal; color: #21283C; margin: 0;
+    }
+
+    .benefit-card-desc {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 18px; line-height: 21.6px; color: #4E566F; margin: 0;
+    }
+
+    .benefit-icon {
+      position: absolute;
+      left: 0;
+      top: 50%; transform: translateY(-50%);
+      width: 80px; height: 80px;
+      flex-shrink: 0;
+    }
+    .benefit-icon img { width: 100%; height: 100%; display: block; }
+
+    /* ─── CÓMO OBTENER ────────────────────────────────── */
+    .como-obtener {
+      background: var(--lg-1);
+      padding: 110px 0 0;
+      overflow: hidden;
+    }
+
+    .como-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; gap: 101px; align-items: center; justify-content: center;
+    }
+
+    .como-info {
+      width: 409px; flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 42px;
+    }
+
+    .como-text { display: flex; flex-direction: column; gap: 24px; }
+
+    .como-subtitle {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 18px; line-height: 21.6px; color: #21283C; margin: 0; font-style: normal;
+    }
+
+    .como-steps {
+      position: relative;
+      width: 690px; flex-shrink: 0;
+      display: flex; gap: 27px; align-items: flex-start;
+    }
+
+    .step-col {
+      flex: 1;
+      display: flex; flex-direction: column; gap: 12px; align-items: center;
+    }
+
+    .step-label {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 15px; line-height: 19px; color: #4E566F;
+      text-align: center; margin: 0; width: 153px;
+    }
+
+    .step-bullet { width: 16px; height: 16px; flex-shrink: 0; }
+
+    .step-img {
+      width: 100%; aspect-ratio: 406/836;
+      object-fit: cover; display: block;
+    }
+
+    .steps-line {
+      position: absolute;
+      left: 114px; top: 58px;
+      right: 114px; height: 0;
+      border-top: 1px solid #4E566F;
+      pointer-events: none;
+    }
+
+    /* ─── QUÉ INCLUYE ────────────────────────────────── */
+    .que-incluye {
+      background: var(--lg-2);
+      padding: 66px 0;
+    }
+
+    .que-incluye-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; flex-direction: column; gap: 101px;
+    }
+
+    .incluye-block { display: flex; flex-direction: column; gap: 57px; align-items: center; }
+
+    .incluye-title { display: flex; flex-direction: column; gap: 24px; text-align: center; }
+
+    .incluye-title p {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 18px; line-height: 21.6px; color: #21283C; margin: 0; font-style: normal;
+    }
+
+    .atributos {
+      display: flex; flex-wrap: wrap; gap: 24px;
+      align-items: flex-start; justify-content: center;
+    }
+
+    .atributo {
+      background: #fff; border: 1px solid #E2E5EF; border-radius: 20px;
+      padding: 24px; display: flex; gap: 24px; align-items: center;
+      height: 105px;
+    }
+
+    .atributo img { width: 57px; height: 57px; flex-shrink: 0; object-fit: contain; }
+
+    .atributo p {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 15px; line-height: 19px; color: #363D55; margin: 0; width: 255px;
+    }
+
+    /* QUÉ ES split */
+    .que-es {
+      display: flex; flex-wrap: wrap;
+      gap: 60px 0; align-items: flex-start; justify-content: space-between;
+    }
+
+    .que-es-text {
+      width: 488px; flex-shrink: 0;
+      display: flex; flex-direction: column; gap: 59px;
+    }
+
+    .que-es-text-content { display: flex; flex-direction: column; gap: 28px; }
+
+    .que-es-desc {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 18px; line-height: 21.6px; color: #21283C; margin: 0; font-style: normal;
+    }
+
+    .que-es-desc-small {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 15px; line-height: 19px; color: #4E566F; margin: 0; font-style: normal;
+    }
+
+    .que-es-image-wrap {
+      flex-shrink: 0;
+      position: relative;
+      padding-right: 52px;
+      display: flex; align-items: center; justify-content: flex-end;
+    }
+
+    .que-es-img {
+      width: 345px; height: 456px;
+      border-radius: 30px 60px 60px 30px;
+      object-fit: cover; object-position: center;
+      display: block;
+      box-shadow: 8px 8px 20px rgba(6,11,64,.1);
+    }
+
+    .que-es-bullets {
+      position: absolute;
+      left: -190px; top: 60px;
+      width: 282px;
+      background: var(--blue);
+      border-radius: 30px;
+      padding: 40px 24px;
+      display: flex; flex-direction: column; gap: 30px;
+    }
+
+    .que-es-bullet { display: flex; gap: 18px; align-items: center; }
+    .que-es-bullet img { width: 20px; height: 20px; flex-shrink: 0; }
+    .que-es-bullet p {
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 12px; line-height: 16px; color: #fff; margin: 0; flex: 1;
+    }
+
+    /* ─── FAQS ────────────────────────────────────────── */
+    .faqs {
+      background: #fff;
+      padding: 140px 0 110px;
+    }
+
+    .faqs-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; flex-direction: column; gap: 48px;
+    }
+
+    .faqs-title {
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: 37.5px; line-height: normal; color: var(--blue); margin: 0;
+      width: 410px;
+    }
+
+    .faqs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 24px; row-gap: 48px;
+    }
+
+    .faq-item {
+      display: flex; flex-direction: column; gap: 14px;
+      cursor: pointer; text-align: left; padding: 0;
+    }
+
+    .faq-item:hover .faq-question { color: var(--blue); }
+
+    .faq-row {
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+
+    .faq-question {
+      flex: 1;
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 18px; line-height: 21.6px; color: #21283C; margin: 0;
+      font-style: normal; text-align: left;
+      transition: color .15s;
+    }
+
+    .faq-icon {
+      width: 25px; height: 25px; flex-shrink: 0;
+      transition: transform .25s ease;
+    }
+    .faq-item.open .faq-icon { transform: rotate(180deg); }
+
+    .faq-line { width: 100%; height: 1px; background: #C8CCDD; margin: 0; border: none; }
+
+    .faq-answer {
+      display: none;
+      font-family: 'Inter', sans-serif; font-weight: 400;
+      font-size: 15px; line-height: 19px; color: #4E566F; margin: 0;
+    }
+    .faq-item.open .faq-answer { display: block; }
+
+    .faq-full { grid-column: 1 / span 2; }
+
+    /* ─── CTA BANNER ─────────────────────────────────── */
+    .cta-banner {
+      position: relative; overflow: hidden;
+      height: 402px;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .cta-bg {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .cta-bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cta-bg-overlay {
+      position: absolute; inset: 0;
+      background: rgba(42,57,208,.9);
+    }
+
+    .cta-content {
+      position: relative;
+      display: flex; flex-wrap: wrap;
+      gap: 102px;
+      align-items: center; justify-content: center;
+      padding: 130px 360px;
+      width: 100%;
+      max-width: 1920px;
+    }
+
+    .cta-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 55px; line-height: 1; color: #fff; margin: 0;
+      width: 588px; height: 142px;
+    }
+    .cta-title .t-light { font-weight: 300; }
+    .cta-title .t-bold  { font-weight: 700; }
+
+    .btn-cta-white {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #fff; border: none; border-radius: 100px;
+      padding: 22px 50px;
+      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 22.5px;
+      color: var(--blue); cursor: pointer; white-space: nowrap;
+      transition: opacity .15s;
+    }
+    .btn-cta-white:hover { opacity: .9; }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer { background: #21283C; padding: 78px 120px 0; }
+
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: 24px; align-items: start;
+      justify-content: center;
+    }
+
+    .footer-brand { display: flex; flex-direction: column; gap: 22px; padding-right: 38px; width: 282px; }
+    .footer-logo  { width: 65px; height: 45px; object-fit: contain; }
+
+    .footer-desc  { font-weight: 400; font-size: 12px; line-height: 16px; color: #C8CCDD; margin: 0; }
+    .footer-copy  { font-weight: 400; font-size: 12px; line-height: 16px; color: #fff; margin-top: 14px; }
+
+    .footer-col { display: flex; flex-direction: column; gap: 18px; width: 282px; }
+
+    .footer-heading-wrap { display: flex; flex-direction: column; gap: 16px; }
+    .footer-heading { font-weight: 700; font-size: 15px; line-height: 19px; color: #fff; }
+    .footer-divider { width: 180px; height: 1px; background: rgba(255,255,255,.15); border: none; }
+
+    .footer-link {
+      font-weight: 400; font-size: 12px; line-height: 16px;
+      color: #C8CCDD; text-decoration: none; display: block;
+    }
+    .footer-link:hover { color: #fff; }
+
+    .footer-bar { height: 10px; background: #363D55; margin: 78px -120px 0; }
+
+    /* ═══════════ RESPONSIVE ═══════════════════════════ */
+    @media (max-width: 1360px) {
+      .beneficios-sidebar { left: 0; }
+      .cta-content { padding: 130px 40px; }
+      footer { padding: 78px 40px 0; }
+      .footer-bar { margin: 78px -40px 0; }
+    }
+
+    @media (max-width: 1024px) {
+      .nav-links .nav-text-btn,
+      .nav-links .nav-plain,
+      .nav-links .nav-cta-outline { display: none; }
+      .hamburger { display: flex; }
+
+      .hero-inner { gap: 48px; padding-top: 80px; }
+      .hero-info { width: 100%; max-width: 600px; }
+      .hero-images { display: none; }
+
+      .quien-sos { height: auto; padding: 80px 0 40px; }
+      .quien-inner { flex-direction: column; gap: 40px; padding: 0 24px; }
+      .quien-panel { width: 100%; max-width: 600px; }
+      .quien-disclaimer { justify-content: center; padding: 25px 24px 0; }
+      .quien-disclaimer p { width: 100%; }
+
+      .beneficios-sidebar { display: none; }
+      .beneficios-content { flex-wrap: wrap; gap: 32px; }
+      .beneficios-image-col { width: 100%; height: auto; justify-content: center; }
+      .beneficios-main-img { position: static; border-radius: 20px; width: 100%; height: 300px; }
+      .beneficios-notif { position: static; width: 100%; height: auto; }
+      .beneficios-lines { display: none; }
+      .beneficios-cards { width: 100%; }
+
+      .como-inner { flex-direction: column; gap: 40px; }
+      .como-info { width: 100%; max-width: 600px; }
+      .como-steps { width: 100%; }
+
+      .que-es { flex-direction: column; }
+      .que-es-text { width: 100%; }
+      .que-es-image-wrap { padding-right: 0; justify-content: center; }
+      .que-es-bullets { position: static; width: 100%; }
+
+      .faqs-grid { grid-template-columns: 1fr; }
+      .faq-full { grid-column: 1; }
+
+      .cta-title { width: auto; height: auto; font-size: 40px; }
+      .cta-content { padding: 80px 24px; gap: 40px; }
+
+      footer { padding: 60px 24px 0; }
+      .footer-bar { margin: 60px -24px 0; }
+      .footer-brand { width: 100%; padding-right: 0; }
+    }
+
+    @media (max-width: 600px) {
+      html, body { overflow-x: hidden; max-width: 100%; }
+      .navbar-inner { padding: 0 16px; }
+      .navbar-logo { width: 46px; height: 32px; }
+      .nav-links { display: none; }
+
+      .hero-title { font-size: 36px; }
+      .btn-hero { width: 100%; justify-content: center; }
+
+      .panel-tab { font-size: 14px; }
+      .panel-card { flex-direction: column; gap: 20px; }
+      .panel-divider { display: none; }
+      .panel-image { width: 100px; }
+
+      .como-steps { flex-direction: column; align-items: center; }
+      .steps-line { display: none; }
+      .step-col { width: 220px; }
+
+      .atributo { width: 100%; box-sizing: border-box; }
+
+      .cta-title { font-size: 28px; }
+      .btn-cta-white { font-size: 16px; padding: 16px 32px; width: 100%; }
+
+      .footer-col { width: 100%; }
+      .footer-divider { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <img class="navbar-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" width="55" height="38" style="cursor:pointer;" onclick="window.scrollTo({top:0,behavior:'smooth'})" />
+      <div class="nav-links">
+        <button class="nav-plain" id="nav-inicio" data-section="s-inicio" data-text="Inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">Inicio</button>
+        <button class="nav-text-btn" id="nav-info" data-section="s-info" onclick="document.getElementById('s-info').scrollIntoView({behavior:'smooth'})">
+          <span data-text="Información">Información</span>
+          <span class="icon">expand_more</span>
+        </button>
+        <button class="nav-text-btn" id="nav-consultas" data-section="s-consultas" onclick="document.getElementById('s-consultas').scrollIntoView({behavior:'smooth'})">
+          <span data-text="Consultas">Consultas</span>
+          <span class="icon">expand_more</span>
+        </button>
+        <button class="nav-plain" data-text="Planes y precios" onclick="goTo('index.html')">Planes y precios</button>
+        <button class="nav-cta-primary" onclick="goTo('index.html')"><span>Solicitar mi firma digital</span></button>
+        <button class="nav-cta-outline" onclick="goTo('login.html')"><span>Iniciar Sesión</span></button>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menú" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="navMobile">
+      <div class="nav-mobile-inner">
+        <button onclick="window.scrollTo({top:0,behavior:'smooth'});toggleMenu()">Inicio</button>
+        <button>Consultas</button>
+        <button>Información</button>
+        <button onclick="goTo('index.html')">Planes y precios</button>
+        <button class="m-cta-primary" onclick="goTo('index.html')">Solicitar mi firma digital</button>
+        <button class="m-cta-outline" onclick="goTo('login.html')">Iniciar Sesión</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="s-inicio">
+    <div class="hero-bg-wrap">
+      <img src="assets/images/landing-hero-bg.png" alt="" />
+    </div>
+    <div class="hero-inner">
+      <div class="hero-info">
+        <img class="hero-badge" src="assets/images/landing-badge.svg" alt="Autorizado" />
+        <div class="hero-title-block">
+          <h1 class="hero-title">
+            <span class="t-light">Firmá documentos con</span>
+            <span class="t-bold">plena seguridad jurídica</span>
+          </h1>
+          <p class="hero-subtitle">La Firma Digital asegura la identidad del firmante, protege la integridad del documento y evita que la operación pueda desconocerse, con plena validez legal y mayor fuerza probatoria que la firma electrónica. <strong>Obtenela 100% online, en la nube y sin trasladarte.</strong></p>
+        </div>
+        <button class="btn-hero" onclick="goTo('index.html')">Obtener Firma Digital</button>
+      </div>
+      <div class="hero-images">
+        <div class="hero-phone-wrap">
+          <img class="hero-phone" src="assets/images/landing-phone-screen.png" alt="App FID" />
+        </div>
+        <img class="hero-firma-card" src="assets/images/landing-hero-firma.png" alt="Documento firmado" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUIÉN SOS ── -->
+  <section class="quien-sos">
+    <div class="quien-bg">
+      <img src="assets/images/landing-quien-bg.svg" alt="" />
+    </div>
+    <div class="quien-inner">
+      <div class="quien-text">
+        <h2 class="quien-title">¿Quién sos?</h2>
+        <p class="quien-subtitle">Elegí quién va a firmar los documentos</p>
+        <p class="quien-desc">La Firma Digital permite validar documentos con respaldo legal, identidad verificada y máxima seguridad. Elegí la opción que mejor se adapte a tu forma de uso, ya sea para una gestión puntual, uso profesional o necesidades empresariales.</p>
+      </div>
+
+      <div class="quien-panel">
+        <div class="panel-tabs" id="panel-tabs-row">
+          <button class="panel-tab active" id="tab-pf" onclick="switchPanelTab('pf')">Persona / Profesional</button>
+          <button class="panel-tab" id="tab-empresa" onclick="switchPanelTab('empresa')">Empresa</button>
+        </div>
+
+        <div class="panel-pointer-wrap" id="pointer-wrap"><div class="panel-pointer-triangle" id="pointer-tri"></div></div>
+
+        <!-- PERSONA FÍSICA -->
+        <div id="panel-pf">
+          <div class="panel-card">
+            <div class="panel-card-info">
+              <p class="panel-card-type">Persona Física</p>
+              <div class="panel-bullets">
+                <div class="panel-bullet">
+                  <img src="assets/images/landing-check-icon.svg" alt="" />
+                  <p class="panel-bullet-text">Para quienes necesitan firmar documentos <strong>a título personal</strong>, sin estructuras empresariales.</p>
+                </div>
+                <div class="panel-bullet">
+                  <img src="assets/images/landing-check-icon.svg" alt="" />
+                  <p class="panel-bullet-text">Firma Digital en la nube con un proceso <strong>100% online.</strong></p>
+                </div>
+              </div>
+              <button class="btn-panel" onclick="goTo('index.html')">Ver planes y precios</button>
+            </div>
+            <div class="panel-divider"></div>
+            <div class="panel-image">
+              <img src="assets/images/landing-individuos.png" alt="Persona física" />
+            </div>
+          </div>
+        </div>
+
+        <!-- EMPRESA -->
+        <div id="panel-empresa" style="display:none;">
+          <div class="panel-card">
+            <div class="panel-image">
+              <img src="assets/images/landing-empresas-icon.png" alt="Empresa" style="width:140px;height:140px;aspect-ratio:1;object-fit:contain;" />
+            </div>
+            <div class="panel-divider"></div>
+            <div class="panel-card-info">
+              <p class="panel-card-type">Persona Jurídica</p>
+              <div class="panel-bullets">
+                <div class="panel-bullet">
+                  <img src="assets/images/landing-check-icon.svg" alt="" />
+                  <p class="panel-bullet-text">Para quienes necesitan firmar documentos <strong>en nombre de una organización.</strong></p>
+                </div>
+                <div class="panel-bullet">
+                  <img src="assets/images/landing-check-icon.svg" alt="" />
+                  <p class="panel-bullet-text">Con certificado jurídico, validación <strong>presencial y token físico.</strong></p>
+                </div>
+              </div>
+              <button class="btn-panel" onclick="goTo('paso1.html')">Iniciar Solicitud</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quien-disclaimer">
+      <p>¿Tenés dudas sobre qué Firma Digital elegir? <strong>Leer las preguntas frecuentes</strong></p>
+    </div>
+  </section>
+
+  <!-- ── BENEFICIOS ── -->
+  <section class="beneficios">
+    <div class="beneficios-sidebar"></div>
+    <div class="beneficios-inner">
+      <div class="beneficios-heading">
+        <h2 class="sec-title-blue">Beneficios</h2>
+        <p class="sec-subtitle-dark">Usá tu Firma Digital para contratos críticos (préstamos, acuerdos, documentos legales y más)</p>
+      </div>
+
+      <div class="beneficios-content">
+        <!-- Imagen izquierda -->
+        <div class="beneficios-image-col">
+          <div class="beneficios-main-img">
+            <img src="assets/images/landing-benefits-img.png" alt="Firma digital" />
+          </div>
+          <div class="beneficios-notif">
+            <img src="assets/images/landing-notification-icon.png" alt="" />
+            <p>Estés donde estés, en cualquier momento, firmá documentos digitalmente</p>
+          </div>
+        </div>
+
+        <!-- Líneas decorativas -->
+        <div class="beneficios-lines">
+          <img src="assets/images/landing-lines.svg" alt="" />
+        </div>
+
+        <!-- Cards de beneficios -->
+        <div class="beneficios-cards">
+          <div class="benefit-item">
+            <div class="benefit-card">
+              <p class="benefit-card-title">Firmá con respaldo legal sólido</p>
+              <p class="benefit-card-desc">Garantiza la autoría e integridad del documento.</p>
+            </div>
+            <div class="benefit-icon">
+              <img src="assets/images/landing-circle-1.svg" alt="" />
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-card">
+              <p class="benefit-card-title">Evitá conflictos legales</p>
+              <p class="benefit-card-desc">Lo que firmás no puede ser desconocido.</p>
+            </div>
+            <div class="benefit-icon">
+              <img src="assets/images/landing-circle-2.svg" alt="" />
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-card">
+              <p class="benefit-card-title">Trazabilidad completa</p>
+              <p class="benefit-card-desc">Cada acción queda registrada y es auditable.</p>
+            </div>
+            <div class="benefit-icon">
+              <img src="assets/images/landing-circle-3.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CÓMO OBTENER ── -->
+  <section class="como-obtener">
+    <div class="como-inner">
+      <div class="como-info">
+        <div class="como-text">
+          <h2 class="sec-title-blue">¿Cómo obtener tu Firma Digital?</h2>
+          <p class="como-subtitle">Modalidad para personas físicas 100% digital</p>
+        </div>
+        <button class="btn-hero" onclick="goTo('index.html')">Descargar Firma Digital</button>
+      </div>
+
+      <div class="como-steps">
+        <div class="steps-line"></div>
+
+        <div class="step-col">
+          <p class="step-label">Iniciás el trámite y realizás el pago</p>
+          <img class="step-bullet" src="assets/images/landing-bullet.svg" alt="" />
+          <img class="step-img" src="assets/images/landing-proceso-1.png" alt="Paso 1" />
+        </div>
+
+        <div class="step-col">
+          <p class="step-label">Validás tus datos e identidad</p>
+          <img class="step-bullet" src="assets/images/landing-bullet.svg" alt="" />
+          <img class="step-img" src="assets/images/landing-proceso-2.png" alt="Paso 2" />
+        </div>
+
+        <div class="step-col">
+          <p class="step-label">Creás tu PIN y empezás a firmar</p>
+          <img class="step-bullet" src="assets/images/landing-bullet.svg" alt="" />
+          <img class="step-img" src="assets/images/landing-proceso-3.png" alt="Paso 3" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUÉ INCLUYE + QUÉ ES ── -->
+  <section class="que-incluye" id="s-info">
+    <div class="que-incluye-inner">
+
+      <!-- Qué incluye -->
+      <div class="incluye-block">
+        <div class="incluye-title">
+          <h2 class="sec-title-blue">¿Qué incluye tu Firma Digital?</h2>
+          <p>Todo lo necesario para firmar con seguridad, respaldo legal y trazabilidad</p>
+        </div>
+
+        <div class="atributos">
+          <div class="atributo">
+            <img src="assets/images/landing-icon-certificado.svg" alt="" />
+            <p>Certificado digital emitido por Autoridad Certificante Licenciada</p>
+          </div>
+          <div class="atributo">
+            <img src="assets/images/landing-icon-respaldo.svg" alt="" />
+            <p>Respaldo legal conforme a la Ley 25.506</p>
+          </div>
+          <div class="atributo">
+            <img src="assets/images/landing-icon-trazabilidad.svg" alt="" />
+            <p>Trazabilidad completa con registro auditable</p>
+          </div>
+          <div class="atributo">
+            <img src="assets/images/landing-icon-validacion.svg" alt="" />
+            <p>Validación de identidad del firmante</p>
+          </div>
+          <div class="atributo">
+            <img src="assets/images/landing-icon-plataforma.svg" alt="" />
+            <p>Plataforma para gestionar y firmar documentos</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Qué es -->
+      <div class="que-es">
+        <div class="que-es-text">
+          <div class="que-es-text-content">
+            <h2 class="sec-title-blue">¿Qué es la Firma Digital?</h2>
+            <p class="que-es-desc">Es una solución que permite firmar documentos de forma remota, asegurando la no repudiabilidad de la operación.</p>
+            <p class="que-es-desc-small">Todo el proceso se realiza de forma 100% online, en la nube y sin necesidad de traslados, garantizando la identidad del firmante, la integridad del documento y la no repudiación de la operación.</p>
+          </div>
+          <button class="btn-hero" onclick="goTo('index.html')">Descargar Firma Digital</button>
+        </div>
+
+        <div class="que-es-image-wrap">
+          <img class="que-es-img" src="assets/images/landing-que-es-img.png" alt="Firma Digital" />
+          <div class="que-es-bullets">
+            <div class="que-es-bullet">
+              <img src="assets/images/landing-check-icon-white.svg" alt="" />
+              <p>Certificado digital emitido por Autoridad Certificante Licenciada</p>
+            </div>
+            <div class="que-es-bullet">
+              <img src="assets/images/landing-check-icon-white.svg" alt="" />
+              <p>Presunción legal de autoría e integridad</p>
+            </div>
+            <div class="que-es-bullet">
+              <img src="assets/images/landing-check-icon-white.svg" alt="" />
+              <p>Equivalente a la firma manuscrita (Ley 25.506)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FAQS ── -->
+  <section class="faqs" id="s-consultas">
+    <div class="faqs-inner">
+      <h2 class="faqs-title">Preguntas frecuentes</h2>
+
+      <div class="faqs-grid">
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-row">
+            <p class="faq-question">¿La Firma Digital tiene validez legal en Argentina?</p>
+            <img class="faq-icon" src="assets/images/landing-faq-icon.svg" alt="" />
+          </div>
+          <hr class="faq-line" />
+          <p class="faq-answer">Sí. La Firma Digital tiene plena validez legal en Argentina según la Ley 25.506. Tiene la misma validez que una firma manuscrita y mayor fuerza probatoria: se presume válida salvo prueba en contrario.</p>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-row">
+            <p class="faq-question">¿La Firma Digital se acepta en todos lados?</p>
+            <img class="faq-icon" src="assets/images/landing-faq-icon.svg" alt="" />
+          </div>
+          <hr class="faq-line" />
+          <p class="faq-answer">Es aceptada en todos los trámites con el Estado Nacional y en la mayoría de entidades privadas que adhieran al marco legal vigente. Es reconocida por juzgados, ministerios, registros públicos y organismos de control.</p>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-row">
+            <p class="faq-question">¿En qué se diferencia de la firma electrónica?</p>
+            <img class="faq-icon" src="assets/images/landing-faq-icon.svg" alt="" />
+          </div>
+          <hr class="faq-line" />
+          <p class="faq-answer">La Firma Digital usa criptografía y un certificado emitido por una Autoridad Certificante licenciada. Se presume válida por ley. La firma electrónica (como un scan o un clic) debe ser probada por quien la invoca y tiene menor valor probatorio.</p>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-row">
+            <p class="faq-question">¿Puedo firmar desde cualquier lugar?</p>
+            <img class="faq-icon" src="assets/images/landing-faq-icon.svg" alt="" />
+          </div>
+          <hr class="faq-line" />
+          <p class="faq-answer">Sí. Tu certificado de firma está en la nube. Podés firmar documentos desde cualquier dispositivo con acceso a internet, sin necesitar instalar software ni contar con hardware adicional.</p>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-row">
+            <p class="faq-question">¿Quién emite el certificado?</p>
+            <img class="faq-icon" src="assets/images/landing-faq-icon.svg" alt="" />
+          </div>
+          <hr class="faq-line" />
+          <p class="faq-answer">El certificado es emitido por Lakaut AC, Autoridad Certificante licenciada por la Autoridad de Aplicación de la Infraestructura de Firma Digital de la República Argentina.</p>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-row">
+            <p class="faq-question">¿Qué pasa si olvido la contraseña de mi certificado?</p>
+            <img class="faq-icon" src="assets/images/landing-faq-icon.svg" alt="" />
+          </div>
+          <hr class="faq-line" />
+          <p class="faq-answer">Si olvidás tu clave de firma, deberás revocar el certificado actual y generar uno nuevo. El proceso es 100% online y podés iniciarlo desde tu cuenta en FID by Lakaut en pocos minutos.</p>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-row">
+            <p class="faq-question">¿Qué es un certificado digital?</p>
+            <img class="faq-icon" src="assets/images/landing-faq-icon.svg" alt="" />
+          </div>
+          <hr class="faq-line" />
+          <p class="faq-answer">Es un documento electrónico emitido por una Autoridad Certificante que vincula tu identidad verificada con una clave criptográfica. Es la base técnica que hace posible la Firma Digital.</p>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-row">
+            <p class="faq-question">¿Cuál es la diferencia entre certificado digital y firma digital?</p>
+            <img class="faq-icon" src="assets/images/landing-faq-icon.svg" alt="" />
+          </div>
+          <hr class="faq-line" />
+          <p class="faq-answer">El certificado digital es la credencial que acredita tu identidad. La firma digital es el acto de firmar un documento usando ese certificado. Sin certificado vigente no es posible firmar digitalmente.</p>
+        </div>
+
+        <div class="faq-item faq-full" onclick="toggleFaq(this)">
+          <div class="faq-row">
+            <p class="faq-question">¿Qué diferencia hay entre una firma para Persona Física y una para Persona Jurídica?</p>
+            <img class="faq-icon" src="assets/images/landing-faq-icon.svg" alt="" />
+          </div>
+          <hr class="faq-line" />
+          <p class="faq-answer">La firma para Persona Física acredita la identidad del individuo y permite firmar documentos a título personal o profesional, con validación 100% online. La firma para Persona Jurídica habilita a firmar en nombre de una organización, requiere un certificado jurídico con validación presencial y token físico.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA BANNER ── -->
+  <section class="cta-banner">
+    <div class="cta-bg">
+      <img src="assets/images/landing-cta-bg.png" alt="" />
+      <div class="cta-bg-overlay"></div>
+    </div>
+    <div class="cta-content">
+      <p class="cta-title">
+        <span class="t-light">Comenzá a firmar </span><span class="t-bold">digitalmente hoy</span>
+      </p>
+      <button class="btn-cta-white" onclick="goTo('index.html')">Descargar Firma Digital</button>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img class="footer-logo" src="assets/icons/logo-fid-white.svg" width="65" height="45" alt="FID by Lakaut" />
+        <div>
+          <p class="footer-desc">Obtené tu Firma Digital 100% online. Firmá documentos cuando lo necesites, desde donde estés.</p>
+          <p class="footer-copy">© 2026 FID by Lakaut. Todos los derechos reservados.</p>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-heading-wrap">
+          <p class="footer-heading">Consultas</p>
+          <hr class="footer-divider" />
+        </div>
+        <a class="footer-link" href="#">Consultar certificados emitidos</a>
+        <a class="footer-link" href="#">Consultar certificados revocados</a>
+        <a class="footer-link" href="#">Consultar certificado raíz</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-heading-wrap">
+          <p class="footer-heading">Información</p>
+          <hr class="footer-divider" />
+        </div>
+        <a class="footer-link" href="#">Validar Firma Digital</a>
+        <a class="footer-link" href="#">Oficiales de registro</a>
+        <a class="footer-link" href="#">Contacto</a>
+      </div>
+
+      <div class="footer-col">
+        <div class="footer-heading-wrap">
+          <p class="footer-heading">Legales</p>
+          <hr class="footer-divider" />
+        </div>
+        <a class="footer-link" href="#">Repositorio legal</a>
+        <a class="footer-link" href="#">Política de certificación</a>
+        <a class="footer-link" href="#">Política de privacidad</a>
+      </div>
+    </div>
+    <div class="footer-bar"></div>
+  </footer>
+
+</div>
+
+<script>
+  function goTo(url) {
+    window.location.href = url;
+  }
+
+  function toggleFaq(el) {
+    el.classList.toggle('open');
+  }
+
+  /* ── Scroll-spy ── */
+  (function() {
+    var sections = [
+      { id: 's-inicio',    nav: 'nav-inicio' },
+      { id: 's-info',      nav: 'nav-info' },
+      { id: 's-consultas', nav: 'nav-consultas' }
+    ];
+
+    var navEls = sections.map(function(s) {
+      return { el: document.getElementById(s.id), btn: document.getElementById(s.nav) };
+    }).filter(function(s) { return s.el && s.btn; });
+
+    function getActive() {
+      var scrollY = window.scrollY + 100;
+      var active = null;
+      navEls.forEach(function(s) {
+        if (s.el.offsetTop <= scrollY) active = s.btn;
+      });
+      return active;
+    }
+
+    function update() {
+      var active = getActive();
+      navEls.forEach(function(s) {
+        s.btn.classList.toggle('active', s.btn === active);
+      });
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  function toggleMenu() {
+    document.getElementById('navMobile').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  }
+
+  function switchPanelTab(tab) {
+    document.getElementById('tab-pf').classList.toggle('active', tab === 'pf');
+    document.getElementById('tab-empresa').classList.toggle('active', tab === 'empresa');
+    document.getElementById('panel-pf').style.display      = tab === 'pf'      ? 'block' : 'none';
+    document.getElementById('panel-empresa').style.display = tab === 'empresa' ? 'block' : 'none';
+
+    // Mover el triángulo debajo del tab activo
+    var activeBtn   = document.getElementById(tab === 'pf' ? 'tab-pf' : 'tab-empresa');
+    var pointerWrap = document.getElementById('pointer-wrap');
+    var tri         = document.getElementById('pointer-tri');
+    if (tri && pointerWrap && activeBtn) {
+      var wrapRect = pointerWrap.getBoundingClientRect();
+      var btnRect  = activeBtn.getBoundingClientRect();
+      var center   = (btnRect.left + btnRect.right) / 2 - wrapRect.left;
+      tri.style.left = (center - 15) + 'px';
+    }
+  }
+
+  // Posicionar triángulo al cargar
+  window.addEventListener('load', function() { switchPanelTab('pf'); });
+</script>
+</body>
+</html>

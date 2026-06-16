@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 239 361.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="lines">
+<path id="Line" d="M239 0.5H207C184.909 0.5 167 18.4086 167 40.5V139.5C167 161.591 149.091 179.5 127 179.5H0" stroke="var(--stroke-0, #E2E5EF)"/>
+<path id="Line_2" d="M239 361H207C184.909 361 167 343.091 167 321V219.5C167 197.409 149.091 179.5 127 179.5H0" stroke="var(--stroke-0, #E2E5EF)"/>
+<path id="Line_3" d="M238.5 179.5C145.555 179.5 0.5 179.5 0.5 179.5" stroke="var(--stroke-0, #E2E5EF)"/>
+</g>
+</svg>
