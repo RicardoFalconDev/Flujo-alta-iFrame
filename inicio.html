@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creá tu firma digital | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+
+  <style>
+    /* ─── HERO ICON ────────────────────────────────── */
+    .hero-icon {
+      width: 80px;
+      height: 80px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ─── TITLE BLOCK ──────────────────────────────── */
+    .onboarding-title {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      color: #3b3a45;
+      text-align: center;
+    }
+
+    .onboarding-subtitle {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #575768;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* ─── LIST ITEMS ────────────────────────────────── */
+    .onboarding-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      padding: 16px 0;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .list-icon-wrap {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      background: #f5f6fe;
+      border: 1px solid #bfdbfe;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2a39d0;
+    }
+
+    .list-icon-wrap .icon {
+      font-size: 20px;
+      color: #2a39d0;
+    }
+
+    .list-text {
+      font-size: 14px;
+      line-height: 20px;
+      color: #3b3a45;
+      letter-spacing: 0.1px;
+      font-feature-settings: "lnum" 1, "tnum" 1;
+    }
+
+    /* ─── TyC CHECKBOX ──────────────────────────────── */
+    .tyc-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .tyc-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 1.5px solid #cacaca;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      transition: background .15s, border-color .15s;
+    }
+
+    .tyc-checkbox:checked {
+      background: #2a39d0;
+      border-color: #2a39d0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' fill='none'%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M1 5l3.5 3.5L11 1'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .tyc-label {
+      font-size: 16px;
+      line-height: 22px;
+      color: #212529;
+      cursor: pointer;
+    }
+
+    .tyc-label a {
+      font-weight: 700;
+      color: #212529;
+      text-decoration: underline;
+    }
+
+    /* ─── BOTÓN CONTINUAR ───────────────────────────── */
+    .btn-wrap {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .btn-continuar {
+      width: 265px;
+      height: 48px;
+      background: #2a39d0;
+      border: none;
+      border-radius: 20px;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: #fff;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+
+    .btn-continuar:hover { opacity: .9; }
+    .btn-continuar:disabled {
+      background: #e1e1e6;
+      color: #939393;
+      cursor: not-allowed;
+      opacity: 1;
+    }
+
+    /* ─── CARD INNER SECTIONS ───────────────────────── */
+    .card-hero { display: flex; flex-direction: column; align-items: center; gap: 40px; }
+    .card-text { display: flex; flex-direction: column; align-items: center; }
+    .card-bottom { display: flex; flex-direction: column; gap: 24px; align-items: center; width: 100%; }
+    .card-actions { display: flex; flex-direction: column; gap: 24px; align-items: center; width: 100%; }
+
+    @media (max-width: 480px) {
+      .btn-continuar { width: 100%; }
+      .onboarding-title { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <img class="header-logo"
+         src="assets/icons/logo-fid.svg"
+         alt="FID by Lakaut"
+         width="55" height="38" />
+    <span class="header-title"></span>
+    <button class="icon-btn" aria-label="Cerrar">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <!-- ── CONTENT ── -->
+  <main class="content-area">
+  <div class="card-wrap">
+    <div class="main-card">
+
+      <div class="card-hero">
+
+        <!-- Ícono principal -->
+        <img class="hero-icon" src="assets/icons/onboarding-icon.svg" alt="" />
+
+        <div style="display:flex;flex-direction:column;gap:24px;width:100%">
+
+          <!-- Título -->
+          <div class="card-text">
+            <h1 class="onboarding-title">Creá tu firma digital</h1>
+            <p class="onboarding-subtitle">Para emitir tu certificado de firma digital y poder firmar, primero necesitamos confirmar tu identidad.</p>
+          </div>
+
+          <!-- Lista de pasos -->
+          <div class="onboarding-list">
+            <div class="list-item">
+              <div class="list-icon-wrap">
+                <span class="icon">pin</span>
+              </div>
+              <p class="list-text">Te enviaremos un código para verificar tu correo y teléfono de contacto.</p>
+            </div>
+            <div class="list-item">
+              <div class="list-icon-wrap">
+                <span class="icon">ar_on_you</span>
+              </div>
+              <p class="list-text">Vamos a escanear tu rostro para asegurar que sos vos.</p>
+            </div>
+            <div class="list-item">
+              <div class="list-icon-wrap">
+                <span class="icon">shield_lock</span>
+              </div>
+              <p class="list-text">Vas a crear la clave para firmar tus documentos de forma segura.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TyC + Botón -->
+      <div class="card-actions">
+        <div class="tyc-row">
+          <input type="checkbox" class="tyc-checkbox" id="tyc" />
+          <label class="tyc-label" for="tyc">
+            Confirmo que he leído, comprendido y acepto los
+            <a href="modal-tyc.html" target="_blank">términos y condiciones del acuerdo con suscriptores</a>
+          </label>
+        </div>
+        <div class="btn-wrap">
+          <button class="btn-continuar" id="btn-continuar" disabled onclick="window.location.href='paso1.html'">
+            Continuar
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <span class="powered-label">POWERED BY</span>
+      <img class="powered-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    </div>
+  </div><!-- /.card-wrap -->
+  </main>
+
+</div>
+
+<script>
+  const checkbox = document.getElementById('tyc');
+  const btnContinuar = document.getElementById('btn-continuar');
+
+  checkbox.addEventListener('change', () => {
+    btnContinuar.disabled = !checkbox.checked;
+  });
+</script>
+</body>
+</html>
