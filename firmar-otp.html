@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Firmar documento | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+
+  <style>
+    :root {
+      --otp-border: #d0d3df;
+      --otp-error:  #ef4444;
+      --otp-size:   72px;
+    }
+
+    /* ─── SECCIÓN HEADER DE CONTENIDO ────────────────── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--text-dark);
+    }
+
+    .section-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .section-link:hover { text-decoration: underline; }
+
+    /* ─── DOCUMENTO THUMBNAIL ─────────────────────────── */
+    .doc-thumb {
+      width: 100%;
+      background: #1b223c;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+
+    .doc-thumb-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1b223c 0%, #2a39d0 100%);
+      opacity: 0.9;
+    }
+
+    .doc-thumb-content {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 1;
+    }
+
+    .doc-play-btn {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .doc-play-btn:hover { background: rgba(255,255,255,0.25); }
+    .doc-play-btn .icon { font-size: 24px; color: #fff; font-variation-settings: 'FILL' 1; }
+
+    .doc-thumb-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .doc-thumb-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.45);
+      border-radius: 100px;
+      padding: 2px 10px;
+      font-size: 12px;
+      color: #fff;
+      font-weight: 500;
+      z-index: 2;
+    }
+
+    /* ─── OTP STYLES ──────────────────────────────────── */
+    .otp-grid {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+    }
+
+    .otp-cell {
+      width: var(--otp-size);
+      height: var(--otp-size);
+      background: #fff;
+      border: 1.5px solid var(--otp-border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 22px;
+      color: var(--text-dark);
+      text-align: center;
+      outline: none;
+      caret-color: var(--blue);
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    .otp-cell:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(42, 57, 208, 0.12);
+    }
+
+    .otp-grid.error .otp-cell {
+      border-color: var(--otp-error);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.10);
+    }
+
+    .otp-grid.verified .otp-cell {
+      background: #f5f5f5;
+      border-color: #006633;
+      pointer-events: none;
+    }
+
+    .otp-input-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .otp-timer {
+      font-size: 13px;
+      line-height: 20px;
+      color: var(--text-ph);
+      text-align: left;
+    }
+
+    .otp-error-msg {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--otp-error);
+    }
+
+    .otp-error-msg.visible { display: flex; }
+
+    .otp-verified-msg {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #006633;
+    }
+
+    .otp-verified-msg.visible { display: flex; }
+    .otp-verified-msg .icon { font-size: 20px; font-variation-settings: 'FILL' 1; }
+
+    /* ─── BOTONES ─────────────────────────────────────── */
+    .btn-row { gap: 16px; width: 100%; margin-top: 32px; }
+    .btn-resend { flex: 1; }
+    .btn-continue { flex: 1; }
+
+    /* ─── UPSELL BANNER ───────────────────────────────── */
+    .upsell-banner {
+      width: 100%;
+      background: #f0f1fd;
+      border: 1px solid #c7caf5;
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .upsell-text { display: flex; flex-direction: column; gap: 2px; }
+
+    .upsell-title {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+
+    .upsell-body {
+      font-size: 12px;
+      color: var(--text-help);
+      line-height: 18px;
+    }
+
+    .upsell-btn {
+      flex-shrink: 0;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity .15s;
+    }
+
+    .upsell-btn:hover { opacity: .88; }
+
+    @media (max-width: 480px) {
+      :root { --otp-size: 46px; }
+      .otp-grid { gap: 10px; }
+      .otp-cell { font-size: 18px; }
+      .upsell-banner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <img class="header-logo"
+         src="assets/icons/logo-fid.svg"
+         alt="FID by Lakaut"
+         width="55" height="38" />
+    <span class="header-title">Firmar documento</span>
+    <button class="icon-btn" aria-label="Cerrar" onclick="window.location.href='index.html'">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <!-- ── CONTENT ── -->
+  <main class="content-area">
+  <div style="display:flex; flex-direction:column; width:600px;">
+
+    <!-- Sección header -->
+    <div class="section-header">
+      <span class="section-title">Firmador de documentos</span>
+      <a class="section-link" href="#">Mostrar todos</a>
+    </div>
+
+    <!-- Thumbnail documento -->
+    <div class="doc-thumb">
+      <div class="doc-thumb-bg"></div>
+      <span class="doc-thumb-badge">5 mins</span>
+      <div class="doc-thumb-content">
+        <button class="doc-play-btn" aria-label="Reproducir">
+          <span class="icon material-symbols-outlined">play_arrow</span>
+        </button>
+        <span class="doc-thumb-label">Firma un documento</span>
+      </div>
+    </div>
+
+    <!-- Card OTP -->
+  <div class="card-wrap">
+    <div class="main-card">
+
+      <div class="title-section">
+        <h2 class="card-title">Autorizá la firma</h2>
+        <p class="card-subtitle">
+          Ingresá el código que enviamos al <strong>+54 11 ●●●● ●● 78</strong>.
+        </p>
+      </div>
+
+      <div style="margin-top:40px;">
+        <!-- OTP Grid -->
+        <div class="otp-input-wrap">
+          <div class="otp-grid" id="otp-grid">
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+            <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" />
+          </div>
+          <span class="otp-timer" id="otp-timer">El código vence en 2:00</span>
+          <span class="otp-verified-msg" id="otp-verified">
+            <span class="icon">check_circle</span>
+            Código verificado
+          </span>
+          <span class="otp-error-msg" id="otp-error">
+            <span class="icon">error</span>
+            El código ingresado es incorrecto.
+          </span>
+        </div>
+
+        <!-- Botones -->
+        <div class="btn-row">
+          <button class="btn-resend" id="btn-resend" onclick="reenviarCodigo()">
+            <span>Reenviar código</span>
+          </button>
+          <button class="btn-continue" id="btn-continue" onclick="continuar()">
+            <span>Continuar</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <span class="powered-label">POWERED BY</span>
+      <img class="powered-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    </div>
+  </div><!-- /.card-wrap -->
+
+    <!-- Upsell banner -->
+    <div class="upsell-banner">
+      <div class="upsell-text">
+        <span class="upsell-title">¿Necesitás más firmas?</span>
+        <span class="upsell-body">Contáctanos para paquetes empresariales con descuentos especiales.</span>
+      </div>
+      <button class="upsell-btn">Contactar</button>
+    </div>
+
+  </div>
+  </main>
+
+</div>
+
+<script>
+  /* ── OTP logic ─────────────────────────────────────── */
+  const grid     = document.getElementById('otp-grid');
+  const cells    = Array.from(grid.querySelectorAll('.otp-cell'));
+  const timerEl  = document.getElementById('otp-timer');
+  const errorEl  = document.getElementById('otp-error');
+  const verEl    = document.getElementById('otp-verified');
+  const btnResend = document.getElementById('btn-resend');
+  const btnCont   = document.getElementById('btn-continue');
+
+  let seconds = 120, timerInterval;
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    seconds = 120;
+    timerEl.classList.remove('expired');
+    timerEl.style.display = '';
+    updateTimer();
+    timerInterval = setInterval(() => {
+      seconds--;
+      updateTimer();
+      if (seconds <= 0) {
+        clearInterval(timerInterval);
+        timerEl.classList.add('expired');
+        timerEl.textContent = 'El código venció. Reenviar.';
+      }
+    }, 1000);
+  }
+
+  function updateTimer() {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    timerEl.textContent = `El código vence en ${m}:${s.toString().padStart(2,'0')}`;
+  }
+
+  cells.forEach((cell, i) => {
+    cell.addEventListener('input', () => {
+      cell.value = cell.value.replace(/\D/g, '').slice(-1);
+      errorEl.classList.remove('visible');
+      grid.classList.remove('error');
+      if (cell.value && i < cells.length - 1) cells[i + 1].focus();
+      const code = cells.map(c => c.value).join('');
+      if (code.length === 6) validateCode(code);
+    });
+    cell.addEventListener('keydown', e => {
+      if (e.key === 'Backspace' && !cell.value && i > 0) cells[i - 1].focus();
+    });
+    cell.addEventListener('paste', e => {
+      const txt = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g,'').slice(0,6);
+      if (!txt) return;
+      e.preventDefault();
+      txt.split('').forEach((ch, idx) => { if (cells[idx]) cells[idx].value = ch; });
+      const next = Math.min(txt.length, cells.length - 1);
+      cells[next].focus();
+      if (txt.length === 6) validateCode(txt);
+    });
+  });
+
+  function validateCode(code) {
+    if (code === '123456') {
+      grid.classList.add('verified');
+      timerEl.style.display = 'none';
+      verEl.classList.add('visible');
+      clearInterval(timerInterval);
+      btnCont.classList.add('active');
+    } else {
+      grid.classList.add('error');
+      errorEl.classList.add('visible');
+    }
+  }
+
+  function reenviarCodigo() {
+    cells.forEach(c => { c.value = ''; c.disabled = false; });
+    grid.classList.remove('error', 'verified');
+    errorEl.classList.remove('visible');
+    verEl.classList.remove('visible');
+    timerEl.style.display = '';
+    btnCont.classList.remove('active');
+    startTimer();
+    cells[0].focus();
+  }
+
+  function continuar() {
+    if (!grid.classList.contains('verified')) return;
+    window.location.href = 'firmar-documento.html';
+  }
+
+  startTimer();
+  cells[0].focus();
+</script>
+</body>
+</html>
