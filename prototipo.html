@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prototipo — FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-page);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--border-hdr);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 32px;
+      gap: 12px;
+    }
+
+    .header-logo { height: 32px; width: auto; }
+
+    .header-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+    }
+
+    .header-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-ph);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 64px 24px;
+      gap: 48px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f0f1fd;
+      border: 1px solid #c7caf5;
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge .icon { font-size: 14px; }
+
+    .hero-title {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 40px;
+      color: var(--text-dark);
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--text-help);
+      max-width: 480px;
+    }
+
+    /* ── CARDS GRID ── */
+    .flows-grid {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flow-card {
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      width: 320px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      cursor: pointer;
+      transition: box-shadow .2s, border-color .2s, transform .15s;
+      text-decoration: none;
+    }
+
+    .flow-card:hover {
+      border-color: #c7caf5;
+      box-shadow: 0 8px 32px rgba(42, 57, 208, 0.10);
+      transform: translateY(-2px);
+    }
+
+    .flow-card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .flow-card-icon .icon {
+      font-size: 28px;
+    }
+
+    .flow-card-icon.alta {
+      background: #eef0fd;
+      color: var(--blue);
+    }
+
+    .flow-card-icon.firma {
+      background: #edfaf4;
+      color: #1a9e5e;
+    }
+
+    .flow-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .flow-card-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-ph);
+    }
+
+    .flow-card-title {
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 26px;
+      color: var(--text-dark);
+    }
+
+    .flow-card-desc {
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--text-help);
+      margin-top: 4px;
+    }
+
+    .flow-card-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    .step-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .flow-card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-hdr);
+    }
+
+    .cta-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    .flow-card.firma .cta-label { color: #1a9e5e; }
+
+    .cta-arrow {
+      font-size: 20px;
+      color: var(--blue);
+    }
+
+    .flow-card.firma .cta-arrow { color: #1a9e5e; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+      color: var(--text-ph);
+    }
+
+    @media (max-width: 700px) {
+      .hero-title { font-size: 24px; }
+      .flow-card { width: 100%; max-width: 400px; }
+      .main { padding: 40px 16px; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    <div class="header-divider"></div>
+    <span class="header-label">Prototipo</span>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- Hero -->
+    <div class="hero">
+      <span class="hero-badge">
+        <span class="icon material-symbols-outlined">labs</span>
+        Flujos disponibles
+      </span>
+      <h1 class="hero-title">Seleccioná un flujo</h1>
+      <p class="hero-subtitle">Prototipo interactivo de FID by Lakaut. Elegí el flujo que querés explorar.</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="flows-grid">
+
+      <!-- Flujo Alta -->
+      <a class="flow-card alta" href="inicio.html">
+        <div class="flow-card-icon alta">
+          <span class="icon material-symbols-outlined">assignment_ind</span>
+        </div>
+        <div class="flow-card-body">
+          <span class="flow-card-tag">Flujo 1</span>
+          <h2 class="flow-card-title">Alta de firma digital</h2>
+          <p class="flow-card-desc">El usuario aún no tiene firma digital y necesita crearla por primera vez.</p>
+          <div class="flow-card-steps">
+            <div class="step-item"><span class="step-dot"></span>Validación de correo y teléfono</div>
+            <div class="step-item"><span class="step-dot"></span>Verificación de identidad (RENAPER)</div>
+            <div class="step-item"><span class="step-dot"></span>Biometría facial</div>
+            <div class="step-item"><span class="step-dot"></span>Creación de clave de firma</div>
+          </div>
+        </div>
+        <div class="flow-card-cta">
+          <span class="cta-label">Ver flujo</span>
+          <span class="icon material-symbols-outlined cta-arrow">arrow_forward</span>
+        </div>
+      </a>
+
+      <!-- Flujo Firma -->
+      <a class="flow-card firma" href="#" onclick="alert('Flujo en construcción')">
+        <div class="flow-card-icon firma">
+          <span class="icon material-symbols-outlined">draw</span>
+        </div>
+        <div class="flow-card-body">
+          <span class="flow-card-tag">Flujo 2</span>
+          <h2 class="flow-card-title">Firmar documento</h2>
+          <p class="flow-card-desc">El usuario ya tiene su firma digital activa y quiere firmar un documento.</p>
+          <div class="flow-card-steps">
+            <div class="step-item"><span class="step-dot"></span>Autenticación con clave de firma</div>
+            <div class="step-item"><span class="step-dot"></span>Revisión del documento</div>
+            <div class="step-item"><span class="step-dot"></span>Confirmación y firma</div>
+          </div>
+        </div>
+        <div class="flow-card-cta">
+          <span class="cta-label">Ver flujo</span>
+          <span class="icon material-symbols-outlined cta-arrow">arrow_forward</span>
+        </div>
+      </a>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    FID by Lakaut — Prototipo interno · No compartir externamente
+  </footer>
+
+</body>
+</html>
