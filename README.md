@@ -7,7 +7,7 @@ Prototipo HTML/CSS/JS del flujo completo de contratación y emisión de un **Cer
 ## Estructura del proyecto
 
 ```
-flujo-juridica-2/
+Flujo-alta-iFrame/
 ├── assets/
 │   ├── css/
 │   │   ├── tokens.css        # Variables de diseño (colores, tipografía, spacing)
