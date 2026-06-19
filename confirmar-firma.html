@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ingresá tu clave de firma | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+  <link rel="stylesheet" href="assets/css/inputs.css" />
+
+  <style>
+    /* ─── Error state del input ────────────────────────────── */
+    .pass-input-wrap.error { border-color: #ef4444; }
+
+    .field-error {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #ef4444;
+    }
+
+    .field-error.visible { display: flex; }
+    .field-error .icon { font-size: 16px; }
+
+    /* ─── Botón centrado ────────────────────────────────────── */
+    .btn-confirm-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-confirm { width: 256px; }
+
+    @media (max-width: 480px) {
+      .btn-confirm { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <img class="header-logo"
+         src="assets/icons/logo-fid.svg"
+         alt="FID by Lakaut"
+         width="55" height="38" />
+    <span class="header-title">Firmar documento</span>
+    <button class="icon-btn" aria-label="Cerrar" onclick="window.location.href='index.html'">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <!-- ── CONTENT ── -->
+  <main class="content-area">
+  <div class="card-wrap">
+    <div class="main-card">
+
+      <!-- Título -->
+      <div class="title-section">
+        <h2 class="card-title">Ingresá tu clave de firma</h2>
+      </div>
+
+      <!-- Formulario -->
+      <div style="display:flex;flex-direction:column;gap:40px;">
+
+        <!-- Campo contraseña -->
+        <div class="field">
+          <label class="field-label" for="clave-input">Clave de firma</label>
+          <div class="pass-input-wrap" id="pass-wrap">
+            <input
+              id="clave-input"
+              type="password"
+              placeholder="Ingresa tu contraseña"
+              autocomplete="current-password"
+              oninput="onInput()"
+            />
+            <button class="eye-btn" aria-label="Mostrar contraseña" id="eye-btn" onclick="togglePass()">
+              <span class="icon" id="eye-icon">visibility_off</span>
+            </button>
+          </div>
+          <span class="field-error" id="field-error">
+            <span class="icon">error</span>
+            La clave ingresada es incorrecta.
+          </span>
+          <span class="field-helper" id="field-helper" style="font-size:12px;line-height:18px;">
+            Es la que configuraste para tu certificado digital
+          </span>
+        </div>
+
+        <!-- Botón -->
+        <div class="btn-confirm-row">
+          <button class="btn-continue btn-confirm" id="btn-confirm" onclick="confirmar()">
+            <span>Firmar documento</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div><!-- /.main-card -->
+
+    <!-- Footer -->
+    <div class="card-footer">
+      <span class="powered-label">POWERED BY</span>
+      <img class="powered-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    </div>
+
+  </div><!-- /.card-wrap -->
+  </main>
+
+</div>
+
+<script>
+  const input     = document.getElementById('clave-input');
+  const passWrap  = document.getElementById('pass-wrap');
+  const eyeIcon   = document.getElementById('eye-icon');
+  const btnConf   = document.getElementById('btn-confirm');
+  const errorMsg  = document.getElementById('field-error');
+  const helperMsg = document.getElementById('field-helper');
+
+  function onInput() {
+    const hasValue = input.value.length > 0;
+    btnConf.classList.toggle('active', hasValue);
+    /* Limpiar error si el usuario corrige */
+    if (hasValue) {
+      passWrap.classList.remove('error');
+      errorMsg.classList.remove('visible');
+      helperMsg.style.display = '';
+    }
+  }
+
+  function togglePass() {
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    eyeIcon.textContent = isHidden ? 'visibility' : 'visibility_off';
+  }
+
+  function confirmar() {
+    if (!btnConf.classList.contains('active')) return;
+
+    /* Simular clave incorrecta si ingresa "000000" */
+    if (input.value === '000000') {
+      passWrap.classList.add('error');
+      errorMsg.classList.add('visible');
+      helperMsg.style.display = 'none';
+      input.focus();
+      return;
+    }
+
+    window.location.href = 'firmando-documento.html';
+  }
+
+  input.focus();
+</script>
+</body>
+</html>

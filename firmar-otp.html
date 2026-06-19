@@ -19,100 +19,15 @@
       --otp-size:   72px;
     }
 
-    /* ─── SECCIÓN HEADER DE CONTENIDO ────────────────── */
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-family: 'Open Sans', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 24px;
-      color: var(--text-dark);
-    }
-
-    .section-link {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--blue);
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .section-link:hover { text-decoration: underline; }
-
-    /* ─── DOCUMENTO THUMBNAIL ─────────────────────────── */
-    .doc-thumb {
-      width: 100%;
-      background: #1b223c;
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-      height: 160px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-      flex-shrink: 0;
-    }
-
-    .doc-thumb-bg {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #1b223c 0%, #2a39d0 100%);
-      opacity: 0.9;
-    }
-
-    .doc-thumb-content {
-      position: relative;
+    /* ─── OTP BODY ───────────────────────────────────── */
+    .otp-body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      z-index: 1;
+      gap: 16px;
     }
 
-    .doc-play-btn {
-      width: 48px;
-      height: 48px;
-      background: rgba(255,255,255,0.15);
-      border: 2px solid rgba(255,255,255,0.5);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background .2s;
-    }
-
-    .doc-play-btn:hover { background: rgba(255,255,255,0.25); }
-    .doc-play-btn .icon { font-size: 24px; color: #fff; font-variation-settings: 'FILL' 1; }
-
-    .doc-thumb-label {
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .doc-thumb-badge {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: rgba(0,0,0,0.45);
-      border-radius: 100px;
-      padding: 2px 10px;
-      font-size: 12px;
-      color: #fff;
-      font-weight: 500;
-      z-index: 2;
-    }
-
-    /* ─── OTP STYLES ──────────────────────────────────── */
+    /* ─── OTP GRID ───────────────────────────────────── */
     .otp-grid {
       display: flex;
       gap: 24px;
@@ -151,19 +66,16 @@
       pointer-events: none;
     }
 
-    .otp-input-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      width: 100%;
+    /* ─── MENSAJES ───────────────────────────────────── */
+    .otp-timer {
+      font-size: 12px;
+      line-height: 16px;
+      color: #505050;
+      letter-spacing: 0.1px;
+      font-feature-settings: "lnum" 1, "tnum" 1;
     }
 
-    .otp-timer {
-      font-size: 13px;
-      line-height: 20px;
-      color: var(--text-ph);
-      text-align: left;
-    }
+    .otp-timer.expired { color: var(--otp-error); }
 
     .otp-error-msg {
       display: none;
@@ -174,6 +86,7 @@
     }
 
     .otp-error-msg.visible { display: flex; }
+    .otp-error-msg .icon { font-size: 16px; }
 
     .otp-verified-msg {
       display: none;
@@ -186,61 +99,37 @@
     .otp-verified-msg.visible { display: flex; }
     .otp-verified-msg .icon { font-size: 20px; font-variation-settings: 'FILL' 1; }
 
-    /* ─── BOTONES ─────────────────────────────────────── */
-    .btn-row { gap: 16px; width: 100%; margin-top: 32px; }
-    .btn-resend { flex: 1; }
-    .btn-continue { flex: 1; }
-
-    /* ─── UPSELL BANNER ───────────────────────────────── */
-    .upsell-banner {
-      width: 100%;
-      background: #f0f1fd;
-      border: 1px solid #c7caf5;
-      border-radius: 12px;
-      padding: 16px 20px;
+    /* ─── OTP INPUT WRAP ─────────────────────────────── */
+    .otp-input-wrap {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-top: 16px;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      margin-top: 54px;
     }
 
-    .upsell-text { display: flex; flex-direction: column; gap: 2px; }
+    /* ─── BOTONES ────────────────────────────────────── */
+    .btn-row { gap: 16px; width: 100%; margin-top: 38px; }
+    #btn-resend { flex: 1; }
+    #btn-verify { flex: 1; }
 
-    .upsell-title {
-      font-family: 'Open Sans', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--text-dark);
-    }
-
-    .upsell-body {
-      font-size: 12px;
-      color: var(--text-help);
-      line-height: 18px;
-    }
-
-    .upsell-btn {
+    /* spinner dentro del botón */
+    .btn-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
       flex-shrink: 0;
-      background: var(--blue);
-      color: #fff;
-      border: none;
-      border-radius: 100px;
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: opacity .15s;
     }
-
-    .upsell-btn:hover { opacity: .88; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     @media (max-width: 480px) {
       :root { --otp-size: 46px; }
       .otp-grid { gap: 10px; }
       .otp-cell { font-size: 18px; }
-      .upsell-banner { flex-direction: column; align-items: flex-start; }
+      .otp-input-wrap { margin-top: 24px; }
+      .btn-row { margin-top: 20px; }
     }
   </style>
 </head>
@@ -261,39 +150,17 @@
 
   <!-- ── CONTENT ── -->
   <main class="content-area">
-  <div style="display:flex; flex-direction:column; width:600px;">
-
-    <!-- Sección header -->
-    <div class="section-header">
-      <span class="section-title">Firmador de documentos</span>
-      <a class="section-link" href="#">Mostrar todos</a>
-    </div>
-
-    <!-- Thumbnail documento -->
-    <div class="doc-thumb">
-      <div class="doc-thumb-bg"></div>
-      <span class="doc-thumb-badge">5 mins</span>
-      <div class="doc-thumb-content">
-        <button class="doc-play-btn" aria-label="Reproducir">
-          <span class="icon material-symbols-outlined">play_arrow</span>
-        </button>
-        <span class="doc-thumb-label">Firma un documento</span>
-      </div>
-    </div>
-
-    <!-- Card OTP -->
   <div class="card-wrap">
     <div class="main-card">
 
+      <!-- Título -->
       <div class="title-section">
-        <h2 class="card-title">Autorizá la firma</h2>
-        <p class="card-subtitle">
-          Ingresá el código que enviamos al <strong>+54 11 ●●●● ●● 78</strong>.
-        </p>
+        <h2 class="card-title">Ingresá el código que enviamos al +54 XXXXXXX 78.</h2>
       </div>
 
-      <div style="margin-top:40px;">
-        <!-- OTP Grid -->
+      <!-- OTP + mensajes + botones -->
+      <div class="otp-body">
+
         <div class="otp-input-wrap">
           <div class="otp-grid" id="otp-grid">
             <input class="otp-cell" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" />
@@ -319,42 +186,30 @@
           <button class="btn-resend" id="btn-resend" onclick="reenviarCodigo()">
             <span>Reenviar código</span>
           </button>
-          <button class="btn-continue" id="btn-continue" onclick="continuar()">
-            <span>Continuar</span>
+          <button class="btn-continue" id="btn-verify" onclick="verificar()">
+            <span>Verificar código</span>
           </button>
         </div>
-      </div>
 
+      </div>
     </div>
     <div class="card-footer">
       <span class="powered-label">POWERED BY</span>
       <img class="powered-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
     </div>
   </div><!-- /.card-wrap -->
-
-    <!-- Upsell banner -->
-    <div class="upsell-banner">
-      <div class="upsell-text">
-        <span class="upsell-title">¿Necesitás más firmas?</span>
-        <span class="upsell-body">Contáctanos para paquetes empresariales con descuentos especiales.</span>
-      </div>
-      <button class="upsell-btn">Contactar</button>
-    </div>
-
-  </div>
   </main>
 
 </div>
 
 <script>
-  /* ── OTP logic ─────────────────────────────────────── */
-  const grid     = document.getElementById('otp-grid');
-  const cells    = Array.from(grid.querySelectorAll('.otp-cell'));
-  const timerEl  = document.getElementById('otp-timer');
-  const errorEl  = document.getElementById('otp-error');
-  const verEl    = document.getElementById('otp-verified');
+  const grid      = document.getElementById('otp-grid');
+  const cells     = Array.from(grid.querySelectorAll('.otp-cell'));
+  const timerEl   = document.getElementById('otp-timer');
+  const errorEl   = document.getElementById('otp-error');
+  const verEl     = document.getElementById('otp-verified');
   const btnResend = document.getElementById('btn-resend');
-  const btnCont   = document.getElementById('btn-continue');
+  const btnVerify = document.getElementById('btn-verify');
 
   let seconds = 120, timerInterval;
 
@@ -362,23 +217,19 @@
     clearInterval(timerInterval);
     seconds = 120;
     timerEl.classList.remove('expired');
-    timerEl.style.display = '';
-    updateTimer();
+    btnResend.classList.remove('active');
     timerInterval = setInterval(() => {
       seconds--;
-      updateTimer();
+      const m = Math.floor(seconds / 60);
+      const s = String(seconds % 60).padStart(2, '0');
+      timerEl.textContent = `El código vence en ${m}:${s}`;
       if (seconds <= 0) {
         clearInterval(timerInterval);
+        timerEl.textContent = 'El código ha vencido.';
         timerEl.classList.add('expired');
-        timerEl.textContent = 'El código venció. Reenviar.';
+        btnResend.classList.add('active');
       }
     }, 1000);
-  }
-
-  function updateTimer() {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    timerEl.textContent = `El código vence en ${m}:${s.toString().padStart(2,'0')}`;
   }
 
   cells.forEach((cell, i) => {
@@ -388,7 +239,8 @@
       grid.classList.remove('error');
       if (cell.value && i < cells.length - 1) cells[i + 1].focus();
       const code = cells.map(c => c.value).join('');
-      if (code.length === 6) validateCode(code);
+      if (code.length === 6) btnVerify.classList.add('active');
+      else btnVerify.classList.remove('active');
     });
     cell.addEventListener('keydown', e => {
       if (e.key === 'Backspace' && !cell.value && i > 0) cells[i - 1].focus();
@@ -398,22 +250,27 @@
       if (!txt) return;
       e.preventDefault();
       txt.split('').forEach((ch, idx) => { if (cells[idx]) cells[idx].value = ch; });
-      const next = Math.min(txt.length, cells.length - 1);
-      cells[next].focus();
-      if (txt.length === 6) validateCode(txt);
+      cells[Math.min(txt.length, cells.length - 1)].focus();
+      if (txt.length === 6) btnVerify.classList.add('active');
     });
   });
 
-  function validateCode(code) {
-    if (code === '123456') {
-      grid.classList.add('verified');
-      timerEl.style.display = 'none';
-      verEl.classList.add('visible');
-      clearInterval(timerInterval);
-      btnCont.classList.add('active');
-    } else {
+  function verificar() {
+    if (!btnVerify.classList.contains('active')) return;
+    const code = cells.map(c => c.value).join('');
+    if (code === '000000') {
       grid.classList.add('error');
       errorEl.classList.add('visible');
+      timerEl.style.display = 'none';
+    } else {
+      // Loading state
+      btnVerify.disabled = true;
+      btnResend.disabled = true;
+      btnVerify.innerHTML = '<span class="btn-spinner"></span><span>Verificando...</span>';
+      grid.classList.add('verified');
+      timerEl.style.display = 'none';
+      clearInterval(timerInterval);
+      setTimeout(() => window.location.href = 'firmar-documento.html', 1200);
     }
   }
 
@@ -423,14 +280,9 @@
     errorEl.classList.remove('visible');
     verEl.classList.remove('visible');
     timerEl.style.display = '';
-    btnCont.classList.remove('active');
+    btnVerify.classList.remove('active');
     startTimer();
     cells[0].focus();
-  }
-
-  function continuar() {
-    if (!grid.classList.contains('verified')) return;
-    window.location.href = 'firmar-documento.html';
   }
 
   startTimer();

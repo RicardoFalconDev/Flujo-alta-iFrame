@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Firmar documento | FID by Lakaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/buttons.css" />
+
+  <style>
+    body, .page { background: #f8f9fa; }
+
+    .firmador-card {
+      width: 705px;
+      background: #fff;
+      border: 1px solid var(--border-card);
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .doc-topbar {
+      background: #f4f4f8;
+      border-bottom: 1px solid var(--border-card);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .doc-name {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+
+    .doc-name .icon {
+      font-size: 20px;
+      color: #e53e3e;
+      font-variation-settings: 'FILL' 1;
+    }
+
+    .doc-pages { font-size: 12px; color: var(--text-sub); }
+
+    .doc-viewer {
+      height: 420px;
+      background: #e8e8ee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .doc-page {
+      width: 320px;
+      height: 380px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      padding: 28px 24px;
+      gap: 10px;
+    }
+
+    .doc-line { height: 10px; background: #e8e8ee; border-radius: 4px; }
+    .doc-line.title  { width: 60%; height: 14px; background: #d0d0d8; }
+    .doc-line.short  { width: 40%; }
+    .doc-line.medium { width: 70%; }
+    .doc-line.full   { width: 100%; }
+
+    .firma-zone {
+      margin-top: auto;
+      border-top: 1.5px dashed #a0a0b0;
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .firma-zone-label {
+      font-size: 9px;
+      color: #a0a0b0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .firma-zone-placeholder { font-size: 11px; color: #c0c0cc; font-style: italic; }
+
+    .doc-footer-bar {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border-card);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .doc-info { font-size: 12px; color: var(--text-sub); line-height: 18px; }
+    .doc-info strong { font-weight: 600; color: var(--text-dark); display: block; font-size: 13px; }
+    .btn-firmar-doc { min-width: 180px; }
+
+    .btn-spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 480px) {
+      .firmador-card { width: 100%; border-radius: 12px 12px 0 0; }
+      .doc-viewer { height: 300px; }
+      .doc-page { width: 240px; height: 280px; padding: 20px 16px; }
+      .doc-footer-bar { flex-direction: column; align-items: stretch; }
+      .btn-firmar-doc { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="header">
+    <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    <span class="header-title">Firmar documento</span>
+    <button class="icon-btn" aria-label="Cerrar" onclick="window.location.href='index.html'">
+      <span class="icon">close</span>
+    </button>
+  </header>
+
+  <main class="content-area">
+  <div class="card-wrap">
+    <div class="firmador-card">
+
+      <div class="doc-topbar">
+        <div class="doc-name">
+          <span class="icon">picture_as_pdf</span>
+          Contrato_de_servicios_2024.pdf
+        </div>
+        <span class="doc-pages">1 / 1</span>
+      </div>
+
+      <div class="doc-viewer">
+        <div class="doc-page">
+          <div class="doc-line title"></div>
+          <div class="doc-line short"></div>
+          <div class="doc-line full"></div>
+          <div class="doc-line full"></div>
+          <div class="doc-line medium"></div>
+          <div class="doc-line full"></div>
+          <div class="doc-line short"></div>
+          <div class="doc-line full"></div>
+          <div class="doc-line medium"></div>
+          <div class="doc-line full"></div>
+          <div class="doc-line full"></div>
+          <div class="doc-line short"></div>
+          <div class="firma-zone">
+            <span class="firma-zone-label">Firma digital</span>
+            <span class="firma-zone-placeholder">Tu firma se aplicará aquí</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-footer-bar">
+        <div class="doc-info">
+          <strong>Firmante</strong>
+          Ricardo Falcón · DNI 12.345.678
+        </div>
+        <button class="btn-primary btn-firmar-doc active" id="btn-firmar" onclick="firmar()">
+          <span>Firmar documento</span>
+        </button>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <span class="powered-label">POWERED BY</span>
+      <img class="powered-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    </div>
+  </div>
+  </main>
+
+</div>
+
+<script>
+  function firmar() {
+    const btn = document.getElementById('btn-firmar');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="btn-spinner"></span><span>Firmando...</span>';
+    setTimeout(() => window.location.href = 'confirmar-firma.html', 1500);
+  }
+</script>
+</body>
+</html>
