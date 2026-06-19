@@ -84,46 +84,60 @@
     /* ─── TyC CHECKBOX ──────────────────────────────── */
     .tyc-row {
       display: flex;
-      align-items: flex-start;
       gap: 8px;
+      align-items: flex-start;
       width: 100%;
     }
 
     .tyc-checkbox {
-      appearance: none;
-      -webkit-appearance: none;
-      width: 20px;
-      height: 20px;
-      min-width: 20px;
-      border: 1.5px solid #cacaca;
-      border-radius: 6px;
-      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 2px;
-      transition: background .15s, border-color .15s;
-    }
-
-    .tyc-checkbox:checked {
-      background: #2a39d0;
-      border-color: #2a39d0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' fill='none'%3E%3Cpath stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M1 5l3.5 3.5L11 1'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-
-    .tyc-label {
-      font-size: 16px;
-      line-height: 22px;
-      color: #212529;
+      padding: 2px;
+      background: none;
+      border: none;
       cursor: pointer;
     }
 
-    .tyc-label a {
-      font-weight: 700;
+    .tyc-checkbox-inner {
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid #adb5bd;
+      border-radius: 6px;
+      background: #fff;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tyc-checkbox.on .tyc-checkbox-inner {
+      background: #2a39d0;
+      border-color: #2a39d0;
+    }
+
+    .tyc-checkbox.on .tyc-checkbox-inner::after {
+      content: '';
+      width: 11px;
+      height: 8px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L4.5 7.5L11 1' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+
+    .tyc-text {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
       color: #212529;
+      flex: 1;
+    }
+
+    .tyc-link {
+      font-weight: 700;
       text-decoration: underline;
+      cursor: pointer;
     }
 
     /* ─── BOTÓN CONTINUAR ───────────────────────────── */
@@ -229,11 +243,13 @@
       <!-- TyC + Botón -->
       <div class="card-actions">
         <div class="tyc-row">
-          <input type="checkbox" class="tyc-checkbox" id="tyc" />
-          <label class="tyc-label" for="tyc">
+          <button class="tyc-checkbox" id="tyc" aria-label="Aceptar términos">
+            <div class="tyc-checkbox-inner"></div>
+          </button>
+          <p class="tyc-text">
             Confirmo que he leído, comprendido y acepto los
-            <a href="modal-tyc.html" target="_blank">términos y condiciones del acuerdo con suscriptores</a>
-          </label>
+            <span class="tyc-link" onclick="openTycModal(event)">términos y condiciones del acuerdo con suscriptores</span>
+          </p>
         </div>
         <div class="btn-wrap">
           <button class="btn-continuar" id="btn-continuar" disabled onclick="window.location.href='paso1.html'">
@@ -253,12 +269,124 @@
 </div>
 
 <script>
-  const checkbox = document.getElementById('tyc');
+  const tycBtn = document.getElementById('tyc');
   const btnContinuar = document.getElementById('btn-continuar');
 
-  checkbox.addEventListener('change', () => {
-    btnContinuar.disabled = !checkbox.checked;
+  tycBtn.addEventListener('click', () => {
+    tycBtn.classList.toggle('on');
+    btnContinuar.disabled = !tycBtn.classList.contains('on');
+  });
+
+  function openTycModal(e) {
+    e.stopPropagation();
+    document.getElementById('tycModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeTycModal() {
+    document.getElementById('tycModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeTycModal();
   });
 </script>
+
+<!-- Modal Acuerdo con Suscriptores -->
+<div id="tycModal" class="tyc-modal-overlay" onclick="closeTycModal()">
+  <div class="tyc-modal" onclick="event.stopPropagation()">
+    <div class="tyc-modal-header">
+      <h2 class="tyc-modal-title">Términos y Condiciones del acuerdo con suscriptores</h2>
+      <button class="tyc-modal-close" onclick="closeTycModal()" aria-label="Cerrar">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="tyc-modal-body">
+      <h3>INTRODUCCIÓN</h3>
+      <p>El presente acuerdo entre Lakaut S.A. y el suscriptor determina los derechos y obligaciones de las partes en lo que respecta a la solicitud, aceptación y uso de certificados de firma digital.</p>
+      <h3>1 - SOLICITUD DE CERTIFICADO Y DESCRIPCIÓN DE LOS CERTIFICADOS</h3>
+      <p>Los certificados digitales emitidos bajo la Política Única de Certificación del Certificador Licenciado Lakaut S.A., en adelante LAKAUT AC, son expedidos a título oneroso a favor de personas humanas o de personas jurídicas públicas o privadas, en adelante SUSCRIPTORES. En ambos casos la vigencia de los certificados digitales será de hasta DOS (2) años, según determine el Certificador Licenciado.</p>
+      <p>Para que la solicitud, aceptación y uso de su certificado digital adquiera plena legitimidad y eficacia jurídica en el marco de este acuerdo, el suscriptor acepta que:</p>
+      <p>a) Toda información que suministra a Lakaut AC en la solicitud del certificado es veraz.<br>b) La información suministrada en la solicitud del certificado no ha sido, ni será utilizada, para ningún propósito contrario a la Política Única de Certificación de Lakaut AC para personas físicas o jurídicas.<br>c) Es la única persona que ha tenido y tendrá único y exclusivo acceso a su propia clave privada.<br>d) La utilización de su certificado digital será, exclusivamente, para propósitos legítimos y autorizados.</p>
+      <h3>CONSENTIMIENTO INFORMADO</h3>
+      <p>El presente consentimiento para el tratamiento de mis datos personales alcanza a los incluidos en mi Documento Nacional de Identidad (INCLUYENDO DATOS BIOMÉTRICOS DE HUELLA DACTILAR Y DE RECONOCIMIENTO FACIAL) en confronte con lo que informa el REGISTRO NACIONAL DE LAS PERSONAS.</p>
+      <p>a) Los datos serán tratados con la exclusiva finalidad de validar mi identidad y verificar la vigencia de mi Documento Nacional de Identidad para la emisión de mi Certificado de Firma Digital.<br>b) Los datos confrontados serán destruidos una vez verificada la validez del Documento Nacional de Identidad.<br>c) Los datos son facilitados con carácter obligatorio, por cuanto es imprescindible identificar fehacientemente al titular.<br>d) El titular de los datos podrá ejercer los derechos de acceso, rectificación y supresión de sus datos en cualquier momento ante el RENAPER.</p>
+      <h3>3 - OBLIGACIONES ANTE LA REVOCACIÓN O EXPIRACIÓN DEL CERTIFICADO</h3>
+      <p>Con respecto a la clave privada, el Suscriptor se compromete a su uso responsable, de acuerdo con los fines estipulados en el presente Acuerdo y en la Política Única de Certificación de Lakaut AC.</p>
+      <h3>4 - POLÍTICA DE PRIVACIDAD</h3>
+      <p>Toda información referida a solicitantes y Suscriptores que sea recibida por Lakaut AC en sus requerimientos, será considerada confidencial y no puede hacerse pública sin el consentimiento previo de aquellos, salvo que sea requerida por autoridad competente.</p>
+      <h3>5 - LIMITACIONES DE LA RESPONSABILIDAD</h3>
+      <p>Lakaut AC en su calidad de Certificador Licenciado no será responsable, por ningún concepto y bajo ninguna circunstancia, por los daños y perjuicios que resulten del uso no autorizado de un certificado digital.</p>
+      <h3>6 - LEGISLACIÓN APLICABLE</h3>
+      <p>La legislación aplicable está constituida por la Ley N° 25.506 de Firma Digital y sus normas complementarias.</p>
+      <h3>8 - CONTACTOS</h3>
+      <p>Contacto: Responsable de Mesa de Ayuda<br>Domicilio: Lima 355, Piso 12 - Of. A<br>E-mail: soportefirmadigital@lakaut.com.ar<br>Teléfono: 4382-2856</p>
+    </div>
+    <div class="tyc-modal-footer">
+      <button class="tyc-modal-btn" onclick="closeTycModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.tyc-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.tyc-modal-overlay.open { display: flex; }
+.tyc-modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 835px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+  animation: modalIn 0.2s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.tyc-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.tyc-modal-title { font-size: 15px; font-weight: 700; color: #111; margin: 0; line-height: 1.4; }
+.tyc-modal-close {
+  background: none; border: none; cursor: pointer; color: #555;
+  padding: 2px; flex-shrink: 0; display: flex; align-items: center; transition: color 0.15s;
+}
+.tyc-modal-close:hover { color: #111; }
+.tyc-modal-body {
+  padding: 20px 24px; overflow-y: auto; flex: 1;
+  font-size: 14px; line-height: 1.75; color: #333;
+}
+.tyc-modal-body h3 {
+  font-size: 13px; font-weight: 700; color: #111;
+  text-transform: uppercase; letter-spacing: 0.02em; margin: 22px 0 8px;
+}
+.tyc-modal-body h3:first-child { margin-top: 0; }
+.tyc-modal-body p { margin: 0 0 10px; }
+.tyc-modal-footer {
+  padding: 16px 24px 20px; border-top: 1px solid #e8e8e8;
+  display: flex; justify-content: center;
+}
+.tyc-modal-btn {
+  background: #2A39D0; color: #fff; border: none; border-radius: 100px;
+  padding: 14px 80px; font-size: 15px; font-weight: 500; cursor: pointer; transition: opacity 0.15s;
+}
+.tyc-modal-btn:hover { opacity: 0.88; }
+</style>
 </body>
 </html>
