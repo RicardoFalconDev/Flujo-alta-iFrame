@@ -19,7 +19,7 @@
       height: 484px;
       background: #fff;
       border: 1px solid var(--border-card);
-      border-radius: 12px;
+      border-radius: 12px 12px 0 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -58,7 +58,7 @@
     }
 
     @media (max-width: 480px) {
-      .loading-card { width: 100%; height: auto; padding: 48px 16px; }
+      .loading-card { width: 100%; height: auto; padding: 48px 16px; border-radius: 12px 12px 0 0; }
       .loading-inner { width: 100%; }
     }
 
@@ -87,6 +87,7 @@
 
   <!-- ── CONTENT ── -->
   <main class="content-area">
+<div class="card-wrap">
     <div class="loading-card">
       <div class="loading-inner">
         <div class="spinner"></div>
@@ -96,6 +97,11 @@
         </div>
       </div>
     </div>
+    <div class="card-footer">
+      <span class="powered-label">POWERED BY</span>
+      <img class="powered-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    </div>
+    </div><!-- /.card-wrap -->
   </main>
 
 </div>

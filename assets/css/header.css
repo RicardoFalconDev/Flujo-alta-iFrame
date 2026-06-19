@@ -74,7 +74,7 @@
 }
 
 .card-footer {
-  width: 600px;
+  width: 100%;
   background: #f9f9ff;
   border: 1px solid var(--border-card);
   border-top: none;

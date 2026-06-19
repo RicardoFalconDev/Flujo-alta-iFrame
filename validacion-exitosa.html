@@ -23,7 +23,7 @@
       height: 484px;
       background: #fff;
       border: 1px solid var(--border-card);
-      border-radius: 12px;
+      border-radius: 12px 12px 0 0;
       padding: 52px 24px 32px;
       display: flex;
       align-items: center;
@@ -86,7 +86,7 @@
     .btn-continuar { width: 265px; }
 
     @media (max-width: 480px) {
-      .success-card { width: 100%; height: auto; padding: 40px 16px; }
+      .success-card { width: 100%; height: auto; padding: 40px 16px; border-radius: 12px 12px 0 0; }
       .success-content { width: 100%; }
       .btn-continuar { width: 100%; }
     }
@@ -106,6 +106,7 @@
 
   <!-- ── CONTENT ── -->
   <main class="content-area">
+<div class="card-wrap">
     <div class="success-card">
       <div class="success-inner">
 
@@ -131,6 +132,11 @@
 
       </div>
     </div>
+    <div class="card-footer">
+      <span class="powered-label">POWERED BY</span>
+      <img class="powered-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    </div>
+    </div><!-- /.card-wrap -->
   </main>
 
 </div>
