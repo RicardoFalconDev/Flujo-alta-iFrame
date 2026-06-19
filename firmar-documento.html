@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Firmar documento | FID by Lakaut</title>
+  <title>Revisá el documento | FID by Lakaut</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
@@ -13,195 +13,467 @@
   <link rel="stylesheet" href="assets/css/buttons.css" />
 
   <style>
-    body, .page { background: #f8f9fa; }
-
-    .firmador-card {
-      width: 705px;
-      background: #fff;
-      border: 1px solid var(--border-card);
-      border-radius: 12px 12px 0 0;
+    /* ─── VISOR PDF ─────────────────────────────────────────── */
+    .pdf-viewer {
+      width: 100%;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
 
-    .doc-topbar {
-      background: #f4f4f8;
-      border-bottom: 1px solid var(--border-card);
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-shrink: 0;
-    }
-
-    .doc-name {
+    /* ── Barra superior ── */
+    .pdf-toolbar {
+      background: #f8f9fa;
       display: flex;
       align-items: center;
       gap: 8px;
+      padding: 0 16px;
+      height: 42px;
+      flex-shrink: 0;
+    }
+
+    .pdf-toolbar-top {
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .pdf-toolbar-bottom {
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .pdf-badge {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: #6a7282;
+      border: 1px solid #d1d5dc;
+      border-radius: 4px;
+      padding: 2px 6px;
+      flex-shrink: 0;
+    }
+
+    .pdf-filename {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: #364153;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Área del documento ── */
+    .pdf-scroll-area {
+      background: #f8f9fa;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      max-height: 540px;
+      overflow-y: auto;
+      position: relative;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(137,137,153,.6) transparent;
+    }
+
+    .pdf-scroll-area::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .pdf-scroll-area::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .pdf-scroll-area::-webkit-scrollbar-thumb {
+      background: rgba(137,137,153,.5);
+      border-radius: 8px;
+    }
+
+    .pdf-pages {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 460px;
+    }
+
+    /* ── Página del documento ── */
+    .pdf-page {
+      background: #fff;
+      border: 0.5px solid #dee2e6;
+      border-radius: 2px;
+      padding: 40px 44px 56px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11.5px;
+      line-height: 1.65;
+      color: #1a1a1a;
+    }
+
+    .pdf-page h2 {
+      font-family: 'Inter', sans-serif;
       font-size: 14px;
-      font-weight: 500;
-      color: var(--text-dark);
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 20px;
+      color: #0b0c0e;
     }
 
-    .doc-name .icon {
-      font-size: 20px;
-      color: #e53e3e;
-      font-variation-settings: 'FILL' 1;
+    .pdf-page p {
+      margin-bottom: 12px;
     }
 
-    .doc-pages { font-size: 12px; color: var(--text-sub); }
+    .pdf-page strong {
+      font-weight: 700;
+    }
 
-    .doc-viewer {
-      height: 420px;
-      background: #e8e8ee;
+    .pdf-page .section-title {
+      font-weight: 700;
+      font-size: 11.5px;
+      margin-top: 28px;
+      margin-bottom: 8px;
+    }
+
+    .pdf-signature-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10.5px;
+      margin-top: 8px;
+    }
+
+    .pdf-signature-table td,
+    .pdf-signature-table th {
+      border: 1px solid #bbb;
+      padding: 5px 8px;
+      vertical-align: top;
+    }
+
+    .pdf-signature-table .sig-cell {
+      height: 80px;
+    }
+
+    .pdf-page-num {
+      text-align: center;
+      font-size: 10px;
+      color: #aaa;
+      margin-top: 24px;
+    }
+
+    /* ── Controles del visor ── */
+    .pdf-controls {
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-    }
-
-    .doc-page {
-      width: 320px;
-      height: 380px;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.12);
-      display: flex;
-      flex-direction: column;
-      padding: 28px 24px;
-      gap: 10px;
-    }
-
-    .doc-line { height: 10px; background: #e8e8ee; border-radius: 4px; }
-    .doc-line.title  { width: 60%; height: 14px; background: #d0d0d8; }
-    .doc-line.short  { width: 40%; }
-    .doc-line.medium { width: 70%; }
-    .doc-line.full   { width: 100%; }
-
-    .firma-zone {
-      margin-top: auto;
-      border-top: 1.5px dashed #a0a0b0;
-      padding-top: 10px;
-      display: flex;
-      flex-direction: column;
       gap: 4px;
+      flex: 1;
     }
 
-    .firma-zone-label {
-      font-size: 9px;
-      color: #a0a0b0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .firma-zone-placeholder { font-size: 11px; color: #c0c0cc; font-style: italic; }
-
-    .doc-footer-bar {
-      padding: 16px 20px;
-      border-top: 1px solid var(--border-card);
+    .pdf-ctrl-btn {
+      width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      justify-content: center;
+      border-radius: 4px;
+      color: #364153;
+      transition: background .12s;
       flex-shrink: 0;
     }
 
-    .doc-info { font-size: 12px; color: var(--text-sub); line-height: 18px; }
-    .doc-info strong { font-weight: 600; color: var(--text-dark); display: block; font-size: 13px; }
-    .btn-firmar-doc { min-width: 180px; }
+    .pdf-ctrl-btn:hover { background: rgba(0,0,0,.06); }
+    .pdf-ctrl-btn:disabled { opacity: .35; cursor: not-allowed; }
+    .pdf-ctrl-btn:disabled:hover { background: none; }
+    .pdf-ctrl-btn .icon { font-size: 20px; }
 
-    .btn-spinner {
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,.4);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-      flex-shrink: 0;
+    .pdf-ctrl-chip {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      height: 28px;
+      min-width: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      color: #212121;
+      padding: 0 10px;
+      user-select: none;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .pdf-divider {
+      width: 1px;
+      height: 28px;
+      background: #e5e7eb;
+      margin: 0 8px;
+    }
+
+    /* ─── BOTÓN FIRMAR ───────────────────────────────────── */
+    .btn-firmar-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 0;
+    }
+
+    .btn-firmar {
+      width: 256px;
+    }
+
+    /* ─── HINT de lectura ────────────────────────────────── */
+    .read-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-ph);
+      transition: opacity .3s;
+    }
+
+    .read-hint .icon { font-size: 16px; }
+    .read-hint.hidden { opacity: 0; pointer-events: none; }
 
     @media (max-width: 480px) {
-      .firmador-card { width: 100%; border-radius: 12px 12px 0 0; }
-      .doc-viewer { height: 300px; }
-      .doc-page { width: 240px; height: 280px; padding: 20px 16px; }
-      .doc-footer-bar { flex-direction: column; align-items: stretch; }
-      .btn-firmar-doc { width: 100%; }
+      .pdf-scroll-area { max-height: 400px; }
+      .pdf-page { padding: 24px 20px 36px; }
+      .btn-firmar { width: 100%; }
     }
   </style>
 </head>
 <body>
 <div class="page">
 
+  <!-- ── HEADER ── -->
   <header class="header">
-    <img class="header-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
+    <img class="header-logo"
+         src="assets/icons/logo-fid.svg"
+         alt="FID by Lakaut"
+         width="55" height="38" />
     <span class="header-title">Firmar documento</span>
     <button class="icon-btn" aria-label="Cerrar" onclick="window.location.href='index.html'">
       <span class="icon">close</span>
     </button>
   </header>
 
+  <!-- ── CONTENT ── -->
   <main class="content-area">
   <div class="card-wrap">
-    <div class="firmador-card">
+    <div class="main-card">
 
-      <div class="doc-topbar">
-        <div class="doc-name">
-          <span class="icon">picture_as_pdf</span>
-          Contrato_de_servicios_2024.pdf
-        </div>
-        <span class="doc-pages">1 / 1</span>
+      <!-- Título -->
+      <div class="title-section">
+        <h2 class="card-title">Revisá el documento</h2>
+        <p class="card-subtitle">Verifica que todos los datos son correctos antes de firmar</p>
       </div>
 
-      <div class="doc-viewer">
-        <div class="doc-page">
-          <div class="doc-line title"></div>
-          <div class="doc-line short"></div>
-          <div class="doc-line full"></div>
-          <div class="doc-line full"></div>
-          <div class="doc-line medium"></div>
-          <div class="doc-line full"></div>
-          <div class="doc-line short"></div>
-          <div class="doc-line full"></div>
-          <div class="doc-line medium"></div>
-          <div class="doc-line full"></div>
-          <div class="doc-line full"></div>
-          <div class="doc-line short"></div>
-          <div class="firma-zone">
-            <span class="firma-zone-label">Firma digital</span>
-            <span class="firma-zone-placeholder">Tu firma se aplicará aquí</span>
+      <!-- Visor PDF -->
+      <div class="pdf-viewer">
+
+        <!-- Barra superior -->
+        <div class="pdf-toolbar pdf-toolbar-top">
+          <span class="pdf-badge">pdf</span>
+          <span class="pdf-filename">Contrato de Alta de Préstamo</span>
+        </div>
+
+        <!-- Páginas del documento -->
+        <div class="pdf-scroll-area" id="pdf-scroll">
+          <div class="pdf-pages" id="pdf-pages">
+
+            <!-- Página 1 -->
+            <div class="pdf-page" id="page-1">
+              <h2>Autorización para retiro de<br>pertenencias</h2>
+
+              <p>Esta autorización tiene validez desde el día <strong>16 de Abril de 2026</strong> hasta el día <strong>30 de Abril de 2026</strong>.</p>
+
+              <p>Para cualquier consulta, pueden contactarme al número telefónico <strong>(11) 4567-8901</strong> o al correo electrónico <strong>ana.torres@mailfalso.com</strong>.</p>
+
+              <p>Se adjunta copia de mi documento de identidad para verificación:<br><strong>DNI_Ana_Torres_Copia.pdf</strong></p>
+
+              <p>En fe de lo cual, firmo la presente en <strong>Buenos Aires</strong>, a los <strong>16 de Abril de 2026</strong>.</p>
+
+              <p class="section-title">Área de Firmas</p>
+              <table class="pdf-signature-table">
+                <tr>
+                  <th>Autorizante:</th>
+                  <th>Autorizado:</th>
+                </tr>
+                <tr>
+                  <td>Firma: (Firma de Ana Torres)</td>
+                  <td>Firma: (Firma de Ricardo Gómez)</td>
+                </tr>
+                <tr>
+                  <td class="sig-cell"></td>
+                  <td class="sig-cell"></td>
+                </tr>
+                <tr>
+                  <td>Aclaración: Ana María Torres Soto</td>
+                  <td>Aclaración: Ricardo Gómez Pérez</td>
+                </tr>
+                <tr>
+                  <td>Documento de Identidad: 45.876.123</td>
+                  <td>Documento de Identidad: 18.345.678</td>
+                </tr>
+              </table>
+
+              <p class="pdf-page-num">1</p>
+            </div>
+
+            <!-- Página 2 -->
+            <div class="pdf-page" id="page-2">
+              <h2>Términos y condiciones del<br>servicio de firma digital</h2>
+
+              <p>Al suscribir el presente documento, el firmante declara conocer y aceptar en su totalidad los términos y condiciones del servicio de firma digital emitido por <strong>FID by Lakaut</strong>.</p>
+
+              <p>La firma digital es un mecanismo criptográfico que permite verificar la autenticidad e integridad del documento firmado, con validez legal conforme a la legislación vigente.</p>
+
+              <p>El titular es responsable de la custodia de su clave de firma y de los documentos firmados con ella. Cualquier uso no autorizado deberá reportarse de inmediato a través de los canales oficiales de soporte.</p>
+
+              <p>Este certificado digital ha sido emitido bajo estándares de seguridad nivel II, con vigencia de <strong>2 años</strong> a partir de la fecha de emisión. Al vencimiento, el titular podrá solicitar su renovación.</p>
+
+              <p>Para más información sobre el uso de la firma digital, consulte la guía disponible en el portal del servicio o comuníquese con el equipo de soporte.</p>
+
+              <p class="pdf-page-num">2</p>
+            </div>
+
           </div>
         </div>
+
+        <!-- Barra inferior -->
+        <div class="pdf-toolbar pdf-toolbar-bottom">
+          <div class="pdf-controls">
+            <!-- Zoom -->
+            <button class="pdf-ctrl-btn" id="btn-zoom-out" aria-label="Reducir zoom" onclick="changeZoom(-1)">
+              <span class="icon">remove</span>
+            </button>
+            <span class="pdf-ctrl-chip" id="zoom-label">100%</span>
+            <button class="pdf-ctrl-btn" id="btn-zoom-in" aria-label="Aumentar zoom" onclick="changeZoom(1)">
+              <span class="icon">add</span>
+            </button>
+
+            <div class="pdf-divider"></div>
+
+            <!-- Navegación de páginas -->
+            <button class="pdf-ctrl-btn" id="btn-prev" aria-label="Página anterior" onclick="changePage(-1)" disabled>
+              <span class="icon">chevron_left</span>
+            </button>
+            <span class="pdf-ctrl-chip" id="page-label">1/2</span>
+            <button class="pdf-ctrl-btn" id="btn-next" aria-label="Página siguiente" onclick="changePage(1)">
+              <span class="icon">chevron_right</span>
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /.pdf-viewer -->
+
+      <!-- Hint + Botón firmar -->
+      <div class="read-hint" id="read-hint">
+        <span class="icon">arrow_downward</span>
+        Desplazate hasta el final para habilitar la firma
       </div>
 
-      <div class="doc-footer-bar">
-        <div class="doc-info">
-          <strong>Firmante</strong>
-          Ricardo Falcón · DNI 12.345.678
-        </div>
-        <button class="btn-primary btn-firmar-doc active" id="btn-firmar" onclick="firmar()">
+      <div class="btn-firmar-row">
+        <button class="btn-continue btn-firmar" id="btn-firmar" onclick="firmar()">
           <span>Firmar documento</span>
         </button>
       </div>
 
-    </div>
+    </div><!-- /.main-card -->
+
+    <!-- Footer -->
     <div class="card-footer">
       <span class="powered-label">POWERED BY</span>
       <img class="powered-logo" src="assets/icons/logo-fid.svg" alt="FID by Lakaut" />
     </div>
-  </div>
+
+  </div><!-- /.card-wrap -->
   </main>
 
 </div>
 
 <script>
-  function firmar() {
-    const btn = document.getElementById('btn-firmar');
-    btn.disabled = true;
-    btn.innerHTML = '<span class="btn-spinner"></span><span>Firmando...</span>';
-    setTimeout(() => window.location.href = 'confirmar-firma.html', 1500);
+  /* ── Estado del visor ── */
+  const zoomLevels  = [50, 75, 100, 125, 150];
+  let zoomIdx       = 2;   // 100%
+  let currentPage   = 1;
+  const totalPages  = 2;
+  let hasReadAll    = false;
+
+  const pdfPages    = document.getElementById('pdf-pages');
+  const scrollArea  = document.getElementById('pdf-scroll');
+  const zoomLabel   = document.getElementById('zoom-label');
+  const pageLabel   = document.getElementById('page-label');
+  const btnPrev     = document.getElementById('btn-prev');
+  const btnNext     = document.getElementById('btn-next');
+  const btnZoomOut  = document.getElementById('btn-zoom-out');
+  const btnZoomIn   = document.getElementById('btn-zoom-in');
+  const btnFirmar   = document.getElementById('btn-firmar');
+  const readHint    = document.getElementById('read-hint');
+
+  /* ── Zoom ── */
+  function applyZoom() {
+    const scale        = zoomLevels[zoomIdx] / 100;
+    const baseFontSize = 11.5;
+    document.querySelectorAll('.pdf-page').forEach(p => {
+      p.style.fontSize = `${(baseFontSize * scale).toFixed(1)}px`;
+    });
+    zoomLabel.textContent = `${zoomLevels[zoomIdx]}%`;
+    btnZoomOut.disabled = zoomIdx === 0;
+    btnZoomIn.disabled  = zoomIdx === zoomLevels.length - 1;
   }
+
+  function changeZoom(dir) {
+    zoomIdx = Math.max(0, Math.min(zoomLevels.length - 1, zoomIdx + dir));
+    applyZoom();
+  }
+
+  /* ── Paginación ── */
+  function applyPage() {
+    pageLabel.textContent = `${currentPage}/${totalPages}`;
+    btnPrev.disabled = currentPage === 1;
+    btnNext.disabled = currentPage === totalPages;
+
+    const target = document.getElementById(`page-${currentPage}`);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function changePage(dir) {
+    const next = currentPage + dir;
+    if (next < 1 || next > totalPages) return;
+    currentPage = next;
+    applyPage();
+  }
+
+  /* ── Actualizar indicador de página al hacer scroll ── */
+  scrollArea.addEventListener('scroll', () => {
+    const page2 = document.getElementById('page-2');
+    const areaRect  = scrollArea.getBoundingClientRect();
+    const page2Rect = page2.getBoundingClientRect();
+
+    /* Detectar página visible */
+    if (page2Rect.top < areaRect.top + areaRect.height * 0.5) {
+      if (currentPage !== 2) { currentPage = 2; applyPage(); }
+    } else {
+      if (currentPage !== 1) { currentPage = 1; applyPage(); }
+    }
+
+    /* Detectar fondo del scroll */
+    const atBottom = scrollArea.scrollTop + scrollArea.clientHeight >= scrollArea.scrollHeight - 20;
+    if (atBottom && !hasReadAll) {
+      hasReadAll = true;
+      btnFirmar.classList.add('active');
+      readHint.classList.add('hidden');
+    }
+  });
+
+  /* ── Navegar al siguiente paso ── */
+  function firmar() {
+    if (!btnFirmar.classList.contains('active')) return;
+    window.location.href = 'confirmar-firma.html';
+  }
+
+  /* ── Init ── */
+  applyZoom();
+  applyPage();
 </script>
 </body>
 </html>
