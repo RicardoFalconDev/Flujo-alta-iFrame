@@ -103,8 +103,14 @@
       .cert-feed { padding: 16px; }
       .cert-card { padding: 32px 16px; }
       .cert-content { max-width: 100%; }
-      .cert-details { width: 100%; }
+      .cert-details { width: 100%; padding: 16px; }
       .btn-finalizar { width: 100%; }
+    }
+
+    @media (max-width: 400px) {
+      .cert-row { flex-direction: column; gap: 2px; }
+      .cert-label { min-width: unset; }
+      .cert-value { text-align: left; }
     }
   </style>
 </head>
