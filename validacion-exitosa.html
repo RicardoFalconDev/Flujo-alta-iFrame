@@ -15,10 +15,6 @@
   <style>
     body, .page { background: #f8f9fa; }
 
-    /* card centrada, dimensiones exactas del Figma */
-    @media (min-width: 641px) {
-      .content-area { align-items: flex-start; }
-    }
 
     .success-card {
       width: 100%;
@@ -28,37 +24,39 @@
       border-radius: 12px 12px 0 0;
       padding: 52px 24px 32px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      flex-direction: column;
     }
 
-    /* Grupo principal (ilustración+texto) + botón */
     .success-inner {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 32px;
+      width: 100%;
     }
 
-    /* Contenido: avatar + texto con 52px entre ellos */
     .success-content {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 52px;
-      width: 400px;
+      gap: 32px;
+      width: 100%;
+      text-align: center;
     }
 
-    /* ─── ILUSTRACIÓN AVATAR ─────────────────────────── */
+    @media (max-width: 760px) {
+      .success-card { flex: 1; padding: 32px 16px 24px; }
+      .success-inner { justify-content: space-between; flex: 1; }
+      .success-content { justify-content: center; flex: 1; }
+    }
+
     .avatar-img {
-      width: 79px;
-      height: 100px;
+      width: 63px;
+      height: 80px;
       flex-shrink: 0;
       display: block;
     }
 
-    /* ─── TEXTO ──────────────────────────────────────── */
     .text-block {
       display: flex;
       flex-direction: column;
@@ -68,10 +66,11 @@
     }
 
     .success-title {
+      font-family: 'Inter', sans-serif;
       font-weight: 600;
-      font-size: 24px;
-      line-height: 32px;
-      color: var(--text-main);
+      font-size: 20px;
+      line-height: 28px;
+      color: #3b3a45;
       font-feature-settings: "lnum" 1, "tnum" 1;
     }
 
@@ -79,18 +78,16 @@
       font-weight: 400;
       font-size: 14px;
       line-height: 20px;
-      color: var(--text-help);
+      color: #575768;
       letter-spacing: 0.1px;
       font-feature-settings: "lnum" 1, "tnum" 1;
     }
 
-    /* ─── BOTÓN ──────────────────────────────────────── */
-    .btn-continuar { width: 265px; }
+    .btn-continuar { width: 100%; }
 
-    @media (max-width: 760px) {
-      .success-card { flex: 1; padding: 40px 16px; }
-      .success-content { width: 100%; }
-      .btn-continuar { width: 100%; }
+    @media (min-width: 761px) {
+      .success-card { min-height: 657px; justify-content: center; }
+      .btn-continuar { width: 265px; align-self: center; }
     }
   </style>
 </head>

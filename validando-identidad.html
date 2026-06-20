@@ -50,11 +50,16 @@
     }
 
     .loading-title {
+      font-family: 'Inter', sans-serif;
       font-weight: 600;
-      font-size: 24px;
-      line-height: 32px;
-      color: var(--text-main);
+      font-size: 20px;
+      line-height: 28px;
+      color: #3b3a45;
       font-feature-settings: "lnum" 1, "tnum" 1;
+    }
+
+    @media (min-width: 761px) {
+      .loading-card { min-height: 657px; }
     }
 
     @media (max-width: 760px) {
@@ -66,7 +71,7 @@
       font-weight: 400;
       font-size: 14px;
       line-height: 20px;
-      color: var(--text-help);
+      color: #575768;
       letter-spacing: 0.1px;
       font-feature-settings: "lnum" 1, "tnum" 1;
       margin-top: 4px;

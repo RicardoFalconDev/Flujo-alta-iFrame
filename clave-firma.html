@@ -34,10 +34,10 @@
     }
 
     .warning-text {
-      font-family: 'Open Sans', sans-serif;
-      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
       line-height: 20px;
-      color: var(--text-help);
+      color: #575768;
     }
 
     .warning-text strong { font-weight: 700; }
@@ -46,7 +46,7 @@
     .form-fields {
       display: flex;
       flex-direction: column;
-      gap: 32px;
+      gap: 24px;
     }
 
     /* ─── ERROR ESTADO ───────────────────────────────── */
@@ -83,12 +83,13 @@
     .field-success.visible { display: flex; }
     .field-success img { width: 20px; height: 20px; flex-shrink: 0; }
 
-    /* ─── BOTÓN CENTRADO ─────────────────────────────── */
-    .btn-wrap { display: flex; justify-content: center; }
-    .btn-generar { width: 256px; }
+    .btn-generar { width: 100%; }
+    .main-card { gap: 16px; }
 
     @media (max-width: 640px) {
-      .btn-generar { width: 100%; }
+      .main-card { flex: 1; }
+      .form-fields { flex: 1; }
+      .btn-generar { margin-top: auto; }
     }
   </style>
 </head>
@@ -119,7 +120,11 @@
 
       <!-- Banner advertencia -->
       <div class="warning-banner">
-        <span class="icon warning-icon">info</span>
+        <svg class="warning-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="10" r="9" stroke="#3b3a45" stroke-width="1.5"/>
+          <rect x="9" y="9" width="2" height="6" rx="1" fill="#3b3a45"/>
+          <circle cx="10" cy="6.5" r="1.2" fill="#3b3a45"/>
+        </svg>
         <p class="warning-text">
           Por seguridad, <strong>esta clave no se puede recuperar</strong>. Si la perdés o la olvidás, vas a tener que emitir un nuevo certificado.
         </p>
@@ -132,7 +137,7 @@
         <div class="field-group">
           <label class="field-label" for="pw1">Clave de firma</label>
           <div class="pass-input-wrap" id="wrap1">
-            <input id="pw1" type="password" placeholder="Ingresa tu contraseña" autocomplete="new-password" />
+            <input id="pw1" type="password" placeholder="Ingresa tu clave..." autocomplete="new-password" />
             <button class="eye-btn" type="button" onclick="toggleEye('pw1','eye1')" aria-label="Mostrar/ocultar">
               <span class="icon" id="eye1">visibility_off</span>
             </button>
@@ -149,7 +154,7 @@
             </div>
             <div class="pw-req" id="req-sym">
               <img src="assets/icons/dot-outline.svg" alt="" />
-              <span>Un número o un símbolo (ej. ! o *).</span>
+              <span>Un número y un carácter especial (ej. ! o *).</span>
             </div>
           </div>
         </div>
@@ -174,11 +179,9 @@
         </div>
 
         <!-- Botón -->
-        <div class="btn-wrap">
-          <button class="btn-primary btn-generar" id="btn-generar" disabled onclick="generar()">
-            <span>Generar certificado</span>
-          </button>
-        </div>
+        <button class="btn-submit btn-generar" id="btn-generar" onclick="generar()">
+          <span>Generar certificado</span>
+        </button>
 
       </div>
 
@@ -229,7 +232,6 @@
     errorMsg.classList.toggle('visible', hasError);
     successMsg.classList.toggle('visible', !!matches);
     btn.classList.toggle('active', allReqs && matches);
-    btn.disabled = !(allReqs && matches);
   }
 
   pw1.addEventListener('input', updateBtn);

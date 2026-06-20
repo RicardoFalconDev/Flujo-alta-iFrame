@@ -30,9 +30,9 @@
 
     /* ── TÍTULOS ── */
     .bio-title {
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      font-size: 20px;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
       line-height: 28px;
       color: #0b0c0e;
       margin: 0 0 4px;
@@ -48,27 +48,33 @@
       margin: 0;
     }
 
-    /* ── INNER CARD (cámara + info) ── */
+    /* ── INNER CONTENT (cámara + info) ── */
     .camera-card {
-      background: #fafafa;
-      border: 1px solid #f2f2f8;
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .camera-card-inner {
-      padding: 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 24px;
+      gap: 32px;
+      width: 100%;
+    }
+
+    .camera-card-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      width: 100%;
+    }
+
+    @media (max-width: 760px) {
+      .camera-card { flex: 1; }
+      .camera-card-inner { flex: 1; }
     }
 
     /* ── CÍRCULO DE CÁMARA ── */
     .circle-wrap {
       position: relative;
-      width: 266px;
-      height: 266px;
+      width: 280px;
+      height: 280px;
       border-radius: 50%;
       overflow: hidden;
       border: 3px solid #3b3a45;
@@ -107,30 +113,32 @@
 
     /* ── INSTRUCCIONES (estado 1) ── */
     .instructions-card {
-      background: #fff;
+      background: #fafafa;
       border: 1px solid #f2f2f8;
       border-radius: 16px;
       width: 100%;
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
     }
 
     .instruction-row {
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
+      align-items: center;
+      gap: 16px;
     }
 
-    .instruction-row + .instruction-row {
-      padding-top: 12px;
-      border-top: 1px solid #f2f2f8;
+    .instr-divider {
+      height: 1px;
+      background: #d1d1d1;
+      opacity: 0.5;
+      width: 100%;
     }
 
     .instr-icon-wrap {
-      width: 36px;
-      height: 36px;
+      width: 24px;
+      height: 24px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -139,47 +147,47 @@
 
     .instr-icon-wrap .icon {
       font-size: 20px;
-      color: #575768;
+      color: #3b3a45;
       font-variation-settings: 'FILL' 0, 'wght' 300;
     }
 
     .instr-text {
       font-family: 'Inter', sans-serif;
       font-weight: 400;
-      font-size: 13px;
-      line-height: 18px;
-      color: #575768;
+      font-size: 14px;
+      line-height: 20px;
+      color: #3b3a45;
       letter-spacing: 0.1px;
     }
 
     /* ── TARJETA ÉXITO (estado 2) ── */
     .success-card {
-      background: #fff;
+      background: #fafafa;
       border: 1px solid #f2f2f8;
       border-radius: 16px;
       width: 100%;
       padding: 16px;
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
+      align-items: center;
+      gap: 16px;
     }
 
     .success-icon-wrap {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       flex-shrink: 0;
-      background: #f1fff8;
-      border: 1px solid #ace1c6;
-      border-radius: 16px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .success-icon-wrap .icon {
-      font-size: 20px;
-      color: #108F50;
-      font-variation-settings: 'FILL' 0, 'wght' 400;
+      font-size: 18px;
+      color: #16a34a;
+      font-variation-settings: 'FILL' 1, 'wght' 400;
     }
 
     .success-text {
@@ -204,7 +212,7 @@
       flex: 1;
     }
 
-    .btn-tomar { width: 265px; align-self: center; }
+    .btn-tomar { width: 265px; align-self: center; margin-top: auto; }
 
     /* Estado oculto */
     .state-2 { display: none; }
@@ -239,9 +247,9 @@
     <div class="bio-card">
 
       <!-- Título -->
-      <div>
-        <h2 class="bio-title">Sacá una foto de tu rostro</h2>
-        <p class="bio-subtitle">Vamos a confirmar que sos la misma persona que figura en tu documento.</p>
+      <div class="title-section">
+        <h2 class="card-title">Sacá una foto de tu rostro</h2>
+        <p class="card-subtitle">Vamos a confirmar que sos la misma persona que figura en tu documento.</p>
       </div>
 
       <!-- Inner card con cámara -->
@@ -264,6 +272,7 @@
               </div>
               <p class="instr-text">Ubica tu cara en el círculo, y presiona en tomar foto</p>
             </div>
+            <div class="instr-divider"></div>
             <div class="instruction-row">
               <div class="instr-icon-wrap">
                 <span class="material-symbols-outlined icon">eyeglasses</span>
@@ -277,7 +286,7 @@
             <div class="success-icon-wrap">
               <span class="material-symbols-outlined icon">check</span>
             </div>
-            <p class="success-text">Foto tomada exitosamente.</p>
+            <p class="success-text">Foto tomada exitosamente</p>
           </div>
 
         </div>

@@ -19,15 +19,6 @@
       --otp-size:   72px;
     }
 
-    .subtitle-link {
-      font-weight: 600;
-      color: var(--blue);
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .subtitle-link:hover { text-decoration: underline; }
-
     /* ─── OTP BODY ───────────────────────────────────── */
     .otp-body {
       display: flex;
@@ -140,11 +131,12 @@
     .btn-continue { flex: 1; }
 
     @media (max-width: 640px) {
-      :root { --otp-size: 46px; }
-      .otp-grid { gap: 10px; }
-      .otp-cell { font-size: 18px; }
+      .otp-grid { gap: 0; width: 100%; justify-content: space-between; }
+      .otp-cell { width: 44px; height: 44px; font-size: 16px; }
+      .otp-timer { font-size: 12px; line-height: 16px; color: #505050; }
       .otp-input-wrap { margin-top: 24px; }
-      .btn-row { margin-top: 20px; }
+      .otp-body { flex: 1; }
+      .btn-row { margin-top: auto; gap: 8px; }
     }
   </style>
 </head>
@@ -173,7 +165,6 @@
         <h2 class="card-title">Validá tu correo electrónico</h2>
         <p class="card-subtitle">
           Ingresá el código que enviamos a <strong>correo@ejemplo.com</strong>.
-          <a class="subtitle-link" href="#" style="text-decoration:underline">Modificar correo.</a>
         </p>
       </div>
 

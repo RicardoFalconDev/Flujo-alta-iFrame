@@ -10,23 +10,22 @@
 
 /* Label */
 .field-label {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 14px;
-  line-height: 20px;
-  letter-spacing: 0.1px;
-  color: var(--text-main);
+  line-height: 26px;
+  color: #222;
 }
 
 /* Input base (texto, email, tel) */
 .input-wrap,
 .pass-input-wrap {
-  height: 48px;
-  border: 1.5px solid var(--border);
+  height: 56px;
+  border: 1px solid #dfdfdf;
   border-radius: 8px;
   display: flex;
   align-items: center;
-  padding: 0 14px;
+  padding: 0 12px;
   gap: 8px;
   background: #fff;
   transition: border-color .15s;
@@ -40,10 +39,10 @@
   flex: 1;
   min-width: 0;
   height: 100%;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 14px;
+  line-height: 26px;
   color: var(--text-main);
   border: none;
   outline: none;
@@ -51,7 +50,7 @@
 }
 
 .input-wrap input::placeholder,
-.pass-input-wrap input::placeholder { color: var(--text-ph); }
+.pass-input-wrap input::placeholder { color: #c8ccdd; }
 
 /* Eye button */
 .eye-btn {
@@ -135,27 +134,29 @@
 
 /* Helper text debajo del campo */
 .field-helper {
-  font-size: 14px;
-  line-height: 20px;
-  color: var(--text-sub);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 18px;
+  color: #505050;
   letter-spacing: 0.1px;
-  font-feature-settings: "lnum" 1, "tnum" 1;
 }
 
 /* Requisitos de contraseña */
 .pw-reqs {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: 4px;
+  gap: 8px;
+  margin-top: 8px;
 }
 
 .pw-req {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: var(--text-sub);
+  gap: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  line-height: 18px;
+  color: #505050;
 }
 
 .pw-req img { width: 20px; height: 20px; flex-shrink: 0; }
@@ -175,6 +176,6 @@
 
   .input-wrap input,
   .pass-input-wrap input {
-    font-size: 16px; /* evita zoom en iOS */
+    font-size: 14px;
   }
 }

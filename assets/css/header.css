@@ -160,9 +160,10 @@
 
   .main-card {
     flex: 1;
-    padding: 24px 16px;
+    padding: 16px 16px 24px;
   }
 
   .title-section { gap: 6px; }
-  .card-title { font-size: 18px; line-height: 24px; }
+  .card-title { font-size: 16px; line-height: 28px; }
+  .card-subtitle { font-size: 14px; line-height: 20px; }
 }

@@ -19,15 +19,6 @@
       --otp-size:   72px;
     }
 
-    .subtitle-link {
-      font-weight: 600;
-      color: var(--blue);
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .subtitle-link:hover { text-decoration: underline; }
-
     /* ─── OTP BODY ───────────────────────────────────── */
     .otp-body {
       display: flex;
@@ -99,6 +90,8 @@
       color: var(--text-ph);
     }
 
+
+
     .otp-timer.expired { color: var(--otp-error); }
 
     .otp-error-msg {
@@ -137,15 +130,18 @@
     /* ─── BOTONES — sizing específico ───────────────── */
     .btn-row { gap: 16px; width: 100%; margin-top: 38px; }
 
-    @media (max-width: 640px) {
-      :root { --otp-size: 46px; }
-      .otp-grid { gap: 10px; }
-      .otp-cell { font-size: 18px; }
-      .otp-input-wrap { margin-top: 24px; }
-      .btn-row { margin-top: 20px; }
-    }
+    /* ─── BOTONES — sizing específico ───────────────── */
     .btn-resend { flex: 1; }
     .btn-continue { flex: 1; }
+
+    @media (max-width: 640px) {
+      .otp-grid { gap: 0; width: 100%; justify-content: space-between; }
+      .otp-cell { width: 44px; height: 44px; font-size: 16px; }
+      .otp-timer { font-size: 12px; line-height: 16px; color: #505050; }
+      .otp-input-wrap { margin-top: 24px; }
+      .otp-body { flex: 1; }
+      .btn-row { margin-top: auto; gap: 8px; }
+    }
   </style>
 </head>
 <body>
@@ -173,7 +169,6 @@
         <h2 class="card-title">Validá tu número de teléfono</h2>
         <p class="card-subtitle">
           Ingresá el código que enviamos al <strong>+54 11 4495-5678</strong>.
-          <a class="subtitle-link" href="#" style="text-decoration:underline">Modificar número.</a>
         </p>
       </div>
 

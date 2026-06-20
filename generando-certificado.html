@@ -26,6 +26,10 @@
       flex: 1;
     }
 
+    @media (min-width: 761px) {
+      .loading-card { min-height: 657px; }
+    }
+
     .loading-inner {
       display: flex;
       flex-direction: column;
@@ -50,10 +54,11 @@
     }
 
     .loading-title {
+      font-family: 'Inter', sans-serif;
       font-weight: 600;
-      font-size: 24px;
-      line-height: 32px;
-      color: var(--text-main);
+      font-size: 20px;
+      line-height: 28px;
+      color: #3b3a45;
       font-feature-settings: "lnum" 1, "tnum" 1;
     }
 
