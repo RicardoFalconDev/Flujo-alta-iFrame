@@ -109,7 +109,7 @@
     }
 
     /* ─── BOTONES ────────────────────────────────────── */
-    .btn-row { gap: 16px; width: 100%; margin-top: 38px; }
+    .btn-row { display: flex; gap: 16px; width: 100%; margin-top: 38px; }
     #btn-resend { flex: 1; }
     #btn-verify { flex: 1; }
 
@@ -125,11 +125,13 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     @media (max-width: 640px) {
-      :root { --otp-size: 46px; }
-      .otp-grid { gap: 10px; }
-      .otp-cell { font-size: 18px; }
+      :root { --otp-size: 44px; }
+      .otp-grid { gap: 0; width: 100%; justify-content: space-between; }
+      .otp-cell { font-size: 16px; }
       .otp-input-wrap { margin-top: 24px; }
-      .btn-row { margin-top: 20px; }
+      .otp-body { flex: 1; }
+      .btn-row { margin-top: auto; gap: 8px; flex-direction: row; }
+      .btn-row > * { width: auto; flex: 1; }
     }
   </style>
 </head>
@@ -183,10 +185,10 @@
 
         <!-- Botones -->
         <div class="btn-row">
-          <button class="btn-resend" id="btn-resend" onclick="reenviarCodigo()">
+          <button class="btn-outline" id="btn-resend" onclick="reenviarCodigo()">
             <span>Reenviar código</span>
           </button>
-          <button class="btn-continue" id="btn-verify" onclick="verificar()">
+          <button class="btn-submit" id="btn-verify" onclick="verificar()">
             <span>Verificar código</span>
           </button>
         </div>
@@ -264,8 +266,8 @@
       timerEl.style.display = 'none';
     } else {
       // Loading state
-      btnVerify.disabled = true;
-      btnResend.disabled = true;
+      btnVerify.classList.remove('active');
+      btnResend.setAttribute('disabled', '');
       btnVerify.innerHTML = '<span class="btn-spinner"></span><span>Verificando...</span>';
       grid.classList.add('verified');
       timerEl.style.display = 'none';

@@ -36,8 +36,17 @@
 
     .btn-confirm { width: 256px; }
 
-    @media (max-width: 480px) {
+    .form-body {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    @media (max-width: 640px) {
       .btn-confirm { width: 100%; }
+      .btn-confirm-row { justify-content: stretch; }
+      .form-body { flex: 1; }
+      .btn-confirm-row { margin-top: auto; }
     }
   </style>
 </head>
@@ -67,7 +76,7 @@
       </div>
 
       <!-- Formulario -->
-      <div style="display:flex;flex-direction:column;gap:40px;">
+      <div class="form-body">
 
         <!-- Campo contraseña -->
         <div class="field">
@@ -95,7 +104,7 @@
 
         <!-- Botón -->
         <div class="btn-confirm-row">
-          <button class="btn-continue btn-confirm" id="btn-confirm" onclick="confirmar()">
+          <button class="btn-submit btn-confirm" id="btn-confirm" onclick="confirmar()">
             <span>Firmar documento</span>
           </button>
         </div>

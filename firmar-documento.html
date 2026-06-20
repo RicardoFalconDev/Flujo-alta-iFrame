@@ -231,10 +231,11 @@
     .read-hint .icon { font-size: 16px; }
     .read-hint.hidden { opacity: 0; pointer-events: none; }
 
-    @media (max-width: 520px) {
-      .pdf-scroll-area { max-height: 400px; }
+    @media (max-width: 640px) {
+      .pdf-scroll-area { max-height: 360px; }
       .pdf-page { padding: 24px 20px 36px; }
       .btn-firmar { width: 100%; }
+      .btn-firmar-row { justify-content: stretch; }
     }
   </style>
 </head>
@@ -370,7 +371,7 @@
       </div>
 
       <div class="btn-firmar-row">
-        <button class="btn-continue btn-firmar" id="btn-firmar" onclick="firmar()">
+        <button class="btn-submit btn-firmar" id="btn-firmar" onclick="firmar()">
           <span>Firmar documento</span>
         </button>
       </div>
