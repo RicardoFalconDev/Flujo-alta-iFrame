@@ -60,10 +60,12 @@
 .card-wrap {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 600px;
 }
 
 .main-card {
-  width: 600px;
+  width: 100%;
   background: #fff;
   border: 1px solid var(--border-card);
   border-radius: 12px 12px 0 0;
@@ -144,21 +146,21 @@
   .header-title { text-align: center; }
 }
 
-/* ─── RESPONSIVE ≤ 480px — layout cards ────────────── */
-@media (max-width: 480px) {
+/* ─── RESPONSIVE ≤ 640px — layout cards ────────────── */
+@media (max-width: 640px) {
   .content-area {
     padding: 16px;
     align-items: stretch;
   }
 
-  .main-card {
-    width: 100%;
-    padding: 24px 16px;
-    border-radius: 12px 12px 0 0;
+  .card-wrap {
+    flex: 1;
+    max-width: 100%;
   }
 
-  .card-footer {
-    width: 100%;
+  .main-card {
+    flex: 1;
+    padding: 24px 16px;
   }
 
   .title-section { gap: 6px; }

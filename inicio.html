@@ -141,12 +141,6 @@
     }
 
     /* ─── BOTÓN CONTINUAR ───────────────────────────── */
-    .btn-wrap {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-    }
-
     .btn-continuar {
       width: 265px;
       height: 48px;
@@ -176,7 +170,7 @@
     .card-bottom { display: flex; flex-direction: column; gap: 24px; align-items: center; width: 100%; }
     .card-actions { display: flex; flex-direction: column; gap: 24px; align-items: center; width: 100%; }
 
-    @media (max-width: 480px) {
+    @media (max-width: 640px) {
       .btn-continuar { width: 100%; }
       .onboarding-title { font-size: 20px; }
     }
@@ -251,11 +245,9 @@
             <span class="tyc-link" onclick="openTycModal(event)">términos y condiciones del acuerdo con suscriptores</span>
           </p>
         </div>
-        <div class="btn-wrap">
-          <button class="btn-continuar" id="btn-continuar" disabled onclick="sessionStorage.setItem('flow','pf'); window.location.href='otp-correo.html'">
-            Continuar
-          </button>
-        </div>
+        <button class="btn-continuar" id="btn-continuar" disabled onclick="sessionStorage.setItem('flow','pf'); window.location.href='otp-correo.html'">
+          Continuar
+        </button>
       </div>
 
     </div>

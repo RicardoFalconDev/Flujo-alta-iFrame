@@ -16,11 +16,13 @@
     body, .page { background: #f8f9fa; }
 
     /* card centrada, dimensiones exactas del Figma */
-    .content-area { align-items: flex-start; }
+    @media (min-width: 641px) {
+      .content-area { align-items: flex-start; }
+    }
 
     .success-card {
-      width: 705px;
-      height: 484px;
+      width: 100%;
+      max-width: 705px;
       background: #fff;
       border: 1px solid var(--border-card);
       border-radius: 12px 12px 0 0;
@@ -85,8 +87,8 @@
     /* ─── BOTÓN ──────────────────────────────────────── */
     .btn-continuar { width: 265px; }
 
-    @media (max-width: 480px) {
-      .success-card { width: 100%; height: auto; padding: 40px 16px; border-radius: 12px 12px 0 0; }
+    @media (max-width: 760px) {
+      .success-card { flex: 1; padding: 40px 16px; }
       .success-content { width: 100%; }
       .btn-continuar { width: 100%; }
     }

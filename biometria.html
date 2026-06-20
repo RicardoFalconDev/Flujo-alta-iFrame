@@ -17,10 +17,11 @@
 
     /* ── CARD EXTERIOR ── */
     .bio-card {
-      width: 705px;
+      width: 100%;
+      max-width: 705px;
       background: #fff;
       border: 1px solid #dee2e6;
-      border-radius: 12px;
+      border-radius: 12px 12px 0 0;
       padding: 32px 24px;
       display: flex;
       flex-direction: column;
@@ -109,7 +110,7 @@
       background: #fff;
       border: 1px solid #f2f2f8;
       border-radius: 16px;
-      width: 320px;
+      width: 100%;
       padding: 16px;
       display: flex;
       flex-direction: column;
@@ -156,7 +157,7 @@
       background: #fff;
       border: 1px solid #f2f2f8;
       border-radius: 16px;
-      width: 320px;
+      width: 100%;
       padding: 16px;
       display: flex;
       align-items: flex-start;
@@ -211,11 +212,9 @@
     /* ─── BOTÓN ─────────────────────────────────────────── */
     .btn-biometria { width: 265px; align-self: center; }
 
-    @media (max-width: 480px) {
-      .bio-card { width: 100%; padding: 24px 16px; }
-      .btn-biometria { width: 100%; }
-      .instructions-card,
-      .success-card { width: 100%; }
+    @media (max-width: 760px) {
+      .bio-card { flex: 1; padding: 24px 16px; }
+      .btn-tomar, .btn-biometria { width: 100%; align-self: stretch; }
       .circle-wrap { width: 220px; height: 220px; }
     }
   </style>

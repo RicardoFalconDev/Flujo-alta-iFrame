@@ -170,3 +170,14 @@
   display: flex;
   justify-content: center;
 }
+
+/* ── Responsive: btn-row apila con primario arriba ───────── */
+@media (max-width: 640px) {
+  .btn-row {
+    flex-direction: column-reverse;
+  }
+  .btn-row > * {
+    width: 100%;
+    flex: none;
+  }
+}
