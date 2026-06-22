@@ -73,7 +73,7 @@
 
     .otp-grid.verified .otp-cell {
       background: #f5f5f5;
-      border-color: #006633;
+      border-color: var(--otp-border);
       pointer-events: none;
     }
 
@@ -134,6 +134,12 @@
       flex-shrink: 0;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* estado verificando: botón permanece azul pero no clickeable */
+    .btn-submit.verifying {
+      pointer-events: none;
+      opacity: 1;
+    }
 
     @media (max-width: 640px) {
       :root { --otp-size: 44px; }
@@ -281,9 +287,9 @@
       timerEl.style.display = 'none';
     } else {
       // Loading state
-      btnVerify.classList.remove('active');
+      btnVerify.classList.add('verifying');
       btnResend.setAttribute('disabled', '');
-      btnVerify.innerHTML = '<span class="btn-spinner"></span><span>Verificando...</span>';
+      btnVerify.innerHTML = '<span class="btn-spinner" style="margin-right:8px"></span><span>Verificando</span>';
       grid.classList.add('verified');
       timerEl.style.display = 'none';
       clearInterval(timerInterval);

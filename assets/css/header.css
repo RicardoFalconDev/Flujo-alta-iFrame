@@ -149,7 +149,7 @@
 /* ─── RESPONSIVE ≤ 640px — layout cards ────────────── */
 @media (max-width: 640px) {
   .content-area {
-    padding: 16px;
+    padding: 16px 16px 0;
     align-items: stretch;
   }
 
