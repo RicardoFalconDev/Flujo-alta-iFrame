@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/header.css" />
   <link rel="stylesheet" href="assets/css/buttons.css" />
+  <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 
   <style>
     /* card centrada, gap 32px entre secciones */
@@ -29,11 +30,11 @@
       max-width: 484px;
     }
 
-    .cert-icon {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
+    .lottie-wrap {
+      width: 80px;
+      height: 80px;
       flex-shrink: 0;
+      margin-bottom: -12px;
     }
 
     .cert-title-block {
@@ -133,7 +134,14 @@
 
       <!-- Ícono + título -->
       <div class="cert-content">
-        <img class="cert-icon" src="assets/images/cert-check-icon.png" alt="" />
+        <div class="lottie-wrap">
+          <dotlottie-player
+            src="assets/Success Check.json"
+            autoplay
+            loop="false"
+            style="width:100%;height:100%">
+          </dotlottie-player>
+        </div>
         <div class="cert-title-block">
           <h2 class="cert-title">Todo listo para firmar</h2>
           <p class="cert-subtitle">Tu certificado digital se encuentra habilitado<br>para firmas digitales.</p>
