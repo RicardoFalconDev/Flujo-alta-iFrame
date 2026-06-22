@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/header.css" />
   <link rel="stylesheet" href="assets/css/buttons.css" />
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
 
   <style>
     /* card centrada, gap 32px entre secciones */
@@ -134,14 +134,7 @@
 
       <!-- Ícono + título -->
       <div class="cert-content">
-        <div class="lottie-wrap">
-          <lottie-player
-            src="assets/success-check.json"
-            autoplay
-            loop="false"
-            style="width:100%;height:100%">
-          </lottie-player>
-        </div>
+        <div class="lottie-wrap" id="lottie-anim"></div>
         <div class="cert-title-block">
           <h2 class="cert-title">Todo listo para firmar</h2>
           <p class="cert-subtitle">Tu certificado digital se encuentra habilitado<br>para firmas digitales.</p>
@@ -220,6 +213,9 @@
   if (sessionStorage.getItem('flow') === 'pf') {
     document.querySelectorAll('.juridico-only').forEach(el => el.style.display = 'none');
   }
+</script>
+<script>
+  lottie.loadAnimation({ container: document.getElementById('lottie-anim'), renderer: 'svg', loop: false, autoplay: true, path: 'assets/success-check.json' });
 </script>
 </body>
 </html>

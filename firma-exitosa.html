@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/header.css" />
   <link rel="stylesheet" href="assets/css/buttons.css" />
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.8/dist/lottie-player.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
 
   <style>
     body, .page { background: #f8f9fa; }
@@ -104,14 +104,7 @@
       <div class="success-inner">
 
         <div class="success-content">
-          <div class="lottie-wrap">
-            <lottie-player
-              src="assets/Verification.json"
-              autoplay
-              loop="false"
-              style="width:100%;height:100%">
-            </lottie-player>
-          </div>
+          <div class="lottie-wrap" id="lottie-anim"></div>
 
           <div>
             <p class="success-title">Firmaste tu documento</p>
@@ -145,6 +138,9 @@
     btn.innerHTML = '<span>Descargando...</span>';
     setTimeout(() => { btn.innerHTML = '<span>Descargar documento</span>'; }, 1500);
   }
+</script>
+<script>
+  lottie.loadAnimation({ container: document.getElementById('lottie-anim'), renderer: 'svg', loop: false, autoplay: true, path: 'assets/Verification.json' });
 </script>
 </body>
 </html>
