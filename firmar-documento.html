@@ -470,7 +470,10 @@
 
   /* ── Init ── */
   applyZoom();
-  applyPage();
+  pageLabel.textContent = `${currentPage}/${totalPages}`;
+  btnPrev.disabled = true;
+  btnNext.disabled = currentPage === totalPages;
+  scrollArea.scrollTop = 0;
 </script>
 </body>
 </html>
