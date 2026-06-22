@@ -19,6 +19,16 @@
       --otp-size:   72px;
     }
 
+    /* ─── CARD PADDING ──────────────────────────────── */
+    .main-card { padding-top: 24px; }
+
+    /* ─── ILUSTRACIÓN ───────────────────────────────── */
+    .otp-illustration {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
     /* ─── OTP BODY ───────────────────────────────────── */
     .otp-body {
       display: flex;
@@ -149,7 +159,7 @@
          src="assets/icons/logo-fid.svg"
          alt="FID by Lakaut"
          width="55" height="38" />
-    <span class="header-title">Validación de correo</span>
+    <span class="header-title"><span class="header-title-skeleton"></span></span>
     <button class="icon-btn" aria-label="Cerrar">
       <span class="icon">close</span>
     </button>
@@ -160,8 +170,13 @@
 <div class="card-wrap">
     <div class="main-card">
 
+      <!-- Ilustración -->
+      <div class="otp-illustration">
+        <img src="assets/images/otp-email.svg" alt="" width="121" height="85" />
+      </div>
+
       <!-- Título -->
-      <div class="title-section">
+      <div class="title-section" style="text-align:center;">
         <h2 class="card-title">Validá tu correo electrónico</h2>
         <p class="card-subtitle">
           Ingresá el código que enviamos a <strong>correo@ejemplo.com</strong>.
